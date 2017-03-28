@@ -1,0 +1,10 @@
+<div class="card horizontal">
+  <div class="card-stacked">
+    <div class="card-action" style="background-color: #0091ea ; height: 100px">
+      <div style="padding-top: 20px">
+        <a [routerLink]="['/module/' + module.moduleCode]" style="color: white; font-size: 20px;">{{module.moduleCode}} - {{module.moduleName}}</a>
+        <span class="new badge blue-grey right-align" data-badge-caption="questions">{{module.totalQuestions}}</span>
+      </div>
+    </div>
+  </div>
+</div><br>
