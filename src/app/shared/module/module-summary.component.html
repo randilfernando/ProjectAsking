@@ -1,12 +1,12 @@
-<div class="row valign-wrapper z-depth-1" style="background-color: #1976d2; height: 100px;">
+<div class="row valign-wrapper z-depth-1" style="background-color: #1e88e5; height: 100px;">
   <div class="col s7">
-    <a class="left-align" [routerLink]="['/module/' + module.moduleCode]" style="color: white; font-size: 20px; padding-left: 10px">{{module.moduleCode}} - {{module.moduleName}}</a>
+    <a class="left-align" [routerLink]="['/module/' + module.moduleCode]" style="color: white; font-size: 20px; padding-left: 20px">{{module.moduleCode}} - {{module.moduleName}}</a>
   </div>
   <div class="col s2">
     <ng-content class="right-align"></ng-content>
   </div>
   <div class="col s3">
-    <div class="right-align" style="padding-right: 10px">
+    <div class="right-align" style="padding-right: 20px">
       <span class="new badge blue-grey" data-badge-caption="questions">{{module.totalQuestions}}</span>
     </div>
   </div>

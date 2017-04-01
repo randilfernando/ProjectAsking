@@ -1,3 +1,5 @@
 <div class="row container">
-  <ask-module-summary *ngFor="let module of featuredModules" [module]="module"></ask-module-summary>
+  <ask-module-summary *ngFor="let module of featuredModules" [module]="module">
+    <ng-content></ng-content>
+  </ask-module-summary>
 </div>

@@ -1,7 +1,7 @@
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
-  <li><a href="#!">{{username}}</a></li>
-  <li><a href="#!">Change Password</a></li>
+  <li><a href="">{{username}}</a></li>
+  <li><a href="">Change Password</a></li>
   <li class="divider"></li>
   <li><a (click)="logout()">Logout</a></li>
 </ul>
@@ -9,9 +9,10 @@
   <div class="nav-wrapper">
     <div class="row">
       <div class="col s8 offset-s1">
-        <form class="navbar-form">
+        <form class="navbar-form" (submit)="search()">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Questions" name="srch-term" id="srch-term">
+            <input type="text" class="form-control" placeholder="Search Questions" name="srch-term" id="srch-term"
+                   [(ngModel)]="keyword">
           </div>
         </form>
       </div>

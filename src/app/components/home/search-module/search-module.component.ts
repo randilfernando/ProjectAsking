@@ -8,7 +8,8 @@ import {ModuleService} from "../../../services/module.service";
 })
 export class SearchModuleComponent implements OnInit {
 
-  private moduleList: Module[];
+  modulesList: Module[];
+  private message: string = 'Loading.....';
 
   constructor(private moduleService: ModuleService) { }
 

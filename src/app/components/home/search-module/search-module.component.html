@@ -1,3 +1,7 @@
-<p>
-  search-module works!
-</p>
+<div class="row container" style="padding-top: 20px">
+  <h5>Modules</h5>
+</div>
+<div class="row container" *ngIf="!modulesList">
+  <h5>{{message}}</h5>
+</div>
+<ask-modulesummarylist *ngIf="modulesList" [featuredModules]="modulesList"></ask-modulesummarylist>

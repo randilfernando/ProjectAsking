@@ -10,7 +10,7 @@ const APP_ROUTES: Routes = [
   {path: '', component: HomeComponent, children: HOME_ROUTES, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent},
-  {path: '**', redirectTo: '/'}
+  {path: '**', redirectTo: '/featured'}
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

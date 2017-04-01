@@ -1,0 +1,7 @@
+<div *ngIf="selectedModule" class="row container" style="padding-top: 20px">
+  <h5>{{selectedModule?.moduleCode}} - {{selectedModule?.moduleName}}</h5>
+</div>
+<div class="row container" *ngIf="!selectedModule">
+  <h5>{{message}}</h5>
+</div>
+<ask-question-list *ngIf="questionList" [questionList]="questionList"></ask-question-list>

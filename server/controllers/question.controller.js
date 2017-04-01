@@ -51,7 +51,7 @@ var getById = function (req, res) {
 };
 
 var getByModule = function (req, res) {
-  Question.find({'moduleId': req.params.id})
+  Question.find({'moduleCode': req.params.id})
     .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
     .exec()
     .then(function (questions) {

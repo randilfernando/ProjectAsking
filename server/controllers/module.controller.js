@@ -5,7 +5,19 @@ var get = function (req, res) {
 };
 
 var getById = function (req, res) {
-    res.send('Not implemented');
+  Module.findOne({'moduleCode': req.params.id})
+    .exec()
+    .then(function (module) {
+      res.status(200);
+      res.send(module);
+    })
+    .catch(function (err) {
+      res.status(404);
+      res.send({
+        message: 'Not found'
+      });
+      console.log('error: ', err);
+    });
 }
 
 var getByKeyword = function (req, res) {

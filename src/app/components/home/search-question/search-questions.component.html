@@ -1,0 +1,7 @@
+<div class="row container" style="padding-top: 20px">
+  <h5>Question List</h5>
+</div>
+<div class="row container" *ngIf="!questionList">
+  <h5>{{message}}</h5>
+</div>
+<ask-question-list *ngIf="questionList" [questionList]="questionList"></ask-question-list>

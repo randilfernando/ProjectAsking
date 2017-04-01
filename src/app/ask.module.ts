@@ -13,7 +13,7 @@ import { LoginFormComponent } from './shared/login-form/login-form.component';
 import { AboutusComponent } from './shared/about-us/aboutus.component';
 import { LoginheaderComponent } from './shared/header/loginheader.component';
 import { HomeComponent } from './components/home/home.component';
-import { RouterModule } from "@angular/router";
+import { RouterModule} from "@angular/router";
 import { SignUpFormComponent } from './shared/sign-up-form/sign-up-form.component';
 import { QuestionSummaryComponent } from './shared/question/question-summary.component';
 import { QuestionListComponent } from './shared/question/question-list.component';
@@ -26,8 +26,9 @@ import { ModuleService } from "./services/module.service";
 import { FeaturedComponent } from './components/home/featured/featured.component';
 import { QuestionService } from "./services/question.service";
 import { QuestionDescriptionComponent } from "./shared/question/question-description.component";
-import { AllQuestionsComponent } from "./components/home/question-list/all-questions.component";
+import { SearchQuestionsComponent } from "./components/home/search-question/search-questions.component";
 import { SearchModuleComponent } from './components/home/search-module/search-module.component';
+import { ModuleDetailsComponent } from './components/home/module-details/module-details.component';
 
 @NgModule({
   declarations: [
@@ -48,8 +49,9 @@ import { SearchModuleComponent } from './components/home/search-module/search-mo
     LoginComponent,
     SignUpComponent,
     FeaturedComponent,
-    AllQuestionsComponent,
-    SearchModuleComponent
+    SearchQuestionsComponent,
+    SearchModuleComponent,
+    ModuleDetailsComponent
   ],
   imports: [
     BrowserModule,
