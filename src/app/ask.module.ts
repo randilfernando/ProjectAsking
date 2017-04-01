@@ -13,16 +13,21 @@ import { LoginFormComponent } from './shared/login-form/login-form.component';
 import { AboutusComponent } from './shared/about-us/aboutus.component';
 import { LoginheaderComponent } from './shared/header/loginheader.component';
 import { HomeComponent } from './components/home/home.component';
-import {RouterModule} from "@angular/router";
-import { AddQuestionComponent } from './shared/question/question-description.component';
+import { RouterModule } from "@angular/router";
 import { SignUpFormComponent } from './shared/sign-up-form/sign-up-form.component';
 import { QuestionSummaryComponent } from './shared/question/question-summary.component';
 import { QuestionListComponent } from './shared/question/question-list.component';
 import { routing } from "./ask.routing";
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import {AuthenticationService} from "./services/authentication.service";
-import {AuthGuard} from "./guards/auth.guard";
+import { AuthenticationService } from "./services/authentication.service";
+import { AuthGuard } from "./guards/auth.guard";
+import { ModuleService } from "./services/module.service";
+import { FeaturedComponent } from './components/home/featured/featured.component';
+import { QuestionService } from "./services/question.service";
+import { QuestionDescriptionComponent } from "./shared/question/question-description.component";
+import { AllQuestionsComponent } from "./components/home/question-list/all-questions.component";
+import { SearchModuleComponent } from './components/home/search-module/search-module.component';
 
 @NgModule({
   declarations: [
@@ -36,12 +41,15 @@ import {AuthGuard} from "./guards/auth.guard";
     AboutusComponent,
     LoginheaderComponent,
     HomeComponent,
-    AddQuestionComponent,
+    QuestionDescriptionComponent,
     SignUpFormComponent,
     QuestionSummaryComponent,
     QuestionListComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    FeaturedComponent,
+    AllQuestionsComponent,
+    SearchModuleComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +60,8 @@ import {AuthGuard} from "./guards/auth.guard";
   ],
   providers: [
     AuthenticationService,
+    ModuleService,
+    QuestionService,
     AuthGuard
   ],
   bootstrap: [AskComponent]

@@ -2,29 +2,39 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
-import {Router} from "@angular/router";
+import {User} from "../types/user.type";
 
 @Injectable()
 export class AuthenticationService {
-  public token: string;
+  private storage = localStorage;
 
-  constructor(private http: Http, private router: Router) {
+  public token: string;
+  public username: string;
+
+  constructor(private http: Http) {
     // set token if saved in local storage
-    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    var currentUser = JSON.parse(this.storage.getItem('currentUser'));
     this.token = currentUser && currentUser.token;
+    this.username = currentUser && currentUser.username;
   }
 
-  login(email: string, password: string): Observable<boolean> {
-    return this.http.post('/api/user/login', JSON.stringify({ email: email, password: password }))
+  login(user: User): Observable<boolean> {
+    return this.http.post('/api/user/login', {"email": user.email, "password": user.password})
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let token = response.json() && response.json().token;
+
         if (token) {
           // set token property
           this.token = token;
+          user.token = token;
+          let username = response.json() && response.json().username;
+          this.username = username;
+          user.username = username;
 
+          user.password = '';
           // store username and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify({ email: email, token: token }));
+          this.storage.setItem('currentUser', JSON.stringify(user));
 
           // return true to indicate successful login
           return true;
@@ -35,9 +45,25 @@ export class AuthenticationService {
       });
   }
 
+  register(user: User): Observable<boolean>{
+    return this.http.post('/api/user/register', {"email": user.email, "username": user.username, "password": user.password})
+      .map((response: Response) => {
+        if (response.status == 200) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+  }
+
   logout(): void {
     // clear token remove user from local storage to log user out
     this.token = null;
-    localStorage.removeItem('currentUser');
+    this.username = null;
+    this.storage.removeItem('currentUser');
+  }
+
+  getloggedOnUser(): User{
+    return JSON.parse(this.storage.getItem('currentUser'));
   }
 }

@@ -1,4 +1,4 @@
-var env = process.env.NODE_ENV || "development"; //To change the environment ("development", "production")
+var env = process.env.NODE_ENV || "development"; //to change the environment ("development", "production")
 
 var config = {
     development: {
@@ -8,7 +8,9 @@ var config = {
         server: {
             host: process.env.host || 'localhost',
             port: process.env.port || '5000'
-        }
+        },
+        //morgan
+        morganMode: 'dev'
     },
     production: {
         //mongodb connection settings
@@ -17,7 +19,9 @@ var config = {
         server: {
             host: process.env.host || 'localhost',
             port: process.env.port || '5000'
-        }
+        },
+        //morgan
+        morganMode: 'common'
     }
 };
 

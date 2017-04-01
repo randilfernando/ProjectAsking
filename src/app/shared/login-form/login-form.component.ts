@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
-import {User} from "../../models/user.model";
+import {User} from "../../types/user.type";
 
 @Component({
   selector: 'ask-login-form',
   templateUrl: 'login-form.component.html'
 })
 export class LoginFormComponent implements OnInit {
-  private model: User;
+  user: User = {email: '', password: '', username: '', token: ''};
 
-  constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     // reset login status
@@ -20,12 +18,12 @@ export class LoginFormComponent implements OnInit {
   }
 
   login() {
-    this.authenticationService.login(this.model.email, this.model.password)
+    this.authenticationService.login(this.user)
       .subscribe(result => {
-        if (result === true) {
-          // login successful
+        if(result){
           this.router.navigate(['/featured']);
         }
+        return result;
       });
   }
 

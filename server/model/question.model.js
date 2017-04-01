@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var answerModel = require('./answer.model');
+var answerModel = require('./answer.model').Answer;
 
 var questionModel = new Schema({
     title: {type:String, required:true, trim:true, text:true},
     submittedBy: {type:String, required:true},
-    totalRating: {type:Number, default:0},
+    totalRatings: {type:Number, default:0},
     totalAnswers: {type:Number, default:0},
-    moduleId: {type:String, required:true},
+    moduleCode: {type:String, required:true, sparse:true},
     moduleName: {type:String, trim:true, required:true},
     tags: [],
     description: {type:String, trim:true},

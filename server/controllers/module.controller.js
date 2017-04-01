@@ -1,4 +1,4 @@
-var Module = require('./../model/module.model');
+var Module = require('./../model/module.model').Module;
 
 var get = function (req, res) {
     res.send('Not implemented');
@@ -12,8 +12,41 @@ var getByKeyword = function (req, res) {
     res.send('Not implemented');
 };
 
+var getFeatured = function (req, res) {
+    Module.find({},null,{
+      skip: 0,
+      limit: 5,
+      sort: { totalQuestions: -1 }
+    })
+      .exec()
+      .then(function (modules) {
+        res.status(200);
+        res.send(modules);
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send({
+          "message": "Internal server error"
+        });
+      })
+}
+
 var add = function (req, res) {
-    res.send('Not implemented');
+  var module = new Module(req.body);
+  module.save()
+    .then(function () {
+      res.status(200);
+      res.send({
+        message: 'Success'
+      });
+    })
+    .catch(function (err) {
+      res.status(500);
+      res.send({
+        message: 'Internal server error'
+      });
+      console.log('error: ', err);
+    });
 };
 
 var update = function (req, res) {
@@ -32,6 +65,7 @@ module.exports = {
     get: get,
     getById: getById,
     getByKeyword: getByKeyword,
+    getFeatured: getFeatured,
     add: add,
     update: update,
     patch: patch,

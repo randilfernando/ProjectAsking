@@ -2,7 +2,7 @@ var Question = require('./../model/question.model').Question;
 
 var get = function (req, res) {
     Question.find({})
-        .select('_id title moduleName submittedBy rating totalAnswers tags')
+        .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
         .exec()
         .then(function (questions) {
             res.status(200);
@@ -19,7 +19,7 @@ var get = function (req, res) {
 
 var getByKeyword = function (req, res) {
     Question.find({$text: {$search: req.params.keyword}})
-        .select('_id title moduleName submittedBy rating totalAnswers tags')
+        .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
         .exec()
         .then(function (questions) {
             res.status(200);
@@ -51,8 +51,19 @@ var getById = function (req, res) {
 };
 
 var getByModule = function (req, res) {
-    res.send({
-        message: 'Method not implemented'
+  Question.find({'moduleId': req.params.id})
+    .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
+    .exec()
+    .then(function (questions) {
+      res.status(200);
+      res.send(questions);
+    })
+    .catch(function (err) {
+      res.status(500);
+      res.send({
+        message: 'Internal server error'
+      });
+      console.log('error: ', err);
     });
 };
 
@@ -88,7 +99,8 @@ var update = function (req, res) {
             question.submittedBy = req.body.submittedBy;
             question.rating = req.body.rating;
             question.totalAnswers = req.body.totalAnswers;
-            question.module = req.body.module;
+            question.moduleCode = req.body.moduleCode;
+            question.moduleName = req.body.moduleName;
             question.tags = req.body.tags;
             question.description = req.body.description;
 

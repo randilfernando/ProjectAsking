@@ -5,7 +5,7 @@ import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy} from 
   templateUrl: 'question-description.component.html',
   styles: []
 })
-export class AddQuestionComponent implements AfterViewInit, OnDestroy{
+export class QuestionDescriptionComponent implements AfterViewInit, OnDestroy{
 
   @Output() onEditorKeyup = new EventEmitter<any>();
 

@@ -3,12 +3,12 @@
     <form id="loginForm" (submit)="login()" class="col s6 offset-s3 z-depth-2" style="padding: 30px 50px;">
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" class="validate" [(ngModel)]="model.email">
+          <input id="email" type="email" class="validate" [(ngModel)]="user.email" name="email">
           <label for="email">Email</label>
         </div>
 
         <div class="input-field col s12">
-          <input id="password" type="password" class="validate" [(ngModel)]="model.password">
+          <input id="password" type="password" class="validate" [(ngModel)]="user.password" name="password">
           <label for="password">Password</label>
         </div>
       </div>
@@ -16,7 +16,7 @@
         <button class="btn waves-effect waves-light center" type="submit" name="action" style="width: 100%">Login
         </button><br><br>
         <a href="#!" class="left"><u>Forgot password</u></a>
-        <a [routerLink]="['/sign-up']" class="right"><u>Sign Up</u></a>
+        <a [routerLink]="['/sign-up']" class="right" href="javascript:void(0);"><u>Sign Up</u></a>
       </div>
     </form>
   </div>

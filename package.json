@@ -7,7 +7,7 @@
   "main": "index.js",
   "scripts": {
     "ng": "ng",
-    "start": "ng build&&node server",
+    "start": "ng build&&node server/server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -31,20 +31,22 @@
     "@angular/platform-browser": "^2.4.0",
     "@angular/platform-browser-dynamic": "^2.4.0",
     "@angular/router": "^3.4.0",
-    "core-js": "^2.4.1",
-    "rxjs": "^5.1.0",
-    "tinymce": "^4.5.5",
-    "zone.js": "^0.7.6",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "cookieparser": "^0.1.0",
+    "core-js": "^2.4.1",
     "express": "^4.15.2",
     "express-jwt": "^5.1.0",
     "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.9.0",
+    "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "serve-favicon": "^2.4.2"
+    "rxjs": "^5.1.0",
+    "serve-favicon": "^2.4.2",
+    "socket.io": "^1.7.3",
+    "tinymce": "^4.5.5",
+    "zone.js": "^0.7.6"
   },
   "devDependencies": {
     "@angular/cli": "1.0.0-rc.1",
@@ -60,10 +62,10 @@
     "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "nodemon": "^1.11.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.4.2",
-    "typescript": "~2.0.0",
-    "nodemon": "^1.11.0"
+    "typescript": "~2.0.0"
   }
 }

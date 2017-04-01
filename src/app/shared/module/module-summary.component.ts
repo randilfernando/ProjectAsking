@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {Module} from "./module";
+import {Module} from "../../types/module.type";
 
 @Component({
   selector: 'ask-module-summary',
@@ -7,7 +7,7 @@ import {Module} from "./module";
 })
 export class ModuleSummaryComponent implements OnInit {
   @Input()
-  module = Module;
+  module: Module;
 
   constructor() { }
 

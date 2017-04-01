@@ -8,4 +8,4 @@ var answerModel = new Schema({
     submittedBy: {type:String, required:true, trim:true}
 });
 
-module.exports = answerModel;
+module.exports.Answer = answerModel;

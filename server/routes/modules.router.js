@@ -8,6 +8,9 @@ moduleRouter.route('')
     .post(moduleController.add)
     .delete(moduleController.del);
 
+moduleRouter.route('/featured')
+    .get(moduleController.getFeatured);
+
 moduleRouter.route('/:id')
     .get(moduleController.getById)
     .put(moduleController.update)
