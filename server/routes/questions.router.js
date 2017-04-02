@@ -1,5 +1,6 @@
 var express = require('express');
-var questionsController = require('./../controllers/question.controller.js');
+var Question = require('./../model/question.model').Question;
+var questionsController = require('./../controllers/question.controller.js')(Question);
 
 var questionRouter = express.Router();
 

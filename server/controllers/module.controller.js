@@ -1,30 +1,30 @@
-var Module = require('./../model/module.model').Module;
+var moduleController = function (Module) {
 
-var get = function (req, res) {
+  var get = function (req, res) {
     res.send('Not implemented');
-};
+  };
 
-var getById = function (req, res) {
-  Module.findOne({'moduleCode': req.params.id})
-    .exec()
-    .then(function (module) {
-      res.status(200);
-      res.send(module);
-    })
-    .catch(function (err) {
-      res.status(404);
-      res.send({
-        message: 'Not found'
+  var getById = function (req, res) {
+    Module.findOne({'moduleCode': req.params.id})
+      .exec()
+      .then(function (module) {
+        res.status(200);
+        res.send(module);
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send({
+          message: 'Not found'
+        });
+        console.log('error: ', err);
       });
-      console.log('error: ', err);
-    });
-}
+  }
 
-var getByKeyword = function (req, res) {
+  var getByKeyword = function (req, res) {
     res.send('Not implemented');
-};
+  };
 
-var getFeatured = function (req, res) {
+  var getFeatured = function (req, res) {
     Module.find({},null,{
       skip: 0,
       limit: 5,
@@ -41,39 +41,39 @@ var getFeatured = function (req, res) {
           "message": "Internal server error"
         });
       })
-}
+  }
 
-var add = function (req, res) {
-  var module = new Module(req.body);
-  module.save()
-    .then(function () {
-      res.status(200);
-      res.send({
-        message: 'Success'
+  var add = function (req, res) {
+    var module = new Module(req.body);
+    module.save()
+      .then(function () {
+        res.status(200);
+        res.send({
+          message: 'Success'
+        });
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send({
+          message: 'Internal server error'
+        });
+        console.log('error: ', err);
       });
-    })
-    .catch(function (err) {
-      res.status(500);
-      res.send({
-        message: 'Internal server error'
-      });
-      console.log('error: ', err);
-    });
-};
+  };
 
-var update = function (req, res) {
+  var update = function (req, res) {
     res.send('Not implemented');
-}
+  }
 
-var patch = function (req, res) {
+  var patch = function (req, res) {
     res.send('Not implemented');
-};
+  };
 
-var del = function (req, res) {
+  var del = function (req, res) {
     res.send('Not implemented');
-};
+  };
 
-module.exports = {
+  return {
     get: get,
     getById: getById,
     getByKeyword: getByKeyword,
@@ -82,4 +82,8 @@ module.exports = {
     update: update,
     patch: patch,
     del: del
-}
+  };
+
+};
+
+module.exports = moduleController;

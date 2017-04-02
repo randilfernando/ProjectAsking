@@ -1,5 +1,6 @@
 var express = require('express');
-var moduleController = require('./../controllers/module.controller.js');
+var Module = require('./../model/module.model').Module;
+var moduleController = require('./../controllers/module.controller.js')(Module);
 
 var moduleRouter = express.Router();
 

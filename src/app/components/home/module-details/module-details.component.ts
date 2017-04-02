@@ -14,7 +14,7 @@ export class ModuleDetailsComponent implements OnInit {
 
   selectedModule: Module;
   questionList: Question[];
-  private message: string;
+  private message: string = 'Loading';
 
   constructor(private moduleService: ModuleService, private questionService: QuestionService, private activatedRoute: ActivatedRoute) { }
 

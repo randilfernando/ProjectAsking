@@ -5,14 +5,7 @@ import {Router} from "@angular/router";
 
 @Component({
   selector: 'ask-sign-up-form',
-  templateUrl: 'sign-up-form.component.html',
-  styles: [`
-      .btn-cancel{
-        background-color: white;
-        color: #1565c0;
-        border: 1px solid #1565c0;
-      }
-  `]
+  templateUrl: 'sign-up-form.component.html'
 })
 export class SignUpFormComponent implements OnInit {
   private user: User = {email: '', password: '', username: '', token: ''};

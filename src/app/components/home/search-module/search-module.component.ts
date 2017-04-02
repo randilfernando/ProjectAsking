@@ -11,10 +11,17 @@ export class SearchModuleComponent implements OnInit {
   modulesList: Module[];
   private message: string = 'Loading.....';
 
-  constructor(private moduleService: ModuleService) { }
-
-  ngOnInit() {
-
+  constructor(private moduleService: ModuleService) {
   }
 
+  ngOnInit() {
+    this.moduleService.loadModules()
+      .subscribe(result => {
+        if (result) {
+          this.modulesList = this.moduleService.getModules();
+        } else {
+          this.message = 'Sorry no modules.'
+        }
+      });
+  }
 }

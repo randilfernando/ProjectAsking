@@ -4,22 +4,22 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var morgan = require('morgan');
-var config = require('./config/config').config;
+var serverConfig = require('./config/server.config').development;
 var apiRouter = require('./routes/api.router.js');
 
-const SERVER_HOST = config.server.host;
-const SERVER_PORT = config.server.port;
-const MONGO_STRING = config.database;
+const SERVER_HOST = serverConfig.host;
+const SERVER_PORT = serverConfig.port;
+const MONGO_STRING = require('./config/database.config').development;
 
 //configure passport
-require('./config/passport');
+require('./config/passport.config')(passport);
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(MONGO_STRING);
 
 var app = express();
 app.use(bodyParser.json());
-app.use(morgan(config.morganMode));
+app.use(morgan(serverConfig.morganMode));
 app.use(passport.initialize());
 
 // point static path to client

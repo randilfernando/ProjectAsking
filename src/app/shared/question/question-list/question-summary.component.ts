@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Question} from "../../types/question.type";
-import {QuestionService} from "../../services/question.service";
+import {Question} from "../../../types/question.type";
+import {QuestionService} from "../../../services/question.service";
 
 @Component({
   selector: 'ask-question-summary',

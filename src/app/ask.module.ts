@@ -15,8 +15,8 @@ import { LoginheaderComponent } from './shared/header/loginheader.component';
 import { HomeComponent } from './components/home/home.component';
 import { RouterModule} from "@angular/router";
 import { SignUpFormComponent } from './shared/sign-up-form/sign-up-form.component';
-import { QuestionSummaryComponent } from './shared/question/question-summary.component';
-import { QuestionListComponent } from './shared/question/question-list.component';
+import { QuestionSummaryComponent } from './shared/question/question-list/question-summary.component';
+import { QuestionListComponent } from './shared/question/question-list/question-list.component';
 import { routing } from "./ask.routing";
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -29,6 +29,9 @@ import { QuestionDescriptionComponent } from "./shared/question/question-descrip
 import { SearchQuestionsComponent } from "./components/home/search-question/search-questions.component";
 import { SearchModuleComponent } from './components/home/search-module/search-module.component';
 import { ModuleDetailsComponent } from './components/home/module-details/module-details.component';
+import { AddQuestionComponent } from './components/home/add-question/add-question.component';
+import { QuestionHeaderComponent } from './shared/question/question-header.component';
+import { QuestionFooterComponent } from './shared/question/question-footer.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { ModuleDetailsComponent } from './components/home/module-details/module-
     FeaturedComponent,
     SearchQuestionsComponent,
     SearchModuleComponent,
-    ModuleDetailsComponent
+    ModuleDetailsComponent,
+    AddQuestionComponent,
+    QuestionHeaderComponent,
+    QuestionFooterComponent
   ],
   imports: [
     BrowserModule,

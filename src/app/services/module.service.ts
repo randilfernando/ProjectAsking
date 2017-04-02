@@ -50,7 +50,7 @@ export class ModuleService {
       });
   }
 
-  getFeaturedModules(): Module[]{
+  getModules(): Module[]{
     return this.moduleList;
   }
 

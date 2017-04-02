@@ -1,24 +1,21 @@
 var mongoose = require('mongoose');
-var crypto = require('crypto');
+var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var Schema = mongoose.Schema;
-var config = require('./../config/config');
+var secretKey = require('./../config/security.config').secretKey;
 
 var userModel = new Schema({
     name: {type: String, required: true},
     email: {type: String, unique: true, required: true},
-    hash: String,
-    salt: String
+    password: String
 });
 
 userModel.methods.setPassword = function(password){
-    this.salt = crypto.randomBytes(16).toString('hex');
-    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha1').toString('hex');
+    this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
 userModel.methods.validPassword = function(password) {
-    var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha1').toString('hex');
-    return this.hash === hash;
+  return bcrypt.compareSync(password, this.password);
 };
 
 userModel.methods.generateJwt = function() {
@@ -30,7 +27,7 @@ userModel.methods.generateJwt = function() {
         email: this.email,
         name: this.name,
         exp: parseInt(expiry.getTime() / 1000),
-    }, config.secretKey.key);
+    }, secretKey);
 };
 
 module.exports.User = mongoose.model("User", userModel);

@@ -17,7 +17,7 @@ export class FeaturedComponent implements OnInit {
     this.moduleService.loadFeaturedModules()
       .subscribe(result => {
         if(result){
-          this.modulesList = this.moduleService.getFeaturedModules();
+          this.modulesList = this.moduleService.getModules();
         }else{
           this.message = 'Sorry no modules.'
         }

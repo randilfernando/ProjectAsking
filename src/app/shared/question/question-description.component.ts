@@ -1,9 +1,8 @@
 import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy} from '@angular/core';
 
 @Component({
-  selector: 'ask-add-question',
-  templateUrl: 'question-description.component.html',
-  styles: []
+  selector: 'ask-question-description',
+  templateUrl: 'question-description.component.html'
 })
 export class QuestionDescriptionComponent implements AfterViewInit, OnDestroy{
 
