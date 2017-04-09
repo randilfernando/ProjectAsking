@@ -25,13 +25,12 @@ import { AuthGuard } from "./guards/auth.guard";
 import { ModuleService } from "./services/module.service";
 import { FeaturedComponent } from './components/home/featured/featured.component';
 import { QuestionService } from "./services/question.service";
-import { QuestionDescriptionComponent } from "./shared/question/question-description.component";
+import { QuestionDescriptionComponent } from "./shared/question/question-add/question-description.component";
 import { SearchQuestionsComponent } from "./components/home/search-question/search-questions.component";
 import { SearchModuleComponent } from './components/home/search-module/search-module.component';
 import { ModuleDetailsComponent } from './components/home/module-details/module-details.component';
 import { AddQuestionComponent } from './components/home/add-question/add-question.component';
-import { QuestionHeaderComponent } from './shared/question/question-header.component';
-import { QuestionFooterComponent } from './shared/question/question-footer.component';
+import { QuestionDetailsComponent } from './shared/question/question-add/question-details.component';
 
 @NgModule({
   declarations: [
@@ -56,8 +55,7 @@ import { QuestionFooterComponent } from './shared/question/question-footer.compo
     SearchModuleComponent,
     ModuleDetailsComponent,
     AddQuestionComponent,
-    QuestionHeaderComponent,
-    QuestionFooterComponent
+    QuestionDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,19 @@
 var moduleController = function (Module) {
 
   var get = function (req, res) {
-    res.send('Not implemented');
+    Module.find({})
+      .select('_id moduleCode moduleName totalQuestions')
+      .exec()
+      .then(function (modules) {
+        res.status(200);
+        res.send(modules);
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send({
+          "message": "Internal server error"
+        });
+      })
   };
 
   var getById = function (req, res) {
@@ -30,6 +42,7 @@ var moduleController = function (Module) {
       limit: 5,
       sort: { totalQuestions: -1 }
     })
+      .select('_id moduleCode moduleName totalQuestions')
       .exec()
       .then(function (modules) {
         res.status(200);

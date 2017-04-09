@@ -25,7 +25,7 @@ export class ModuleDetailsComponent implements OnInit {
   }
 
   getModuleDetails(id: number){
-    this.moduleService.loadModule(id)
+    this.moduleService.loadTopics(id)
       .subscribe(result => {
         if(result){
           this.selectedModule = this.moduleService.getSelectedModule();

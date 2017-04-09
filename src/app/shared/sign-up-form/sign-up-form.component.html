@@ -1,29 +1,56 @@
 <div class="container" style="padding-bottom: 50px">
   <div class="row" style="padding-top: 50px;">
-    <form id="signUpForm" (submit)="register()" class="col s6 offset-s3 z-depth-2" style="padding: 30px 50px;">
+    <form id="signUpForm" (ngSubmit)="register()" class="col s6 offset-s3 z-depth-2" style="padding: 30px 50px;" #f="ngForm">
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" class="validate" [(ngModel)]="user.email" name="email">
+          <input id="email"
+                 type="email"
+                 class="validate"
+                 [(ngModel)]="user.email"
+                 name="email"
+                 mgModel
+                 required
+                 pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+          >
           <label for="email">Email</label>
         </div>
 
         <div class="input-field col s12">
-          <input id="username" type="text" class="validate" [(ngModel)]="user.username" name="username">
+          <input id="username"
+                 type="text"
+                 class="validate"
+                 [(ngModel)]="user.username"
+                 name="username"
+                 ngModel
+                 required
+          >
           <label for="username">Username</label>
         </div>
 
         <div class="input-field col s12">
-          <input id="password" type="password" class="validate" [(ngModel)]="user.password" name="password">
+          <input id="password"
+                 type="password"
+                 class="validate"
+                 [(ngModel)]="user.password"
+                 name="password"
+                 ngModel
+                 required
+          >
           <label for="password">Password</label>
         </div>
 
         <div class="input-field col s12">
-          <input id="confirmPassword" type="password" class="validate" name="confirmPassword">
+          <input id="confirmPassword"
+                 type="password"
+                 class="validate"
+                 name="confirmPassword"
+                 required
+          >
           <label for="confirmPassword">Confirm Password</label>
         </div>
       </div>
       <div class="row" style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px">
-        <button class="btn waves-effect waves-light center grey darken-1" type="button" name="cancel" style="width: 100%">Cancel</button>
+        <button [routerLink]="['/']" class="btn waves-effect waves-light center grey darken-1" type="button" name="cancel" style="width: 100%">Cancel</button>
       </div>
       <div class="row" style="padding-left: 10px; padding-right: 10px;">
         <button class="btn waves-effect waves-light center" type="submit" name="action" style="width: 100%">Submit</button>

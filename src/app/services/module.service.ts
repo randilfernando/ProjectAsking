@@ -37,7 +37,7 @@ export class ModuleService {
       });
   }
 
-  loadModule(moduleCode: number): Observable<boolean>{
+  loadTopics(moduleCode: number): Observable<boolean>{
     return this.http.get(`/api/module/${moduleCode}`)
       .map((response: Response) => {
         let message = response.json() && response.json().message;
