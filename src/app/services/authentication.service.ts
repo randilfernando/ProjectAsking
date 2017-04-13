@@ -19,7 +19,10 @@ export class AuthenticationService {
   }
 
   login(user: User): Observable<boolean> {
-    return this.http.post('/api/user/login', {"email": user.email, "password": user.password})
+    return this.http.post('/api/user/login', {
+      "email": user.email,
+      "password": user.password
+    })
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let token = response.json() && response.json().token;
@@ -46,7 +49,11 @@ export class AuthenticationService {
   }
 
   register(user: User): Observable<boolean>{
-    return this.http.post('/api/user/register', {"email": user.email, "username": user.username, "password": user.password})
+    return this.http.post('/api/user/register', {
+      "email": user.email,
+      "username": user.username,
+      "password": user.password
+    })
       .map((response: Response) => {
         if (response.status == 200) {
           return true;

@@ -20,20 +20,7 @@ export class ModuleDetailsComponent implements OnInit {
 
   ngOnInit() {
     let id = this.activatedRoute.snapshot.params['id'];
-    this.getModuleDetails(id);
     this.getQuestions(id);
-  }
-
-  getModuleDetails(id: number){
-    this.moduleService.loadTopics(id)
-      .subscribe(result => {
-        if(result){
-          this.selectedModule = this.moduleService.getSelectedModule();
-        }else{
-          this.selectedModule = null;
-          this.message = 'Sorry no such module.'
-        }
-      });
   }
 
   getQuestions(id: number){

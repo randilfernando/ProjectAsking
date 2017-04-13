@@ -2,8 +2,10 @@ export interface Question {
   _id: string;
   title: string;
   moduleCode: string;
-  moduleName: number;
+  moduleName: string;
+  description: string;
+  tags: string[];
   totalAnswers: number;
   totalRatings: number;
-  tags: string[];
+  submittedBy: string;
 }

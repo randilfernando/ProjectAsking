@@ -74,6 +74,7 @@ var questionController = function (Question) {
 
   var add = function (req, res) {
     var question = new Question(req.body);
+    console.log(question);
     question.save()
       .then(function () {
         res.status(200);

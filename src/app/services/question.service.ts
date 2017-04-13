@@ -10,7 +10,14 @@ export class QuestionService {
   constructor(private http: Http){}
 
   addQuestion(question:Question): Observable<boolean> {
-    return this.http.post('api/question', JSON.stringify(question))
+    return this.http.post('/api/question', {
+      "title": question.title,
+      "moduleCode": question.moduleCode,
+      "moduleName": question.moduleName,
+      "description": question.description,
+      "submittedBy": question.submittedBy,
+      "tags": question.tags
+    })
       .map( (response: Response) => {
         let status = response.status;
         // get modules if successful
@@ -18,7 +25,7 @@ export class QuestionService {
           return true;
         }
         return false;
-      })
+      });
   }
 
   loadQuestions(): Observable<boolean>{

@@ -9,7 +9,7 @@
   <div class="nav-wrapper">
     <div class="row">
       <div class="col s8 offset-s1">
-        <form class="navbar-form" (submit)="search()">
+        <form class="navbar-form" (ngSubmit)="search()">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search Questions" name="srch-term" id="srch-term"
                    [(ngModel)]="keyword">

@@ -31,6 +31,7 @@ import { SearchModuleComponent } from './components/home/search-module/search-mo
 import { ModuleDetailsComponent } from './components/home/module-details/module-details.component';
 import { AddQuestionComponent } from './components/home/add-question/add-question.component';
 import { QuestionDetailsComponent } from './shared/question/question-add/question-details.component';
+import { InputErrorComponent } from './shared/messages/input-error/input-error.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { QuestionDetailsComponent } from './shared/question/question-add/questio
     SearchModuleComponent,
     ModuleDetailsComponent,
     AddQuestionComponent,
-    QuestionDetailsComponent
+    QuestionDetailsComponent,
+    InputErrorComponent
   ],
   imports: [
     BrowserModule,

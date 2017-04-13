@@ -37,7 +37,7 @@ export class ModuleService {
       });
   }
 
-  loadTopics(moduleCode: number): Observable<boolean>{
+  loadModule(moduleCode: string): Observable<boolean>{
     return this.http.get(`/api/module/${moduleCode}`)
       .map((response: Response) => {
         let message = response.json() && response.json().message;
@@ -48,6 +48,10 @@ export class ModuleService {
         }
         return false;
       });
+  }
+
+  addModule(module: Module): Observable<boolean>{
+    return new Observable();
   }
 
   getModules(): Module[]{

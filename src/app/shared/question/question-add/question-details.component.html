@@ -1,47 +1,50 @@
 <div class="row">
-  <div class="input-field col s12">
-    <input type="text" placeholder="Search for module" id="module" class="autocomplete">
-    <label for="module">Module</label>
-  </div>
-</div>
-<div class="row">
-  <div class="input-field col s12">
-    <select id="topic">
-      <option value="" disabled selected>Choose your option</option>
-      <option *ngFor="let topic of topicList" value="{{topic}}">{{topic}}</option>
-    </select>
-    <label>Topic</label>
-  </div>
-</div>
-<div class="row">
-  <div class="input-field col s12">
-    <input placeholder="Add your question title here..." id="question" type="text" class="validate">
-    <label for="question">Question</label>
-  </div>
+  <form id="moduleSearchForm" (ngSubmit)="loadSelectedModule(moduleName.value)" method="post">
+    <div class="input-field col s12">
+      <input type="text" placeholder="Search for module" id="moduleSearch" class="autocomplete"
+             name="moduleSearch" autocomplete="off" #moduleName>
+      <label for="moduleSearch">Module</label>
+    </div>
+  </form>
 </div>
 
-<ask-question-description></ask-question-description>
-
-<div class="row">
-  <div class="chips chips-placeholder"></div>
-  <!--<div class="chip" *ngFor="let tag of tags">-->
-    <!--{{tag}}-->
-    <!--<i class="close material-icons" (click)="removeTag(tag)">close</i>-->
-  <!--</div>-->
-  <!--<form class="col s3" (submit)="addTag()">-->
-    <!--<div class="input-group">-->
-      <!--<input type="text" class="form-control" placeholder="+tag" name="tag_name" id="tag_name"-->
-             <!--[(ngModel)]="editingTag">-->
-    <!--</div>-->
-  <!--</form>-->
-</div>
-<div class="row">
-  <div class="col s6">
-    <button class="btn waves-effect waves-light center grey darken-1" type="button" name="cancel" style="width: 100%" (click)="printTags()">
-      Cancel
-    </button>
+<form (ngSubmit)="submitQuestion()">
+  <div class="row">
+    <div class="input-field col s12">
+      <select id="topic" (click)="loadSelectedModule(moduleName.value)" name="topic">
+        <option value="" disabled selected>Choose your option</option>
+        <option *ngFor="let topic of selectedModule?.topics" value="{{topic}}">{{topic}}</option>
+      </select>
+      <label>Topic</label>
+    </div>
   </div>
-  <div class="col s6">
-    <button class="btn waves-effect waves-light center" type="submit" name="action" style="width: 100%">Submit</button>
+  <div class="row">
+    <div class="input-field col s12">
+      <input placeholder="Add your question title here..." id="title" type="text" required
+             [(ngModel)]="question.title" name="title">
+      <label for="title">Question</label>
+    </div>
   </div>
-</div>
+  <div class="input-field col s12">
+    <ask-question-description (onEditorKeyup)="question.description = $event"></ask-question-description>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <div class="chips chips-placeholder"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field">
+      <div class="col s6">
+        <button class="btn waves-effect waves-light center grey darken-1" type="button" name="cancel" style="width: 100%">
+          Cancel
+        </button>
+      </div>
+      <div class="col s6">
+        <button class="btn waves-effect waves-light center" type="submit" name="submit" style="width: 100%">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
