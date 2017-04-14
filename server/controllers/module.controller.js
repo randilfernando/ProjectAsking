@@ -20,13 +20,20 @@ var moduleController = function (Module) {
     Module.findOne({'moduleCode': req.params.id})
       .exec()
       .then(function (module) {
-        res.status(200);
-        res.send(module);
+        if (module){
+          res.status(200);
+          res.send(module);
+        }else{
+          res.status(404);
+          res.send({
+            message: 'Module not found'
+          });
+        }
       })
       .catch(function (err) {
-        res.status(404);
+        res.status(500);
         res.send({
-          message: 'Not found'
+          message: 'Internal server error'
         });
         console.log('error: ', err);
       });

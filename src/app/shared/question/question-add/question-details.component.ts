@@ -17,6 +17,8 @@ export class QuestionDetailsComponent implements OnInit, AfterViewInit {
     _id: '', title: '', moduleCode: '', moduleName: '', description: '', tags: [], totalRatings: 0, totalAnswers: 0, submittedBy: ''
   };
 
+  private hasError: boolean = false;
+
   constructor(private moduleService: ModuleService, private questionService: QuestionService) {
   }
 
@@ -39,21 +41,26 @@ export class QuestionDetailsComponent implements OnInit, AfterViewInit {
   }
 
   submitQuestion(){
-    this.question.moduleCode = this.selectedModule.moduleCode;
-    this.question.moduleName = this.selectedModule.moduleName;
-    this.question.submittedBy = 'Randil Fernando'; //can remove after authentication implemented
-    let chips = $('.chips-placeholder').material_chip('data');
-    for (let chip of chips){
-      this.question.tags.push(chip.tag);
-    }
-    console.log(this.question);
-    this.questionService.addQuestion(this.question).subscribe(
-      (result) => {
-        if(result){
-          console.log('Success');
-        }
+    if (this.selectedModule == null){
+      this.hasError = true;
+    }else{
+      this.hasError = false;
+      this.question.moduleCode = this.selectedModule.moduleCode;
+      this.question.moduleName = this.selectedModule.moduleName;
+      this.question.submittedBy = 'Randil Fernando'; //can remove after authentication implemented
+      let chips = $('.chips-placeholder').material_chip('data');
+      for (let chip of chips){
+        this.question.tags.push(chip.tag);
       }
-    );
+      console.log(this.question);
+      this.questionService.addQuestion(this.question).subscribe(
+        (result) => {
+          if(result){
+            console.log('Success');
+          }
+        }
+      );
+    }
   }
 
   ngOnInit() {
@@ -70,12 +77,16 @@ export class QuestionDetailsComponent implements OnInit, AfterViewInit {
           }
 
           $(document).ready(function () {
+            $('.modal').modal();
             $('select').material_select();
 
             $('#moduleSearch').autocomplete({
               data: item,
               limit: 20,
-              minLength: 1
+              minLength: 1,
+              onAutocomplete: function(){
+                $('#load_topics').click();
+              }
             });
 
             $('.chips-placeholder').material_chip({

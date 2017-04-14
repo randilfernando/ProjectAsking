@@ -3,5 +3,6 @@
 //   id: string;
 // };
 
-declare var tinymce: any;
+declare let tinymce: any;
 declare let $: any;
+declare let Materialize: any;

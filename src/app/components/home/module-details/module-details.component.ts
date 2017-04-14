@@ -20,7 +20,21 @@ export class ModuleDetailsComponent implements OnInit {
 
   ngOnInit() {
     let id = this.activatedRoute.snapshot.params['id'];
+    this.getModule(id);
     this.getQuestions(id);
+  }
+
+  getModule(id: string){
+    this.moduleService.loadModule(id)
+      .subscribe( result => {
+        if(result){
+          this.selectedModule = this.moduleService.getSelectedModule();
+        }else{
+          this.selectedModule = null;
+          this.message = 'No such Module...'
+        }
+      }
+    );
   }
 
   getQuestions(id: number){
@@ -29,7 +43,8 @@ export class ModuleDetailsComponent implements OnInit {
         if(result){
           this.questionList = this.questionService.getQuestionList();
         }else{
-          this.questionService = null;
+          this.questionList = null;
+          this.message = 'No questions submitted...'
         }
       });
   }

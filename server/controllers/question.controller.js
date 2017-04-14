@@ -41,7 +41,7 @@ var questionController = function (Question) {
         res.send(question);
       })
       .catch(function (err) {
-        res.status(404);
+        res.status(500);
         res.send({
           message: 'Question not found'
         });

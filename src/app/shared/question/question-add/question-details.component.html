@@ -1,14 +1,23 @@
-<div class="row">
-  <form id="moduleSearchForm" (ngSubmit)="loadSelectedModule(moduleName.value)" method="post">
-    <div class="input-field col s12">
-      <input type="text" placeholder="Search for module" id="moduleSearch" class="autocomplete"
-             name="moduleSearch" autocomplete="off" #moduleName>
-      <label for="moduleSearch">Module</label>
-    </div>
-  </form>
+<!-- Modal Structure -->
+<div id="confirmation" class="modal">
+  <div class="modal-content">
+    <h4>Question is not submitted!</h4>
+    <p>Do you wish to cancel the question submission. All the entered details will be lost.</p>
+  </div>
+  <div class="modal-footer">
+    <a [routerLink]="['/featured']" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div>
 </div>
 
 <form (ngSubmit)="submitQuestion()">
+  <div class="row">
+    <div class="input-field col s12">
+      <input type="text" placeholder="Search for module" id="moduleSearch" class="autocomplete"
+             name="moduleSearch" autocomplete="off" #moduleName required>
+      <button id="load_topics" hidden (click)="loadSelectedModule(moduleName.value)" type="button"></button>
+      <label for="moduleSearch">Module</label>
+    </div>
+  </div>
   <div class="row">
     <div class="input-field col s12">
       <select id="topic" (click)="loadSelectedModule(moduleName.value)" name="topic">
@@ -33,10 +42,11 @@
       <div class="chips chips-placeholder"></div>
     </div>
   </div>
+  <ask-input-error *ngIf="hasError" [errorMessage]="'PLease select a module before submitting the answer'"></ask-input-error>
   <div class="row">
     <div class="input-field">
       <div class="col s6">
-        <button class="btn waves-effect waves-light center grey darken-1" type="button" name="cancel" style="width: 100%">
+        <button data-target="confirmation" class="btn waves-effect waves-light center grey darken-1" type="button" name="cancel" style="width: 100%">
           Cancel
         </button>
       </div>
