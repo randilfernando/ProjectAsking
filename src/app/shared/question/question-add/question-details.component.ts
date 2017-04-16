@@ -5,6 +5,7 @@ import {ModuleService} from "../../../services/module.service";
 import {Module} from "../../../types/module.type";
 import {Question} from "../../../types/question.type";
 import {QuestionService} from "../../../services/question.service";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'ask-question-details',
@@ -19,7 +20,7 @@ export class QuestionDetailsComponent implements OnInit, AfterViewInit {
 
   private hasError: boolean = false;
 
-  constructor(private moduleService: ModuleService, private questionService: QuestionService) {
+  constructor(private moduleService: ModuleService, private questionService: QuestionService, private authenticationService: AuthenticationService) {
   }
 
   loadSelectedModule(moduleCode: string) {
@@ -47,7 +48,7 @@ export class QuestionDetailsComponent implements OnInit, AfterViewInit {
       this.hasError = false;
       this.question.moduleCode = this.selectedModule.moduleCode;
       this.question.moduleName = this.selectedModule.moduleName;
-      this.question.submittedBy = 'Randil Fernando'; //can remove after authentication implemented
+      this.question.submittedBy = this.authenticationService.getloggedOnUser().username; //can remove after authentication implemented
       let chips = $('.chips-placeholder').material_chip('data');
       for (let chip of chips){
         this.question.tags.push(chip.tag);

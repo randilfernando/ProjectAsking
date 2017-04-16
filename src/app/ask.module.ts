@@ -25,13 +25,16 @@ import { AuthGuard } from "./guards/auth.guard";
 import { ModuleService } from "./services/module.service";
 import { FeaturedComponent } from './components/home/featured/featured.component';
 import { QuestionService } from "./services/question.service";
-import { QuestionDescriptionComponent } from "./shared/question/question-add/question-description.component";
+import { TextAreaComponent } from "./shared/text-area/text-area.component";
 import { SearchQuestionsComponent } from "./components/home/search-question/search-questions.component";
 import { SearchModuleComponent } from './components/home/search-module/search-module.component';
 import { ModuleDetailsComponent } from './components/home/module-details/module-details.component';
 import { AddQuestionComponent } from './components/home/add-question/add-question.component';
 import { QuestionDetailsComponent } from './shared/question/question-add/question-details.component';
 import { InputErrorComponent } from './shared/messages/input-error/input-error.component';
+import { AnswerListComponent } from './shared/answer/answer-list/answer-list.component';
+import { AnswerSummaryComponent } from './shared/answer/answer-list/answer-summary.component';
+import { ViewQuestionComponent } from './components/home/view-question/view-question.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,7 @@ import { InputErrorComponent } from './shared/messages/input-error/input-error.c
     AboutusComponent,
     LoginheaderComponent,
     HomeComponent,
-    QuestionDescriptionComponent,
+    TextAreaComponent,
     SignUpFormComponent,
     QuestionSummaryComponent,
     QuestionListComponent,
@@ -57,7 +60,10 @@ import { InputErrorComponent } from './shared/messages/input-error/input-error.c
     ModuleDetailsComponent,
     AddQuestionComponent,
     QuestionDetailsComponent,
-    InputErrorComponent
+    InputErrorComponent,
+    AnswerListComponent,
+    AnswerSummaryComponent,
+    ViewQuestionComponent
   ],
   imports: [
     BrowserModule,

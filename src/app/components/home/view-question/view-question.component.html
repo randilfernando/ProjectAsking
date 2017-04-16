@@ -1,0 +1,25 @@
+<div *ngIf="selectedQuestion && answerList" class="container" style="padding-top: 50px; padding-bottom: 50px">
+  <div class="row">
+    <div class="col s12">
+      <h5>{{selectedQuestion.title}}</h5>
+      <div class="divider"></div>
+      <div [innerHTML]="selectedQuestion.description">
+      </div>
+      <br>
+      <div class="chip" style="background-color: #1e88e5; border-radius: 0">
+        <a style="color: white">{{selectedQuestion.moduleCode}} - {{selectedQuestion.moduleName}}</a></div>
+      <div class="chip" style="border-radius: 0" *ngFor="let tag of selectedQuestion.tags">{{tag}}</div>
+    </div>
+  </div>
+
+  <ask-answer-list [answerList]="answerList" [totalAnswers]="selectedQuestion.totalAnswers"></ask-answer-list>
+
+  <div class="row" style="padding-top: 20px">
+    <div class="col s12">
+      <ask-text-area (onEditorKeyup)="editingAnswer.answer = $event"></ask-text-area>
+      <button class="btn waves-effect waves-light center right" (click)="addQuestion()">
+        Add Answer
+      </button>
+    </div>
+  </div>
+</div>

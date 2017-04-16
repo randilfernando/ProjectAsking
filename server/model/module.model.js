@@ -5,7 +5,7 @@ var moduleModel = new Schema({
     moduleCode: {type:String, unique:true, required:true},
     moduleName: {type:String, required:true},
     totalQuestions: {type:Number, default:0},
-    topics: {type:[], default:null}
+    topics: {type: [String], default:null}
 });
 
 moduleModel.index({

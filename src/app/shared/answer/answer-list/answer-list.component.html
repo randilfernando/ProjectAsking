@@ -1,0 +1,7 @@
+<div class="row">
+  <div class="col s12">
+    <h5>{{totalAnswers}} Answers</h5>
+    <div class="divider"></div>
+  </div>
+</div>
+<ask-answer-summary *ngFor="let answer of answerList" [answer]="answer"></ask-answer-summary>

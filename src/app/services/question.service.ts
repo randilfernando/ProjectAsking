@@ -2,12 +2,16 @@ import {Question} from "../types/question.type";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
+import {Answer} from "../types/answer.type";
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class QuestionService {
   private questionList: Question[];
+  private selectedQuestion: Question;
+  private answerList: Answer[];
 
-  constructor(private http: Http){}
+  constructor(private http: Http, private authenticationService: AuthenticationService){}
 
   addQuestion(question:Question): Observable<boolean> {
     return this.http.post('/api/question', {
@@ -16,7 +20,8 @@ export class QuestionService {
       "moduleName": question.moduleName,
       "description": question.description,
       "submittedBy": question.submittedBy,
-      "tags": question.tags
+      "tags": question.tags,
+      "token": this.authenticationService.getloggedOnUser().token
     })
       .map( (response: Response) => {
         let status = response.status;
@@ -67,7 +72,49 @@ export class QuestionService {
       });
   }
 
+  loadQuestionById(questionId: string): Observable<boolean>{
+    return this.http.get(`/api/question/${questionId}`)
+      .map((response: Response) => {
+        let message = response.json() && response.json().message;
+        // get modules if successful
+        if(!message){
+          this.selectedQuestion = response.json();
+          this.answerList = response.json() && response.json().answers;
+          return true;
+        }
+        return false;
+      });
+  }
+
+  addAnswer(questionId: string, answer: Answer): Observable<boolean>{
+    return this.http.post(`/api/answer/`, {
+      "questionId": questionId,
+      "answer": {
+        "answer": answer.answer,
+        "submittedBy": answer.submittedBy
+      }
+    })
+      .map((response: Response) => {
+        let message = response.json() && response.json().message;
+        // get modules if successful
+        if(!message){
+          this.selectedQuestion = response.json();
+          this.answerList = response.json() && response.json().answers;
+          return true;
+        }
+        return false;
+      });
+  }
+
   getQuestionList(){
     return this.questionList;
+  }
+
+  getSelectedQuestion(){
+    return this.selectedQuestion;
+  }
+
+  getAnswerList(){
+    return this.answerList;
   }
 }

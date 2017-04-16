@@ -1,4 +1,4 @@
-var questionController = function (Question) {
+var questionController = function (Question, Module) {
   var get = function (req, res) {
     Question.find({})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
@@ -73,14 +73,35 @@ var questionController = function (Question) {
   };
 
   var add = function (req, res) {
-    var question = new Question(req.body);
-    console.log(question);
-    question.save()
-      .then(function () {
-        res.status(200);
-        res.send({
-          message: 'Success'
-        });
+    Module.findOne({'moduleCode': req.body.moduleCode})
+      .exec()
+      .then(function (module) {
+        if (module){
+          var question = new Question(req.body);
+          module.totalQuestions++;
+          question.save()
+            .then(function () {
+              module.save()
+                .then(function () {
+                  res.status(200);
+                  res.send({
+                    message: 'Success'
+                  });
+                })
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send({
+                message: 'Internal server error'
+              });
+              console.log('error: ', err);
+            });
+        }else{
+          res.status(404);
+          res.send({
+            message: 'Module not found'
+          });
+        }
       })
       .catch(function (err) {
         res.status(500);
