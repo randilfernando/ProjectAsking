@@ -6,6 +6,7 @@ import {ModuleDetailsComponent} from "./module-details/module-details.component"
 import {AddQuestionComponent} from "./add-question/add-question.component";
 import {ViewQuestionComponent} from "./view-question/view-question.component";
 import {SearchModuleComponent} from "./search-module/search-module.component";
+import {ViewReportComponent} from "./view-report/view-report.component";
 
 export const HOME_ROUTES : Routes = [
   {path: 'featured', component: FeaturedComponent},
@@ -13,5 +14,6 @@ export const HOME_ROUTES : Routes = [
   {path: 'search-module', component: SearchModuleComponent},
   {path: 'question/:id', component: ViewQuestionComponent},
   {path: 'question/search/:keyword', component: SearchQuestionsComponent},
-  {path: 'module/:id', component: ModuleDetailsComponent}
+  {path: 'module/:id', component: ModuleDetailsComponent},
+  {path: 'view-report', component: ViewReportComponent}
 ];

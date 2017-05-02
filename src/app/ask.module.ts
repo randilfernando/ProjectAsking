@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { ChartModule } from 'angular2-chartjs';
 
 import { AskComponent } from './ask.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -33,8 +34,9 @@ import { AnswerListComponent } from './shared/answer/answer-list.component';
 import { AnswerSummaryComponent } from './shared/answer/answer-summary.component';
 import { ViewQuestionComponent } from './components/home/view-question/view-question.component';
 import { Error404Component } from './components/error-pages/error-404/error-404.component';
-import { DognutComponent } from './shared/graphs/dognut/dognut.component';
-import {UserService} from "./services/user.service";
+import { UserService } from "./services/user.service";
+import { ViewReportComponent } from './components/home/view-report/view-report.component';
+import { ReportService } from "./services/report.service";
 
 @NgModule({
   declarations: [
@@ -62,13 +64,14 @@ import {UserService} from "./services/user.service";
     AnswerSummaryComponent,
     ViewQuestionComponent,
     Error404Component,
-    DognutComponent
+    ViewReportComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     FormsModule,
     RouterModule,
+    ChartModule,
     routing
   ],
   providers: [
@@ -76,6 +79,7 @@ import {UserService} from "./services/user.service";
     ModuleService,
     QuestionService,
     UserService,
+    ReportService,
     AuthGuard
   ],
   bootstrap: [AskComponent]

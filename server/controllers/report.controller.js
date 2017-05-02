@@ -1,7 +1,10 @@
 var reportController = function (Question, Module) {
 
   var getOverall = function (req, res) {
-    Module.find({})
+    Module.find({},null,{
+      skip: 0,
+      sort: { totalQuestions: -1 }
+    })
       .select('_id moduleCode moduleName totalQuestions')
       .exec()
       .then(function (modules) {
