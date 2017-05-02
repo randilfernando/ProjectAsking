@@ -1,4 +1,4 @@
-import {Component, getModuleFactory, OnInit} from '@angular/core';
+import {Component, getModuleFactory, OnDestroy, OnInit} from '@angular/core';
 import {Question} from "../../../types/question.type";
 import {Module} from "../../../types/module.type";
 import {ModuleService} from "../../../services/module.service";
@@ -10,19 +10,14 @@ import {ActivatedRoute} from "@angular/router";
   selector: 'ask-module-details',
   templateUrl: './module-details.component.html'
 })
-export class ModuleDetailsComponent implements OnInit {
+export class ModuleDetailsComponent implements OnInit, OnDestroy {
 
   selectedModule: Module;
   questionList: Question[];
   private message: string = 'Loading';
+  private subscription: Subscription;
 
   constructor(private moduleService: ModuleService, private questionService: QuestionService, private activatedRoute: ActivatedRoute) { }
-
-  ngOnInit() {
-    let id = this.activatedRoute.snapshot.params['id'];
-    this.getModule(id);
-    this.getQuestions(id);
-  }
 
   getModule(id: string){
     this.moduleService.loadModule(id)
@@ -47,6 +42,19 @@ export class ModuleDetailsComponent implements OnInit {
           this.message = 'No questions submitted...'
         }
       });
+  }
+
+  ngOnInit() {
+    this.subscription = this.activatedRoute.params.subscribe(
+      (params: any) => {
+        this.getModule(params['id']);
+        this.getQuestions(params['id']);
+      }
+    );
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 
 }

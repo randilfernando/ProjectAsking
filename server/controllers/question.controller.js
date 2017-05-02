@@ -187,6 +187,12 @@ var questionController = function (Question, Module) {
       .then(function (question) {
         question.remove()
           .then(function () {
+            Module.findOne({'moduleCode': question.moduleCode})
+              .exec()
+              .then(function (module) {
+                module.totalQuestions--;
+                module.save();
+              })
             res.status(200);
             res.send({
               message: 'Success'

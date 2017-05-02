@@ -9,14 +9,12 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { SidePanelComponent } from './shared/side-panel/side-panel.component';
 import { ModuleSummaryComponent } from './shared/module/module-summary.component';
 import { ModuleSummaryListComponent } from './shared/module/module-summary-list.component';
-import { LoginFormComponent } from './shared/login-form/login-form.component';
 import { AboutusComponent } from './shared/about-us/aboutus.component';
 import { LoginheaderComponent } from './shared/header/loginheader.component';
 import { HomeComponent } from './components/home/home.component';
 import { RouterModule} from "@angular/router";
-import { SignUpFormComponent } from './shared/sign-up-form/sign-up-form.component';
-import { QuestionSummaryComponent } from './shared/question/question-list/question-summary.component';
-import { QuestionListComponent } from './shared/question/question-list/question-list.component';
+import { QuestionSummaryComponent } from './shared/question/question-summary.component';
+import { QuestionListComponent } from './shared/question/question-list.component';
 import { routing } from "./ask.routing";
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -30,11 +28,13 @@ import { SearchQuestionsComponent } from "./components/home/search-question/sear
 import { SearchModuleComponent } from './components/home/search-module/search-module.component';
 import { ModuleDetailsComponent } from './components/home/module-details/module-details.component';
 import { AddQuestionComponent } from './components/home/add-question/add-question.component';
-import { QuestionDetailsComponent } from './shared/question/question-add/question-details.component';
 import { InputErrorComponent } from './shared/messages/input-error/input-error.component';
-import { AnswerListComponent } from './shared/answer/answer-list/answer-list.component';
-import { AnswerSummaryComponent } from './shared/answer/answer-list/answer-summary.component';
+import { AnswerListComponent } from './shared/answer/answer-list.component';
+import { AnswerSummaryComponent } from './shared/answer/answer-summary.component';
 import { ViewQuestionComponent } from './components/home/view-question/view-question.component';
+import { Error404Component } from './components/error-pages/error-404/error-404.component';
+import { DognutComponent } from './shared/graphs/dognut/dognut.component';
+import {UserService} from "./services/user.service";
 
 @NgModule({
   declarations: [
@@ -44,12 +44,10 @@ import { ViewQuestionComponent } from './components/home/view-question/view-ques
     SidePanelComponent,
     ModuleSummaryComponent,
     ModuleSummaryListComponent,
-    LoginFormComponent,
     AboutusComponent,
     LoginheaderComponent,
     HomeComponent,
     TextAreaComponent,
-    SignUpFormComponent,
     QuestionSummaryComponent,
     QuestionListComponent,
     LoginComponent,
@@ -59,11 +57,12 @@ import { ViewQuestionComponent } from './components/home/view-question/view-ques
     SearchModuleComponent,
     ModuleDetailsComponent,
     AddQuestionComponent,
-    QuestionDetailsComponent,
     InputErrorComponent,
     AnswerListComponent,
     AnswerSummaryComponent,
-    ViewQuestionComponent
+    ViewQuestionComponent,
+    Error404Component,
+    DognutComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +75,7 @@ import { ViewQuestionComponent } from './components/home/view-question/view-ques
     AuthenticationService,
     ModuleService,
     QuestionService,
+    UserService,
     AuthGuard
   ],
   bootstrap: [AskComponent]

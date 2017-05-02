@@ -3,7 +3,47 @@
   <ask-loginheader></ask-loginheader>
 </header>
 <main>
-  <ask-login-form></ask-login-form>
+  <div class="container">
+    <div class="row" style="padding-top: 50px;">
+      <form id="loginForm" (ngSubmit)="login()" class="col s6 offset-s3 z-depth-2" style="padding: 30px 50px;">
+        <div class="row">
+          <div class="input-field col s12">
+            <input
+              id="email"
+              type="email"
+              class="validate"
+              [(ngModel)]="user.email"
+              name="email"
+              ngModel
+              required
+              pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+            >
+            <label for="email">Email</label>
+          </div>
+
+          <div class="input-field col s12">
+            <input
+              id="password"
+              type="password"
+              class="validate"
+              [(ngModel)]="user.password"
+              name="password"
+              ngModel
+              required
+            >
+            <label for="password">Password</label>
+          </div>
+        </div>
+        <div class="row" style="padding-left: 10px; padding-right: 10px;">
+          <button class="btn waves-effect waves-light center" type="submit" name="action" style="width: 100%">Login
+          </button>
+          <br><br>
+          <a href="#!" class="left"><u>Forgot password</u></a>
+          <a [routerLink]="['/sign-up']" class="right" href="javascript:void(0);"><u>Sign Up</u></a>
+        </div>
+      </form>
+    </div>
+  </div>
 </main>
 <footer>
   <ask-footer></ask-footer>

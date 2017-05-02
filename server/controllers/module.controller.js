@@ -61,7 +61,7 @@ var moduleController = function (Module) {
           "message": "Internal server error"
         });
       })
-  }
+  };
 
   var add = function (req, res) {
     var module = new Module(req.body);

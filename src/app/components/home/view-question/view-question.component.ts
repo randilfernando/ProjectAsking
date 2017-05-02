@@ -42,14 +42,21 @@ export class ViewQuestionComponent implements OnInit {
     );
   }
 
-  addQuestion(){
+  addAnswer(){
     this.editingAnswer.submittedBy = this.authenticationService.getloggedOnUser().username;
     this.questionService.addAnswer(this.selectedQuestion._id, this.editingAnswer).subscribe(
       result => {
         if (result){
-          this.answerList.push(this.editingAnswer);
+          let clone: Answer = {
+            _id: '',
+            totalRatings: 0,
+            answer: '',
+            submittedBy: ''
+          };
+          Object.assign(clone, this.editingAnswer);
+          this.answerList.push(clone);
           this.selectedQuestion.totalAnswers ++;
-          console.log(this.answerList);
+          this.editingAnswer.answer = '';
         }
       }
     );
