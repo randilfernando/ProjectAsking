@@ -1,4 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
+import {AuthenticationService} from "../../services/authentication.service";
+import {UserService} from "../../services/user.service";
+import {Module} from "../../types/module.type";
 
 @Component({
   selector: 'ask-side-panel',
@@ -7,24 +10,21 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 export class SidePanelComponent implements OnInit {
   @Input()
-  enrolledModules = [
-    {name: 'Object Oriented Programming'},
-    {name: 'Theory of Computing'},
-    {name: 'Data Structures and Algorithms'},
-    {name: 'Intelligent Systems'},
-    {name: 'Image Processing'},
-    {name: 'Software Engineering'},
-    {name: 'Graph theory'},
-    {name: 'Theory of Electricity'},
-    {name: 'Aspects of Civil Engineering'},
-    {name: 'Mechanical Engineering'},
-    {name: 'Introduction to Manufacturing Engineering'}
-  ];
+  enrolledModules: Module[];
 
-  constructor() {
+  constructor(private authenticationService: AuthenticationService, private userService: UserService) {
   }
 
   ngOnInit() {
+    let userEmail = this.authenticationService.getloggedOnUser().email;
+    this.userService.loadSubscribedModules(userEmail)
+      .subscribe(result => {
+        if(result){
+          this.enrolledModules = this.userService.getSubscribedModules();
+        } else {
+          this.enrolledModules = [];
+        }
+      })
   }
 
 }

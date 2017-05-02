@@ -1,13 +1,11 @@
 <div class="row valign-wrapper z-depth-1" style="background-color: #1e88e5; height: 100px;">
-  <div class="col s7">
+  <div class="col s9">
     <a class="left-align" [routerLink]="['/module/' + module.moduleCode]" style="color: white; font-size: 20px; padding-left: 20px">{{module.moduleCode}} - {{module.moduleName}}</a>
   </div>
-  <div class="col s2">
-    <ng-content class="right-align"></ng-content>
-  </div>
   <div class="col s3">
-    <div class="right-align" style="padding-right: 20px">
-      <span class="new badge blue-grey" data-badge-caption="questions">{{module.totalQuestions}}</span>
+    <button *ngIf="subscribeEnabled" (click)="subscribe()" class="btn waves-effect waves-light center grey darken-2 z-depth-0">Subscribe</button>
+    <div *ngIf="!subscribeEnabled" class="right-align" style="padding-right: 20px;">
+      <span class="new badge grey darken-2" data-badge-caption="questions">{{module.totalQuestions}}</span>
     </div>
   </div>
 </div>

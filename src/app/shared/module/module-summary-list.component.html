@@ -1,5 +1,4 @@
 <div class="row container">
-  <ask-module-summary *ngFor="let module of featuredModules" [module]="module">
-    <ng-content></ng-content>
+  <ask-module-summary *ngFor="let module of moduleList" [module]="module" [subscribeEnabled]="subscribeEnabled">
   </ask-module-summary>
 </div>

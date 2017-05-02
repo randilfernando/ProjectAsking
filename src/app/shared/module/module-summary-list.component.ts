@@ -9,7 +9,10 @@ import {ModuleService} from "../../services/module.service";
 export class ModuleSummaryListComponent implements OnInit {
 
   @Input()
-  featuredModules: Module[];
+  moduleList: Module[];
+
+  @Input()
+  subscribeEnabled: boolean = false;
 
   constructor() { }
 

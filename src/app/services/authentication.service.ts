@@ -8,15 +8,7 @@ import {User} from "../types/user.type";
 export class AuthenticationService {
   private storage = localStorage;
 
-  public token: string;
-  public username: string;
-
-  constructor(private http: Http) {
-    // set token if saved in local storage
-    var currentUser = JSON.parse(this.storage.getItem('currentUser'));
-    this.token = currentUser && currentUser.token;
-    this.username = currentUser && currentUser.username;
-  }
+  constructor(private http: Http) {}
 
   login(user: User): Observable<boolean> {
     return this.http.post('/api/user/login', {
@@ -29,12 +21,9 @@ export class AuthenticationService {
 
         if (token) {
           // set token property
-          this.token = token;
           user.token = token;
-          let username = response.json() && response.json().username;
-          this.username = username;
-          user.username = username;
-
+          user.username = response.json() && response.json().username;
+          user.accessLevel = response.json() && response.json().accessLevel;
           user.password = '';
           // store username and jwt token in local storage to keep user logged in between page refreshes
           this.storage.setItem('currentUser', JSON.stringify(user));
@@ -65,8 +54,6 @@ export class AuthenticationService {
 
   logout(): void {
     // clear token remove user from local storage to log user out
-    this.token = null;
-    this.username = null;
     this.storage.removeItem('currentUser');
   }
 

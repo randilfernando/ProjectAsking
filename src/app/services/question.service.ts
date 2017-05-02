@@ -95,11 +95,7 @@ export class QuestionService {
       }
     })
       .map((response: Response) => {
-        let message = response.json() && response.json().message;
-        // get modules if successful
-        if(!message){
-          this.selectedQuestion = response.json();
-          this.answerList = response.json() && response.json().answers;
+        if(response.status === 200){
           return true;
         }
         return false;

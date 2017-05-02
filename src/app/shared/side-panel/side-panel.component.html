@@ -7,12 +7,12 @@
   </li>
   <li><a [routerLink]="['/featured']" routerLinkActive="active">Home</a></li>
   <li><a [routerLink]="['/add-question']" routerLinkActive="active">Add Question</a></li>
-  <li><a [routerLink]="['/module']" routerLinkActive="active">Search Module</a></li>
+  <li><a [routerLink]="['/search-module']" routerLinkActive="active">Search Module</a></li>
   <li>
     <div class="divider"></div>
   </li>
   <li><a class="subheader">Enrolled Modules</a></li>
   <div class="scroll-box">
-    <li *ngFor="let module of enrolledModules"><a href="#!">{{module.name}}</a></li>
+    <li *ngFor="let module of enrolledModules"><a [routerLink]="['/module/' + module.moduleCode]" class="truncate">{{module.moduleName}}</a></li>
   </div>
 </ul>

@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
-    this.username = this.authenticationService.username;
+    this.username = this.authenticationService.getloggedOnUser().username;
   }
 
   logout(){

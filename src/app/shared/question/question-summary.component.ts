@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Question} from "../../../types/question.type";
-import {QuestionService} from "../../../services/question.service";
+import {Question} from "../../types/question.type";
 
 @Component({
   selector: 'ask-question-summary',
@@ -8,7 +7,7 @@ import {QuestionService} from "../../../services/question.service";
 })
 export class QuestionSummaryComponent implements OnInit {
   @Input()
-  private selectedQuestion: Question;
+  question: Question;
 
   constructor() { }
 

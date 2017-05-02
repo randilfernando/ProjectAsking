@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Answer} from "../../../types/answer.type";
+import {Answer} from "../../types/answer.type";
 
 @Component({
   selector: 'ask-answer-summary',
@@ -13,6 +13,7 @@ export class AnswerSummaryComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.answer);
   }
 
 }
