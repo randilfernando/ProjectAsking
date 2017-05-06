@@ -4,12 +4,12 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var morgan = require('morgan');
-var serverConfig = require('./config/server.config').development;
+var serverConfig = require('./config/server.config').production;
 var apiRouter = require('./routes/api.router.js');
 
 const SERVER_HOST = process.env.HOST || serverConfig.host;
 const SERVER_PORT = process.env.PORT || serverConfig.port;
-const MONGO_STRING = require('./config/database.config').development;
+const MONGO_STRING = require('./config/database.config').production;
 
 //configure passport
 require('./config/passport.config')(passport);
