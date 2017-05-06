@@ -2,6 +2,6 @@
   <h5>Question List</h5>
 </div>
 <div class="row container" *ngIf="!questionList">
-  <h5>{{message}}</h5>
+  <h6>{{message}}</h6>
 </div>
 <ask-question-list *ngIf="questionList" [questionList]="questionList"></ask-question-list>

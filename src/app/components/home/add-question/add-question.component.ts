@@ -18,6 +18,7 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
     title: '',
     moduleCode: '',
     moduleName: '',
+    topic: '',
     description: '',
     tags: [],
     totalRatings: 0,
@@ -39,6 +40,7 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
         } else {
           this.selectedModule = null;
         }
+        this.question.topic = '';
       }
     );
 
@@ -55,6 +57,8 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
       this.hasError = false;
       this.question.moduleCode = this.selectedModule.moduleCode;
       this.question.moduleName = this.selectedModule.moduleName;
+      this.question.topic = $('#topic').val();
+      this.question.title = $('#title').val();
       this.question.submittedBy = this.authenticationService.getloggedOnUser().username; //can remove after authentication implemented
       let chips = $('.chips-placeholder').material_chip('data');
       for (let chip of chips) {

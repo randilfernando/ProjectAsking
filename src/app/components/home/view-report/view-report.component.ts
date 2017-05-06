@@ -55,14 +55,13 @@ export class ViewReportComponent implements OnInit {
           this.moduleList = this.reportService.getModuleReport();
           this.generateModuleChartData(this.reportService.getModuleReport());
           this.isModuleDataLoaded = true;
-        }
-      })
-
-    this.reportService.loadUnanswered()
-      .subscribe(result => {
-        if(result){
-          this.generateAllQuestionsChartData(this.reportService.getAnsweredCount(), this.reportService.getUnansweredCount());
-          this.isQuestionDataLoaded = true;
+          this.reportService.loadUnanswered()
+            .subscribe(result => {
+              if(result){
+                this.generateAllQuestionsChartData(this.reportService.getAnsweredCount(), this.reportService.getUnansweredCount());
+                this.isQuestionDataLoaded = true;
+              }
+            })
         }
       })
   }

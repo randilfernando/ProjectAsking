@@ -9,6 +9,7 @@ var questionModel = new Schema({
     totalAnswers: {type:Number, default:0},
     moduleCode: {type:String, required:true, sparse:true},
     moduleName: {type:String, trim:true, required:true},
+    topic: {type:String, trim:true},
     tags: [],
     description: {type:String, trim:true},
     answers: {type:[answerModel], default:null}

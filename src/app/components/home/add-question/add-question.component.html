@@ -1,4 +1,8 @@
-<div class="container" style="padding-top: 50px; padding-bottom: 50px">
+<div class="row container" style="padding-top: 20px">
+  <h5>Add New Question</h5>
+</div>
+<div class="row divider"></div>
+<div class="container" style="padding-bottom: 50px">
   <!-- Modal Structure -->
   <div id="confirmation" class="modal">
     <div class="modal-content">
@@ -21,9 +25,9 @@
     </div>
     <div class="row">
       <div class="input-field col s12">
-        <select id="topic" (click)="loadSelectedModule(moduleName.value)" name="topic">
+        <select id="topic" name="topic">
           <option value="" disabled selected>Choose your option</option>
-          <option *ngFor="let topic of selectedModule?.topics" value="{{topic}}">{{topic}}</option>
+          <option *ngFor="let topic of selectedModule?.topics" [value]="topic">{{topic}}</option>
         </select>
         <label>Topic</label>
       </div>

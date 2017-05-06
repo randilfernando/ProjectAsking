@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Module} from "../types/module.type";
-import {Http, Response} from "@angular/http";
+import {Http, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class ModuleService {
@@ -9,14 +10,14 @@ export class ModuleService {
   private moduleList: Module[];
   private selectedModule: Module;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private authenticationService: AuthenticationService) { }
 
   loadFeaturedModules(): Observable<boolean>{
-    return this.http.get('/api/module/featured')
+    let headers = new Headers();
+    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    return this.http.get('/api/module/featured', {headers: headers})
       .map((response: Response) => {
-        let message = response.json() && response.json().message;
-        // get modules if successful
-        if(!message){
+        if(response.status === 200){
           this.moduleList = response.json();
           return true;
         }
@@ -25,11 +26,11 @@ export class ModuleService {
   }
 
   loadModules(): Observable<boolean>{
-    return this.http.get('/api/module')
+    let headers = new Headers();
+    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    return this.http.get('/api/module', {headers: headers})
       .map((response: Response) => {
-        let message = response.json() && response.json().message;
-        // get modules if successful
-        if(!message){
+        if(response.status === 200){
           this.moduleList = response.json();
           return true;
         }
@@ -38,11 +39,11 @@ export class ModuleService {
   }
 
   loadModule(moduleCode: string): Observable<boolean>{
-    return this.http.get(`/api/module/${moduleCode}`)
+    let headers = new Headers();
+    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    return this.http.get(`/api/module/${moduleCode}`, {headers: headers})
       .map((response: Response) => {
-        let message = response.json() && response.json().message;
-        // get modules if successful
-        if(!message){
+        if(response.status === 200){
           this.selectedModule = response.json();
           return true;
         }

@@ -8,7 +8,7 @@ export class AdminGuard implements CanActivate {
   constructor(private authenticationService: AuthenticationService) { }
 
   canActivate() {
-    if (this.authenticationService.getloggedOnUser().accessLevel > 1) {
+    if (this.authenticationService.getloggedOnUser().accessLevel == 2) {
       // If admin
       return true;
     }

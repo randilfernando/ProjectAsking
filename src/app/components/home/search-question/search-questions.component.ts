@@ -28,13 +28,14 @@ export class SearchQuestionsComponent implements OnInit, OnDestroy {
   }
 
   searchQuestions(keyword: string){
+    this.questionList = null;
+    this.message = 'Loading...';
     this.questionService.searchQuestions(keyword)
       .subscribe(result => {
         if(result){
           this.questionList = this.questionService.getQuestionList();
         }else{
-          this.questionList = null;
-          this.message = 'Sorry no questions.'
+          this.message = 'Sorry no questions...';
         }
       });
   }

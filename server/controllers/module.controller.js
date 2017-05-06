@@ -44,6 +44,7 @@ var moduleController = function (Module) {
   };
 
   var getFeatured = function (req, res) {
+    console.log(req.header('Authorization'));
     Module.find({},null,{
       skip: 0,
       limit: 5,

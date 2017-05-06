@@ -3,6 +3,7 @@ export interface Question {
   title: string;
   moduleCode: string;
   moduleName: string;
+  topic: string;
   description: string;
   tags: string[];
   totalAnswers: number;

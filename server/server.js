@@ -9,7 +9,7 @@ var apiRouter = require('./routes/api.router.js');
 
 const SERVER_HOST = serverConfig.host;
 const SERVER_PORT = serverConfig.port;
-const MONGO_STRING = require('./config/database.config').development;
+const MONGO_STRING = require('./config/database.config').production;
 
 //configure passport
 require('./config/passport.config')(passport);

@@ -71,7 +71,7 @@ var answerController = function (Question) {
       .exec()
       .then(function (question) {
         question.answers.id(req.body.answerId).remove();
-        question.totalAnswers --;
+        question.totalAnswers--;
 
         question.save()
           .then(function () {

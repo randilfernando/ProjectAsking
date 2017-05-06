@@ -3,6 +3,7 @@ var passport = require('passport');
 var User = require('./../model/user.model').User;
 var Module = require('./../model/module.model').Module;
 var userController = require('./../controllers/user.controller')(User, Module, passport);
+var authMiddleware = require('./../middleware/auth.middleware');
 
 var usersRouter = express.Router();
 
@@ -13,12 +14,12 @@ usersRouter.route('/login')
   .post(userController.login);
 
 usersRouter.route('/profile/:email')
-  .get(userController.getByEmail);
+  .get(authMiddleware, userController.getByEmail);
 
 usersRouter.route('/subscribe')
-  .post(userController.subscribe);
+  .post(authMiddleware, userController.subscribe);
 
 usersRouter.route('/unsubscribe')
-  .post(userController.unsubscribe);
+  .post(authMiddleware, userController.unsubscribe);
 
 module.exports = usersRouter;

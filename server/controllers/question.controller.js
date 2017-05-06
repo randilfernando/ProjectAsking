@@ -21,8 +21,15 @@ var questionController = function (Question, Module) {
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
       .exec()
       .then(function (questions) {
-        res.status(200);
-        res.send(questions);
+        if (questions.length == 0){
+          res.status(204);
+          res.send({
+            "message": "No questions found"
+          });
+        }else{
+          res.status(200);
+          res.send(questions);
+        }
       })
       .catch(function (err) {
         res.status(500);
@@ -54,8 +61,15 @@ var questionController = function (Question, Module) {
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
       .exec()
       .then(function (questions) {
-        res.status(200);
-        res.send(questions);
+        if (questions.length == 0){
+          res.status(204);
+          res.send({
+            "message": "No questions submitted"
+          });
+        } else {
+          res.status(200);
+          res.send(questions);
+        }
       })
       .catch(function (err) {
         res.status(500);
@@ -122,6 +136,7 @@ var questionController = function (Question, Module) {
         question.totalAnswers = req.body.totalAnswers;
         question.moduleCode = req.body.moduleCode;
         question.moduleName = req.body.moduleName;
+        question.topic = req.body.topic;
         question.tags = req.body.tags;
         question.description = req.body.description;
 

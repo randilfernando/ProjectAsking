@@ -1,4 +1,5 @@
 var userController = function (User, Module, passport) {
+
   var getByEmail = function (req, res) {
     User.findOne({'email': req.params.email})
       .populate('subscribedModules', '_id moduleCode moduleName totalQuestions')
@@ -20,6 +21,7 @@ var userController = function (User, Module, passport) {
 
     user.name = req.body.username;
     user.email = req.body.email;
+    user.accessLevel = 1;
 
     user.setPassword(req.body.password);
 
