@@ -4,6 +4,11 @@
     "port": 5000,
     "morganMode": "dev"
   },
+  "test": {
+    "host": "localhost",
+    "port": 5000,
+    "morganMode": "dev"
+  },
   "production": {
     "host": "localhost",
     "port": 5000,

@@ -4,12 +4,13 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var morgan = require('morgan');
-var serverConfig = require('./config/server.config').production;
 var apiRouter = require('./routes/api.router.js');
+var mainConfig = require('./config/main.config');
 
-const SERVER_HOST = process.env.HOST || serverConfig.host;
-const SERVER_PORT = process.env.PORT || serverConfig.port;
-const MONGO_STRING = require('./config/database.config').production;
+const SERVER_HOST = mainConfig.host;
+const SERVER_PORT = mainConfig.port;
+const MORGAN_MODE = mainConfig.morganMode;
+const MONGO_STRING = mainConfig.database;
 
 //configure passport
 require('./config/passport.config')(passport);
@@ -19,7 +20,7 @@ mongoose.connect(MONGO_STRING);
 
 var app = express();
 app.use(bodyParser.json());
-app.use(morgan(serverConfig.morganMode));
+app.use(morgan(MORGAN_MODE));
 app.use(passport.initialize());
 
 // point static path to client
@@ -32,5 +33,5 @@ app.use('/api', apiRouter);
 app.get('*', (req, res) => { res.sendFile(path.join(__dirname, '../client/index.html')); });
 
 app.listen(SERVER_PORT, function(){
-    console.log(`server is ${SERVER_HOST}:${SERVER_PORT}`);
+    console.log(`server is running on ${SERVER_HOST}:${SERVER_PORT}`);
 });
