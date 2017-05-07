@@ -10,8 +10,8 @@ var environments = {
 var environment = environments.production; // change environment for the application
 
 module.exports = {
-  host: serverConfig[environment].host,
-  port: serverConfig[environment].port,
+  host: process.env.HOST || serverConfig[environment].host,
+  port: process.env.PORT || serverConfig[environment].port,
   morganMode: serverConfig[environment].morganMode,
   database: databaseConfig[environment]
 };
