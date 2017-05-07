@@ -37,8 +37,8 @@ import { Error404Component } from './components/error-pages/error-404/error-404.
 import { UserService } from "./services/user.service";
 import { ViewReportComponent } from './components/home/view-report/view-report.component';
 import { ReportService } from "./services/report.service";
-import { ViewModuleReportComponent } from './components/home/view-module-report/view-module-report.component';
 import { Error403Component } from './components/error-pages/error-403/error-403.component';
+import {AdminGuard} from "./guards/admin.guard";
 import {LecturerGuard} from "./guards/lecturer.guard";
 
 @NgModule({
@@ -68,7 +68,6 @@ import {LecturerGuard} from "./guards/lecturer.guard";
     ViewQuestionComponent,
     Error404Component,
     ViewReportComponent,
-    ViewModuleReportComponent,
     Error403Component
   ],
   imports: [
@@ -86,7 +85,8 @@ import {LecturerGuard} from "./guards/lecturer.guard";
     UserService,
     ReportService,
     AuthGuard,
-    LecturerGuard
+    LecturerGuard,
+    AdminGuard
   ],
   bootstrap: [AskComponent]
 })

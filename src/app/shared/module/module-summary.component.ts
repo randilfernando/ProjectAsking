@@ -20,7 +20,7 @@ export class ModuleSummaryComponent implements OnInit {
   }
 
   subscribe(){
-    let email = this.authenticationService.getloggedOnUser().email;
+    let email = this.authenticationService.getLoggedOnUser().email;
     this.userService.subscribeModule(email, this.module)
       .subscribe(result => {
 

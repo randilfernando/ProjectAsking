@@ -14,7 +14,7 @@ export class ModuleService {
 
   loadFeaturedModules(): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
     return this.http.get('/api/module/featured', {headers: headers})
       .map((response: Response) => {
         if(response.status === 200){
@@ -27,7 +27,7 @@ export class ModuleService {
 
   loadModules(): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
     return this.http.get('/api/module', {headers: headers})
       .map((response: Response) => {
         if(response.status === 200){
@@ -38,10 +38,10 @@ export class ModuleService {
       });
   }
 
-  loadModule(moduleCode: string): Observable<boolean>{
+  loadModule(id: string): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
-    return this.http.get(`/api/module/${moduleCode}`, {headers: headers})
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
+    return this.http.get(`/api/module/${id}`, {headers: headers})
       .map((response: Response) => {
         if(response.status === 200){
           this.selectedModule = response.json();

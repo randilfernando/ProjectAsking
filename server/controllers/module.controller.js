@@ -5,19 +5,26 @@ var moduleController = function (Module) {
       .select('_id moduleCode moduleName totalQuestions')
       .exec()
       .then(function (modules) {
-        res.status(200);
-        res.send(modules);
+        if (modules.length == 0){
+          res.status(203);
+          res.send({
+            message: 'No modules found'
+          })
+        }else{
+          res.status(200);
+          res.send(modules);
+        }
       })
       .catch(function (err) {
         res.status(500);
         res.send({
-          "message": "Internal server error"
+          message: 'Internal server error'
         });
       })
   };
 
   var getById = function (req, res) {
-    Module.findOne({'moduleCode': req.params.id})
+    Module.findOne({'moduleCode': req.params.code})
       .exec()
       .then(function (module) {
         if (module){
@@ -27,7 +34,7 @@ var moduleController = function (Module) {
           res.status(404);
           res.send({
             message: 'Module not found'
-          });
+          })
         }
       })
       .catch(function (err) {
@@ -44,11 +51,10 @@ var moduleController = function (Module) {
   };
 
   var getFeatured = function (req, res) {
-    console.log(req.header('Authorization'));
-    Module.find({},null,{
+    Module.find({}, null, {
       skip: 0,
       limit: 5,
-      sort: { totalQuestions: -1 }
+      sort: {totalQuestions: -1}
     })
       .select('_id moduleCode moduleName totalQuestions')
       .exec()
@@ -59,7 +65,7 @@ var moduleController = function (Module) {
       .catch(function (err) {
         res.status(500);
         res.send({
-          "message": "Internal server error"
+          message: 'Internal server error'
         });
       })
   };

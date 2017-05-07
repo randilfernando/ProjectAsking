@@ -2,6 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../../services/user.service";
 import {Module} from "../../types/module.type";
+import {ActionURL} from "../../types/action.type";
 
 @Component({
   selector: 'ask-side-panel',
@@ -9,22 +10,17 @@ import {Module} from "../../types/module.type";
   styleUrls: ['side-panel.component.css']
 })
 export class SidePanelComponent implements OnInit {
+
   @Input()
   enrolledModules: Module[];
 
-  constructor(private authenticationService: AuthenticationService, private userService: UserService) {
+  @Input()
+  actionURLList: ActionURL[];
+
+  constructor() {
   }
 
   ngOnInit() {
-    let userEmail = this.authenticationService.getloggedOnUser().email;
-    this.userService.loadSubscribedModules(userEmail)
-      .subscribe(result => {
-        if(result){
-          this.enrolledModules = this.userService.getSubscribedModules();
-        } else {
-          this.enrolledModules = [];
-        }
-      })
   }
 
 }

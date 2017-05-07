@@ -59,7 +59,7 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
       this.question.moduleName = this.selectedModule.moduleName;
       this.question.topic = $('#topic').val();
       this.question.title = $('#title').val();
-      this.question.submittedBy = this.authenticationService.getloggedOnUser().username; //can remove after authentication implemented
+      this.question.submittedBy = this.authenticationService.getLoggedOnUser().username; //can remove after authentication implemented
       let chips = $('.chips-placeholder').material_chip('data');
       for (let chip of chips) {
         this.question.tags.push(chip.tag);

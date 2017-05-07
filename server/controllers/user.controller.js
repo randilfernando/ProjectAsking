@@ -21,8 +21,6 @@ var userController = function (User, Module, passport) {
 
     user.name = req.body.username;
     user.email = req.body.email;
-    user.accessLevel = 1;
-
     user.setPassword(req.body.password);
 
     user.save()
@@ -81,7 +79,6 @@ var userController = function (User, Module, passport) {
     user.name = req.body.username;
     user.email = req.body.email;
     user.accessLevel = req.body.accessLevel;
-
     user.setPassword(req.body.password);
 
     user.save()
@@ -116,38 +113,45 @@ var userController = function (User, Module, passport) {
     User.findOne({'email': req.body.email})
       .exec()
       .then(function (user) {
-        Module.findById(req.body.id)
-          .exec()
-          .then(function (module) {
-            var count = user.subscribedModules.length;
-            user.subscribedModules.addToSet(module._id);
-            user.save()
-              .then(function () {
-                if(count < user.subscribedModules.length){
-                  res.status(200);
-                  res.send({
-                    "message": "Success"
-                  });
-                }else{
-                  res.status(304);
-                  res.send({
-                    "message": "Already subscribed"
-                  });
-                }
-              })
-              .catch(function (err) {
-                res.status(500);
-                res.send({
-                  "message": "Internal server error"
-                });
-              })
+        if (user.accessLevel > 1){
+          res.status(203);
+          res.send({
+            message: 'User can not subscribe for modules'
           })
-          .catch(function (err) {
-            res.status(404);
-            res.send({
-              "message": "Module not found"
+        }else {
+          Module.findById(req.body.id)
+            .exec()
+            .then(function (module) {
+              var count = user.subscribedModules.length;
+              user.subscribedModules.addToSet(module._id);
+              user.save()
+                .then(function () {
+                  if (count < user.subscribedModules.length) {
+                    res.status(200);
+                    res.send({
+                      "message": "Success"
+                    });
+                  } else {
+                    res.status(304);
+                    res.send({
+                      "message": "Already subscribed"
+                    });
+                  }
+                })
+                .catch(function (err) {
+                  res.status(500);
+                  res.send({
+                    "message": "Internal server error"
+                  });
+                })
+            })
+            .catch(function (err) {
+              res.status(404);
+              res.send({
+                "message": "Module not found"
+              });
             });
-          });
+        }
       })
       .catch(function (err) {
         res.status(404);
@@ -161,20 +165,28 @@ var userController = function (User, Module, passport) {
       User.findOne({'email': req.body.email})
         .exec()
         .then(function (user) {
-          user.subscribedModules.id(req.body.moduleId).remove();
-          user.save()
-            .then(function () {
-              res.status(200);
-              res.send({
-                "message": "Success"
-              });
+          if (user.accessLevel > 1){
+            res.status(203);
+            res.send({
+              message: 'User can not unsubscribe for modules'
             })
-            .catch(function (err) {
-              res.status(500);
-              res.send({
-                "message": "Internal server error"
+          }else{
+            user.subscribedModules.id(req.body.moduleId).remove();
+            user.save()
+              .then(function () {
+                res.status(200);
+                res.send({
+                  "message": "Success"
+                });
+              })
+              .catch(function (err) {
+                res.status(500);
+                res.send({
+                  "message": "Internal server error"
+                });
+                console.log('error', err);
               });
-            });
+          }
         })
         .catch(function (err) {
           res.status(404);

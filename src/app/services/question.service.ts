@@ -22,7 +22,7 @@ export class QuestionService {
       "description": question.description,
       "submittedBy": question.submittedBy,
       "tags": question.tags,
-      "token": this.authenticationService.getloggedOnUser().token
+      "token": this.authenticationService.getLoggedOnUser().token
     })
       .map( (response: Response) => {
         if(response.status === 200){
@@ -34,7 +34,7 @@ export class QuestionService {
 
   loadQuestions(): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
     return this.http.get('/api/question', {headers: headers})
       .map((response: Response) => {
         if(response.status === 200){
@@ -47,7 +47,7 @@ export class QuestionService {
 
   searchQuestions(keyword:string): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
     return this.http.get(`/api/question/search/${keyword}`, {headers: headers})
       .map((response: Response) => {
         if(response.status === 200){
@@ -60,7 +60,7 @@ export class QuestionService {
 
   loadQuestionsByModule(moduleCode: string): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
     return this.http.get(`/api/question/module/${moduleCode}`, {headers: headers})
       .map((response: Response) => {
         if(response.status === 200){
@@ -73,7 +73,7 @@ export class QuestionService {
 
   loadQuestionById(questionId: string): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
     return this.http.get(`/api/question/${questionId}`, {headers: headers})
       .map((response: Response) => {
         if(response.status === 200){
@@ -92,7 +92,7 @@ export class QuestionService {
         "answer": answer.answer,
         "submittedBy": answer.submittedBy
       },
-      "token": this.authenticationService.getloggedOnUser().token
+      "token": this.authenticationService.getLoggedOnUser().token
     })
       .map((response: Response) => {
         if(response.status === 200){

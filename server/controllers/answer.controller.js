@@ -19,7 +19,7 @@ var answerController = function (Question) {
             res.send({
               message: 'Internal server error'
             });
-            console.log('error: ',err);
+            console.log('error: ', err);
           });
       })
       .catch(function (err) {
@@ -27,7 +27,7 @@ var answerController = function (Question) {
         res.send({
           message: 'Question not found'
         });
-        console.log('error: ',err);
+        console.log('error: ', err);
       });
   };
 
@@ -54,7 +54,7 @@ var answerController = function (Question) {
             res.send({
               message: 'Internal server error'
             });
-            console.log('error: ',err);
+            console.log('error: ', err);
           });
       })
       .catch(function (err) {
@@ -62,7 +62,7 @@ var answerController = function (Question) {
         res.send({
           message: 'Question not found'
         });
-        console.log('error: ',err);
+        console.log('error: ', err);
       });
   };
 
@@ -85,7 +85,7 @@ var answerController = function (Question) {
             res.send({
               message: 'Internal server error'
             });
-            console.log('error: ',err);
+            console.log('error: ', err);
           });
       })
       .catch(function (err) {
@@ -93,7 +93,7 @@ var answerController = function (Question) {
         res.send({
           message: 'Question not found'
         });
-        console.log('error: ',err);
+        console.log('error: ', err);
       });
   };
 

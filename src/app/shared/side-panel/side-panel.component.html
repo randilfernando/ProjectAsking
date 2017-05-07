@@ -5,14 +5,12 @@
       <h1 style="font-size: 40px; color: white; padding-left: 40px;">asking</h1>
     </div>
   </li>
-  <li><a [routerLink]="['/featured']" routerLinkActive="active">Home</a></li>
-  <li><a [routerLink]="['/add-question']" routerLinkActive="active">Add Question</a></li>
-  <li><a [routerLink]="['/search-module']" routerLinkActive="active">Search Module</a></li>
+  <li *ngFor="let actionURL of actionURLList"><a [routerLink]="['/' + actionURL.actionURL]" routerLinkActive="active">{{actionURL.title}}</a></li>
   <li>
-    <div class="divider"></div>
+    <div *ngIf="enrolledModules" class="divider"></div>
   </li>
-  <li><a class="subheader">Enrolled Modules</a></li>
-  <div class="scroll-box">
+  <li *ngIf="enrolledModules"><a class="subheader">Enrolled Modules</a></li>
+  <div *ngIf="enrolledModules" class="scroll-box">
     <li *ngFor="let module of enrolledModules"><a [routerLink]="['/module/' + module.moduleCode]" class="truncate">{{module.moduleName}}</a></li>
   </div>
 </ul>

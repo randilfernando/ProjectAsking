@@ -9,13 +9,14 @@ import {ModuleService} from "../../../services/module.service";
 export class FeaturedComponent implements OnInit {
 
   modulesList: Module[];
-  private message: string = 'Loading.....';
+  private message: string = null;
 
   constructor(private moduleService: ModuleService) { }
 
   ngOnInit() {
     this.moduleService.loadFeaturedModules()
       .subscribe(result => {
+        this.message = null
         if(result){
           this.modulesList = this.moduleService.getModules();
         }else{

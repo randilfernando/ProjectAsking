@@ -15,7 +15,7 @@ export class UserService {
     return this.http.post('/api/user/subscribe', {
       "email": email,
       "id": module._id,
-      "token": this.authenticationService.getloggedOnUser().token
+      "token": this.authenticationService.getLoggedOnUser().token
     })
       .map((response: Response) => {
         if (response.status === 200) {
@@ -29,7 +29,7 @@ export class UserService {
 
   loadSubscribedModules(email: string): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
     return this.http.get(`/api/user/profile/${email}`, {headers: headers})
       .map((response: Response) => {
         if(response.status === 200){

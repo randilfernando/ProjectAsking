@@ -3,46 +3,52 @@
 </div>
 <div class="row divider"></div>
 <div class="container">
-  <div class="row">
-    <h6 class="center-align">All questions submitted</h6><br>
-  </div>
-  <div class="row">
-    <div class="col s6">
-      <chart *ngIf="isQuestionDataLoaded" [type]="allQuestionsChart.type" [data]="allQuestionsChart.data" [options]="allQuestionsChart.options"></chart>
+  <div *ngIf="isQuestionDataLoaded">
+    <div class="row">
+      <h6 class="center-align">All questions submitted</h6><br>
     </div>
-    <div class="col s6">
-      <p>This chart displays a report of answered and unanswered questions. Below chart categorized questions according to
-        module. Further you can view report on each module by selecting the relevant module.
-      </p>
+    <div class="row">
+      <div class="col s6">
+        <chart [type]="allQuestionsChart.type" [data]="allQuestionsChart.data"
+               [options]="allQuestionsChart.options"></chart>
+      </div>
+      <div class="col s6">
+        <p>This chart displays a report of answered and unanswered questions. Below chart categorized questions
+          according to
+          module. Further you can view report on each module by selecting the relevant module.
+        </p>
+      </div>
     </div>
+    <div *ngIf="isModuleDataLoaded" class="row divider"></div>
   </div>
-  <div class="row divider"></div>
-  <div class="row">
-    <h6 class="center-align">Questions submitted categorized by module</h6><br>
-  </div>
-  <div class="row">
-    <div class="col s12">
-      <chart *ngIf="isModuleDataLoaded" [type]="moduleChart.type" [data]="moduleChart.data" [options]="moduleChart.options"></chart>
+  <div *ngIf="isModuleDataLoaded">
+    <div class="row">
+      <h6 class="center-align">Questions submitted categorized by module</h6><br>
     </div>
-  </div>
-  <div class="row">
-    <table class="highlight">
-      <thead>
-      <tr>
-        <th>Module Code</th>
-        <th>Module Name</th>
-        <th>Answers Submitted</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let module of moduleList">
-        <td>{{module.moduleCode}}</td>
-        <td>{{module.moduleName}}</td>
-        <td>{{module.totalQuestions}}</td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="row">
+      <div class="col s12">
+        <chart [type]="moduleChart.type" [data]="moduleChart.data" [options]="moduleChart.options"></chart>
+      </div>
+    </div>
+    <div class="row">
+      <table class="highlight">
+        <thead>
+        <tr>
+          <th>Module Code</th>
+          <th>Module Name</th>
+          <th>Answers Submitted</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let module of moduleList">
+          <td>{{module.moduleCode}}</td>
+          <td>{{module.moduleName}}</td>
+          <td>{{module.totalQuestions}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-<div class="row divider"></div>
+<div *ngIf="isQuestionDataLoaded" class="row divider"></div>
 <router-outlet style="padding-bottom: 20px"></router-outlet>

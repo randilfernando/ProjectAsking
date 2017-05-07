@@ -12,7 +12,7 @@ import {Subscription} from "rxjs";
 export class SearchQuestionsComponent implements OnInit, OnDestroy {
 
   questionList: Question[];
-  private message: string = 'Loading...';
+  private message: string = null;
   private subscription: Subscription;
 
   constructor(private questionService: QuestionService, private activatedRoute: ActivatedRoute) { }
@@ -29,7 +29,7 @@ export class SearchQuestionsComponent implements OnInit, OnDestroy {
 
   searchQuestions(keyword: string){
     this.questionList = null;
-    this.message = 'Loading...';
+    this.message = null;
     this.questionService.searchQuestions(keyword)
       .subscribe(result => {
         if(result){

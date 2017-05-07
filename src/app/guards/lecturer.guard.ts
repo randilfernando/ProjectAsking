@@ -8,7 +8,7 @@ export class LecturerGuard implements CanActivate {
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   canActivate() {
-    if (this.authenticationService.getloggedOnUser().accessLevel == 1) {
+    if (this.authenticationService.getLoggedOnUser().accessLevel > 0) {
       //If lecturer
       return true;
     }

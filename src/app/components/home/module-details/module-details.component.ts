@@ -14,21 +14,18 @@ export class ModuleDetailsComponent implements OnInit, OnDestroy {
 
   selectedModule: Module;
   questionList: Question[];
-  private message: string = 'Loading...';
+  private message: string = null;
   private subscription: Subscription;
-  private isLoading = true;
 
   constructor(private moduleService: ModuleService, private questionService: QuestionService, private activatedRoute: ActivatedRoute) { }
 
   getModule(id: string){
-    this.isLoading = true;
-    this.message = 'Loading...';
+    this.questionList = null;
     this.moduleService.loadModule(id)
       .subscribe( result => {
         if(result){
           this.selectedModule = this.moduleService.getSelectedModule();
           this.getQuestions(id);
-          console.log(this.message);
         }else{
           this.selectedModule = null;
           this.message = 'No such Module...';
@@ -45,7 +42,7 @@ export class ModuleDetailsComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         if(result){
           this.questionList = this.questionService.getQuestionList();
-          this.isLoading = false;
+          this.message = null;
         }else{
           this.questionList = null;
           this.message = 'No questions submitted...'

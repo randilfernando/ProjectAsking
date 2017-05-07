@@ -1,7 +1,7 @@
 <div class="row container" style="padding-top: 20px">
   <h5>Question List</h5>
 </div>
-<div class="row container" *ngIf="!questionList">
+<div class="row container valign-wrapper" *ngIf="message" style="padding-top: 20px">
   <h6>{{message}}</h6>
 </div>
 <ask-question-list *ngIf="questionList" [questionList]="questionList"></ask-question-list>

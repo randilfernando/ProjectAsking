@@ -9,7 +9,7 @@ import {ModuleService} from "../../../services/module.service";
 export class SearchModuleComponent implements OnInit {
 
   modulesList: Module[];
-  private message: string = 'Loading.....';
+  private message: string = null;
 
   constructor(private moduleService: ModuleService) {
   }
@@ -17,6 +17,7 @@ export class SearchModuleComponent implements OnInit {
   ngOnInit() {
     this.moduleService.loadModules()
       .subscribe(result => {
+        this.message = null;
         if (result) {
           this.modulesList = this.moduleService.getModules();
         } else {

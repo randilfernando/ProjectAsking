@@ -14,7 +14,7 @@ export class ReportService {
 
   loadOverallReport(): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
     return this.http.get('/api/report', {headers: headers})
       .map((response: Response) => {
         if (response.status === 200) {
@@ -28,7 +28,7 @@ export class ReportService {
 
   loadUnanswered(): Observable<boolean>{
     let headers = new Headers();
-    headers.append('x-jwt-token', this.authenticationService.getloggedOnUser().token);
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
     return this.http.get('/api/report/unanswered', {headers: headers})
       .map((response: Response) => {
         if (response.status === 200) {

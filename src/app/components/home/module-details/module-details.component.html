@@ -1,7 +1,7 @@
-<div *ngIf="selectedModule" class="row container" style="padding-top: 20px">
-  <h5>{{selectedModule?.moduleCode}} - {{selectedModule?.moduleName}}</h5>
+<div class="row container" style="padding-top: 20px">
+  <h5 *ngIf="selectedModule">{{selectedModule?.moduleCode}} - {{selectedModule?.moduleName}}</h5>
 </div>
-<div class="row container" *ngIf="isLoading" style="padding-top: 20px">
+<div class="row valign-wrapper container" *ngIf="message" style="padding-top: 20px">
   <h6>{{message}}</h6>
 </div>
 <ask-question-list *ngIf="questionList" [questionList]="questionList"></ask-question-list>

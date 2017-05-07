@@ -1,4 +1,5 @@
 var questionController = function (Question, Module) {
+
   var get = function (req, res) {
     Question.find({})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
@@ -17,14 +18,15 @@ var questionController = function (Question, Module) {
   };
 
   var getByKeyword = function (req, res) {
-    Question.find({$text: {$search: req.params.keyword}})
+    Question.find({$text: {$search: req.params.keyword}}, {score : { $meta: "textScore" }})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
+      .sort({ score : { $meta : 'textScore' } })
       .exec()
       .then(function (questions) {
         if (questions.length == 0){
           res.status(204);
           res.send({
-            "message": "No questions found"
+            message: 'No questions found'
           });
         }else{
           res.status(200);
@@ -48,7 +50,7 @@ var questionController = function (Question, Module) {
         res.send(question);
       })
       .catch(function (err) {
-        res.status(500);
+        res.status(404);
         res.send({
           message: 'Question not found'
         });
@@ -57,14 +59,14 @@ var questionController = function (Question, Module) {
   };
 
   var getByModule = function (req, res) {
-    Question.find({'moduleCode': req.params.id})
+    Question.find({'moduleCode': req.params.code})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
       .exec()
       .then(function (questions) {
         if (questions.length == 0){
           res.status(204);
           res.send({
-            "message": "No questions submitted"
+            message: 'No questions submitted'
           });
         } else {
           res.status(200);

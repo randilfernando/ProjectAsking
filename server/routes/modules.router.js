@@ -1,22 +1,22 @@
 var express = require('express');
 var Module = require('./../model/module.model').Module;
 var moduleController = require('./../controllers/module.controller.js')(Module);
-var adminMiddleware = require('./../middleware/admin.middleware');
+var accessMiddleware = require('./../middleware/access.middleware');
 
 var moduleRouter = express.Router();
 
 moduleRouter.route('')
     .get(moduleController.get)
-    .post(adminMiddleware, moduleController.add)
-    .delete(adminMiddleware, moduleController.del);
+    .post(accessMiddleware([2]), moduleController.add)
+    .delete(accessMiddleware([2]), moduleController.del);
 
 moduleRouter.route('/featured')
     .get(moduleController.getFeatured);
 
-moduleRouter.route('/:id')
+moduleRouter.route('/:code')
     .get(moduleController.getById)
-    .put(adminMiddleware, moduleController.update)
-    .patch(adminMiddleware, moduleController.patch);
+    .put(accessMiddleware([2]), moduleController.update)
+    .patch(accessMiddleware([2]), moduleController.patch);
 
 moduleRouter.route('/search/:keyword')
     .get(moduleController.getByKeyword);
