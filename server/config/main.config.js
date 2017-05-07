@@ -7,7 +7,7 @@ var environments = {
   "test": "test"
 };
 
-var environment = environments.development; // change environment for the application
+var environment = environments.production; // change environment for the application
 
 module.exports = {
   host: serverConfig[environment].host,
