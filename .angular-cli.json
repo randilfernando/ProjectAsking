@@ -20,7 +20,6 @@
       "prefix": "ask",
       "styles": [
         "./assets/css/materialize.css",
-        "./assets/css/materialize.icons.css",
         "./assets/css/styles.css"
       ],
       "scripts": [
