@@ -10,8 +10,8 @@ var mainConfig = require('./config/main.config');
 const SERVER_HOST = mainConfig.host;
 const SERVER_PORT = mainConfig.port;
 const MORGAN_MODE = mainConfig.morganMode;
-const CLIENT_LOCATION = mainConfig.client;
-const MONGO_STRING = '../' + mainConfig.database;
+const CLIENT_LOCATION = '../' + mainConfig.client;
+const MONGO_STRING = mainConfig.database;
 
 //configure passport
 require('./config/passport.config')(passport);
