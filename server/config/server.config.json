@@ -1,17 +1,20 @@
 {
-  "development": {
+  "dev": {
     "host": "localhost",
     "port": 5000,
-    "morganMode": "dev"
+    "morganMode": "dev",
+    "client": "client_dev"
   },
   "test": {
     "host": "localhost",
     "port": 5000,
-    "morganMode": "dev"
+    "morganMode": "dev",
+    "client": "client_dev"
   },
-  "production": {
+  "prod": {
     "host": "localhost",
     "port": 5000,
-    "morganMode": "common"
+    "morganMode": "common",
+    "client": "client"
   }
 }

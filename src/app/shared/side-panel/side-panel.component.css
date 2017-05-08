@@ -1,13 +1,11 @@
 /*Make scrollable div*/
 .scroll-box {
   overflow-y:scroll;
-  height: 250px;
 }
 
 @media screen and (max-width: 1024px) {
   .scroll-box {
     overflow-y:hidden;
-    height: 250px;
   }
 }
 

@@ -1,6 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {AuthenticationService} from "../../services/authentication.service";
-import {UserService} from "../../services/user.service";
+import {Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
 import {Module} from "../../types/module.type";
 import {ActionURL} from "../../types/action.type";
 
@@ -9,7 +7,7 @@ import {ActionURL} from "../../types/action.type";
   templateUrl: 'side-panel.component.html',
   styleUrls: ['side-panel.component.css']
 })
-export class SidePanelComponent implements OnInit {
+export class SidePanelComponent implements OnInit, AfterViewInit {
 
   @Input()
   enrolledModules: Module[];
@@ -17,10 +15,22 @@ export class SidePanelComponent implements OnInit {
   @Input()
   actionURLList: ActionURL[];
 
+  @ViewChild('menuUp') menuUp: ElementRef;
+  menuDownHeight = 0;
+
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.menuDownHeight = window.innerHeight - (this.menuUp.nativeElement.offsetHeight + 60);
+  }
+
+  onResize(){
+    this.menuDownHeight = window.innerHeight - this.menuUp.nativeElement.offsetHeight;
+    console.log()
   }
 
 }
