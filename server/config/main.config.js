@@ -9,6 +9,8 @@ var environments = {
 
 var environment = process.env.NODE_ENV || environments.production; // change environment for the application
 
+console.log(serverConfig[environment].host);
+
 module.exports = {
   host: serverConfig[environment].host,
   port: process.env.PORT || serverConfig[environment].port,
