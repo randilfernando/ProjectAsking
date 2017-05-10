@@ -8,12 +8,12 @@ var userLevels = {
   student: 0,
   lecturer: 1,
   admin: 2
-}
+};
 
 var userModel = new Schema({
   name: {type: String, required: true},
   email: {type: String, unique: true, required: true},
-  password: String,
+  password: {type: String, required: true},
   accessLevel: {type: Number, default: userLevels.student},
   subscribedModules: [{type: Schema.Types.ObjectId, ref: 'Module'}]
 });

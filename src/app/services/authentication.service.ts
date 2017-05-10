@@ -41,7 +41,7 @@ export class AuthenticationService {
   register(user: User): Observable<boolean>{
     return this.http.post('/api/user/register', {
       "email": user.email,
-      "username": user.username,
+      "name": user.username,
       "password": user.password
     })
       .map((response: Response) => {

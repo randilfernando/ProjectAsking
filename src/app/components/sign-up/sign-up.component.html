@@ -1,4 +1,30 @@
 <body>
+
+<!-- Modal Structure -->
+<div id="resend" class="modal">
+  <div class="modal-content">
+    <h4>Pending user</h4>
+    <p>Send verification email again.</p>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action modal-close waves-effect waves-green btn-flat">Yes</a>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="confirmation" class="modal">
+  <div class="modal-content">
+    <h4>Confirmation</h4>
+    <p>A confirmation email with activation link was sent to your email address.</p>
+  </div>
+  <div class="modal-footer">
+    <a [routerLink]="['/login']" class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+  </div>
+</div>
+
+<a hidden id="trigger_resend" href="#resend">Resend Modal Trigger</a>
+<a hidden id="trigger_confirmation" href="#confirmation">Confirmation Modal Trigger</a>
+
 <header>
   <ask-loginheader></ask-loginheader>
 </header>

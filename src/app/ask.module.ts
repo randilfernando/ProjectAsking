@@ -41,6 +41,7 @@ import { Error403Component } from './components/error-pages/error-403/error-403.
 import {AdminGuard} from "./guards/admin.guard";
 import {LecturerGuard} from "./guards/lecturer.guard";
 import { ViewProfileComponent } from './components/home/view-profile/view-profile.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { ViewProfileComponent } from './components/home/view-profile/view-profil
     Error404Component,
     ViewReportComponent,
     Error403Component,
-    ViewProfileComponent
+    ViewProfileComponent,
+    PasswordResetComponent
   ],
   imports: [
     BrowserModule,

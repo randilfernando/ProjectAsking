@@ -1,8 +1,9 @@
 var express = require('express');
 var passport = require('passport');
 var User = require('./../model/user.model').User;
+var TempUser = require('./../model/tempUser.model').TempUser;
 var Module = require('./../model/module.model').Module;
-var userController = require('./../controllers/user.controller')(User, Module, passport);
+var userController = require('./../controllers/user.controller')(User, TempUser, Module, passport);
 var authMiddleware = require('./../middleware/auth.middleware');
 
 var usersRouter = express.Router();
@@ -12,6 +13,9 @@ usersRouter.route('/register')
 
 usersRouter.route('/login')
   .post(userController.login);
+
+usersRouter.route('/verification/:id')
+  .get(userController.verification);
 
 usersRouter.route('/reset')
   .post(userController.resetPassword);

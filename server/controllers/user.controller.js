@@ -1,13 +1,13 @@
 var mailController = require('./mail.controller');
 var generator = require('generate-password');
 
-var userController = function (User, Module, passport) {
+var userController = function (User, TempUser, Module, passport) {
 
   var getByEmail = function (req, res) {
     User.findById(req.body.token._id)
       .populate('subscribedModules', '_id moduleCode moduleName totalQuestions')
       .exec()
-      .then(function(user){
+      .then(function (user) {
         res.status(200);
         res.send(user);
       })
@@ -20,27 +20,114 @@ var userController = function (User, Module, passport) {
   };
 
   var register = function (req, res) {
-    var user = new User();
 
-    user.name = req.body.username;
-    user.email = req.body.email;
-    user.setPassword(req.body.password);
+    console.log(req.body);
 
-    user.save()
-      .then(function () {
-        res.status(200);
-        res.json({
-          "message": 'Success'
-        });
+    User.findOne({email: req.body.email})
+      .exec()
+      .then(function (user) {
+        if (user) {
+          res.status(409);
+          res.send({
+            message: 'User account already exist'
+          });
+        } else {
+          TempUser.findOne({email: req.body.email})
+            .exec()
+            .then(function (tempUser) {
+              if (tempUser) {
+                res.status(203);
+                res.send({
+                  message: 'Confirmation pending'
+                });
+              } else {
+                var user = new User();
+                user.setPassword(req.body.password);
+
+                var tempUser = new TempUser();
+                tempUser.name = req.body.name;
+                tempUser.email = req.body.email;
+                tempUser.password = user.password;
+
+                tempUser.save()
+                  .then(function (savedUser) {
+                    mailController.accountConfirmationMail(savedUser.email, savedUser._id);
+                    res.status(200);
+                    res.send({
+                      message: 'Confirmation message sent to email address'
+                    });
+                  })
+                  .catch(function (err) {
+                    res.status(500);
+                    res.send({
+                      message: 'Internal server error'
+                    });
+                    console.log(err);
+                  });
+              }
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send({
+                message: 'Internal server error'
+              });
+              console.log(err);
+            });
+        }
       })
       .catch(function (err) {
         res.status(500);
-        res.json({
-          "message": 'Internal server error'
+        res.send({
+          message: 'Internal server error'
         });
-        console.log('error: ', err);
-      })
+        console.log(err);
+      });
+  };
 
+  var verification = function (req, res) {
+    TempUser.findById(req.params.id)
+      .exec()
+      .then(function (tempUser) {
+        var user = new User();
+        user.email = tempUser.email;
+        user.name = tempUser.name;
+        user.password = tempUser.password;
+
+        user.save()
+          .then(function () {
+            tempUser.remove();
+            res.status(200);
+            res.redirect('/login');
+          })
+          .catch(function (err) {
+            res.status(500);
+            res.send({
+              message: 'Internal server error'
+            });
+            console.log(err);
+          })
+      })
+  };
+
+  var resend = function (req, res) {
+    TempUser.findOne({email: req.body.email})
+      .exec()
+      .then(function (tempUser) {
+        if(tempUser){
+          mailController.accountConfirmationMail(tempUser.email, tempUser._id);
+        }else{
+          res.status(404);
+          res.send({
+            message: 'No pending users found'
+          });
+        }
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send({
+          message: 'Internal server error'
+        });
+      })
   };
 
   var login = function (req, res) {
@@ -149,12 +236,12 @@ var userController = function (User, Module, passport) {
     User.findById(req.body.token._id)
       .exec()
       .then(function (user) {
-        if (user.accessLevel > 1){
+        if (user.accessLevel > 1) {
           res.status(203);
           res.send({
             message: 'User can not subscribe for modules'
           })
-        }else {
+        } else {
           Module.findById(req.body.id)
             .exec()
             .then(function (module) {
@@ -198,46 +285,48 @@ var userController = function (User, Module, passport) {
   };
 
   var unsubscribe = function (req, res) {
-      User.findById(req.body.token._id)
-        .exec()
-        .then(function (user) {
-          if (user.accessLevel > 1){
-            res.status(203);
-            res.send({
-              message: 'User can not unsubscribe for modules'
-            })
-          }else{
-            var index = user.subscribedModules.indexOf(req.body.id);
-            if (index > -1) {
-              user.subscribedModules.splice(index, 1);
-            }
-            user.save()
-              .then(function () {
-                res.status(200);
-                res.send({
-                  "message": "Success"
-                });
-              })
-              .catch(function (err) {
-                res.status(500);
-                res.send({
-                  "message": "Internal server error"
-                });
-                console.log('error', err);
-              });
-          }
-        })
-        .catch(function (err) {
-          res.status(404);
+    User.findById(req.body.token._id)
+      .exec()
+      .then(function (user) {
+        if (user.accessLevel > 1) {
+          res.status(203);
           res.send({
-            "message": "User not found"
-          });
+            message: 'User can not unsubscribe for modules'
+          })
+        } else {
+          var index = user.subscribedModules.indexOf(req.body.id);
+          if (index > -1) {
+            user.subscribedModules.splice(index, 1);
+          }
+          user.save()
+            .then(function () {
+              res.status(200);
+              res.send({
+                "message": "Success"
+              });
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send({
+                "message": "Internal server error"
+              });
+              console.log('error', err);
+            });
+        }
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send({
+          "message": "User not found"
         });
-    };
+      });
+  };
 
   return {
     getByEmail: getByEmail,
     register: register,
+    verification: verification,
+    resend: resend,
     login: login,
     resetPassword: resetPassword,
     subscribe: subscribe,

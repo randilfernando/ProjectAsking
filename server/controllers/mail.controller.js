@@ -1,5 +1,6 @@
 var nodeMailer = require('nodemailer');
 var security = require('./../config/security.config.json');
+var config = require('./../config/main.config');
 
 var transporter = nodeMailer.createTransport({
   service: 'gmail',
@@ -26,12 +27,25 @@ var sendMail = function (receiver, subject, text, html) {
   });
 };
 
-module.exports.passwordResetMail = function(email, password){
+module.exports.passwordResetMail = function (email, password) {
   sendMail(email,
     '[Asking] Password Reset',
     'Use this email to reset your password.',
-    '<p>Asking question and answer platform reset your password according to your request.</p>' +
-    '<p>This is your new password: <b>' + password + '</b></p>' +
-    '<button onclick="console.log(1)">Click me!</button>'
+    `
+      <p>Asking question and answer platform reset your password according to your request.</p>
+      <p>This is your new password: <b>${password}</b></p>
+    `
+  );
+};
+
+module.exports.accountConfirmationMail = function (email, tempUserUrl) {
+  var url = 'http://' + config.host + ':' + config.port + '/api/user/verification/' + tempUserUrl;
+  sendMail(email,
+    '[Asking] Email Confirmation',
+    'Click on this link to activate user user account at Asking',
+    `
+      <p>Asking question and answer platform created a user account for you click on this link to activate your user account.</p>
+      <p>Activation link: <a href="${url}">${url}</a></p>
+    `
   )
 };
