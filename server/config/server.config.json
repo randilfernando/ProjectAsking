@@ -6,7 +6,7 @@
     "client": "client_dev"
   },
   "test": {
-    "host": "localhost",
+    "host": "http://localhost",
     "port": 5000,
     "morganMode": "dev",
     "client": "client_dev"

@@ -10,7 +10,7 @@ var environments = {
 var environment = process.env.NODE_ENV || environments.production; // change environment for the application
 
 module.exports = {
-  host: process.env.HOST || serverConfig[environment].host,
+  host: serverConfig[environment].host,
   port: process.env.PORT || serverConfig[environment].port,
   morganMode: serverConfig[environment].morganMode,
   client: serverConfig[environment].client,
