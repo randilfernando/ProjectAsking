@@ -1,7 +1,10 @@
+var mailController = require('./mail.controller');
+var generator = require('generate-password');
+
 var userController = function (User, Module, passport) {
 
   var getByEmail = function (req, res) {
-    User.findOne({'email': req.params.email})
+    User.findById(req.body.token._id)
       .populate('subscribedModules', '_id moduleCode moduleName totalQuestions')
       .exec()
       .then(function(user){
@@ -73,6 +76,39 @@ var userController = function (User, Module, passport) {
 
   };
 
+  var resetPassword = function (req, res) {
+    User.findOne({'email': req.body.email})
+      .exec()
+      .then(function (user) {
+        var password = generator.generate({
+          length: 10,
+          numbers: true
+        });
+        user.setPassword(password);
+        user.save()
+          .then(function () {
+            mailController.passwordResetMail(user.email, password);
+            res.status(200);
+            res.json({
+              "message": 'Success'
+            });
+          })
+          .catch(function (err) {
+            res.status(500);
+            res.json({
+              "message": 'Internal server error'
+            });
+            console.log('error: ', err);
+          })
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send({
+          message: 'User not found'
+        })
+      })
+  };
+
   var add = function (req, res) {
     var user = new User();
 
@@ -110,7 +146,7 @@ var userController = function (User, Module, passport) {
   };
 
   var subscribe = function (req, res) {
-    User.findOne({'email': req.body.email})
+    User.findById(req.body.token._id)
       .exec()
       .then(function (user) {
         if (user.accessLevel > 1){
@@ -162,7 +198,7 @@ var userController = function (User, Module, passport) {
   };
 
   var unsubscribe = function (req, res) {
-      User.findOne({'email': req.body.email})
+      User.findById(req.body.token._id)
         .exec()
         .then(function (user) {
           if (user.accessLevel > 1){
@@ -171,7 +207,10 @@ var userController = function (User, Module, passport) {
               message: 'User can not unsubscribe for modules'
             })
           }else{
-            user.subscribedModules.id(req.body.moduleId).remove();
+            var index = user.subscribedModules.indexOf(req.body.id);
+            if (index > -1) {
+              user.subscribedModules.splice(index, 1);
+            }
             user.save()
               .then(function () {
                 res.status(200);
@@ -200,6 +239,7 @@ var userController = function (User, Module, passport) {
     getByEmail: getByEmail,
     register: register,
     login: login,
+    resetPassword: resetPassword,
     subscribe: subscribe,
     unsubscribe: unsubscribe
   };

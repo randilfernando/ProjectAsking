@@ -1,4 +1,5 @@
-<div class="container" style="padding-top: 20px; padding-bottom: 20px">
-  <ask-module-summary *ngFor="let module of moduleList" [module]="module" [subscribeEnabled]="subscribeEnabled">
+<div style="padding-top: 20px; padding-bottom: 20px">
+  <ask-module-summary *ngFor="let module of moduleList" [module]="module"
+                      [subscribeEnabled]="subscribeEnabled" [unsunscribeEnables]="unsubscribeEnabled">
   </ask-module-summary>
 </div>

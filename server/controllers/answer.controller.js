@@ -4,7 +4,9 @@ var answerController = function (Question) {
     Question.findById(req.body.questionId)
       .exec()
       .then(function (question) {
-        question.answers.push(req.body.answer);
+        var answer = req.body.answer;
+        answer.submittedBy = req.body.token.email;
+        question.answers.push(answer);
         question.totalAnswers++;
 
         question.save()
@@ -38,7 +40,6 @@ var answerController = function (Question) {
         var answer = question.answers.id(req.body.answerId);
 
         answer.answer = req.body.answer;
-        answer.submittedBy = req.body.submittedBy;
         answer.totalRatings = req.body.totalRatings;
         answer.totalComments = req.body.totalComments;
 

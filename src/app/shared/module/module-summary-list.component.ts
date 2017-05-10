@@ -14,6 +14,9 @@ export class ModuleSummaryListComponent implements OnInit {
   @Input()
   subscribeEnabled: boolean = false;
 
+  @Input()
+  unsubscribeEnabled: boolean = false;
+
   constructor() { }
 
   ngOnInit() {

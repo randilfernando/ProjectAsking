@@ -1,6 +1,6 @@
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
-  <li><a href="">{{username}}</a></li>
+  <li><a [routerLink]="['/view-profile']">{{username}}</a></li>
   <li><a href="">Change Password</a></li>
   <li class="divider"></li>
   <li><a (click)="logout()">Logout</a></li>

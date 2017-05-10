@@ -14,14 +14,23 @@ export class ModuleSummaryComponent implements OnInit {
   @Input()
   subscribeEnabled: boolean = false;
 
+  @Input()
+  unsunscribeEnables: boolean = false;
+
   constructor(private authenticationService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
   }
 
   subscribe(){
-    let email = this.authenticationService.getLoggedOnUser().email;
-    this.userService.subscribeModule(email, this.module)
+    this.userService.subscribeModule(this.module)
+      .subscribe(result => {
+
+      });
+  }
+
+  unsubscribe(){
+    this.userService.unsubscribeModule(this.module)
       .subscribe(result => {
 
       });

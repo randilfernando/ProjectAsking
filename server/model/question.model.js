@@ -12,7 +12,8 @@ var questionModel = new Schema({
     topic: {type:String, trim:true},
     tags: [],
     description: {type:String, trim:true},
-    answers: {type:[answerModel], default:null}
+    answers: {type:[answerModel], default:null},
+    ratings: {type: [String], default: []}
 });
 
 questionModel.index({

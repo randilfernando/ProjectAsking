@@ -13,7 +13,10 @@ usersRouter.route('/register')
 usersRouter.route('/login')
   .post(userController.login);
 
-usersRouter.route('/profile/:email')
+usersRouter.route('/reset')
+  .post(userController.resetPassword);
+
+usersRouter.route('/profile')
   .get(authMiddleware, userController.getByEmail);
 
 usersRouter.route('/subscribe')

@@ -8,6 +8,7 @@ import {ViewQuestionComponent} from "./view-question/view-question.component";
 import {SearchModuleComponent} from "./search-module/search-module.component";
 import {ViewReportComponent} from "./view-report/view-report.component";
 import {LecturerGuard} from "../../guards/lecturer.guard";
+import {ViewProfileComponent} from "./view-profile/view-profile.component";
 
 export const HOME_ROUTES : Routes = [
   {path: 'featured', component: FeaturedComponent},
@@ -16,5 +17,6 @@ export const HOME_ROUTES : Routes = [
   {path: 'question/:id', component: ViewQuestionComponent},
   {path: 'question/search/:keyword', component: SearchQuestionsComponent},
   {path: 'module/:id', component: ModuleDetailsComponent},
-  {path: 'view-report', component: ViewReportComponent, canActivate: [LecturerGuard]}
+  {path: 'view-report', component: ViewReportComponent, canActivate: [LecturerGuard]},
+  {path: 'view-profile', component: ViewProfileComponent}
 ];

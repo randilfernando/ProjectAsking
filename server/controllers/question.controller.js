@@ -18,17 +18,17 @@ var questionController = function (Question, Module) {
   };
 
   var getByKeyword = function (req, res) {
-    Question.find({$text: {$search: req.params.keyword}}, {score : { $meta: "textScore" }})
+    Question.find({$text: {$search: req.params.keyword}}, {score: {$meta: "textScore"}})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
-      .sort({ score : { $meta : 'textScore' } })
+      .sort({score: {$meta: 'textScore'}})
       .exec()
       .then(function (questions) {
-        if (questions.length == 0){
+        if (questions.length == 0) {
           res.status(204);
           res.send({
             message: 'No questions found'
           });
-        }else{
+        } else {
           res.status(200);
           res.send(questions);
         }
@@ -54,7 +54,7 @@ var questionController = function (Question, Module) {
         res.send({
           message: 'Question not found'
         });
-        console.log('error: ',err);
+        console.log('error: ', err);
       });
   };
 
@@ -63,7 +63,7 @@ var questionController = function (Question, Module) {
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
       .exec()
       .then(function (questions) {
-        if (questions.length == 0){
+        if (questions.length == 0) {
           res.status(204);
           res.send({
             message: 'No questions submitted'
@@ -83,20 +83,44 @@ var questionController = function (Question, Module) {
   };
 
   var getByUser = function (req, res) {
-    res.send({
-      message: 'Method not implemented'
-    });
-  };
+      Question.find({'submittedBy': req.body.token.email}, null, {
+        skip: 0,
+        limit: 100,
+        sort: {_id: -1}
+      })
+        .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
+        .exec()
+        .then(function (questions) {
+          if (questions.length == 0) {
+            res.status(204);
+            res.send({
+              message: 'No questions submitted'
+            });
+          } else {
+            res.status(200);
+            res.send(questions);
+          }
+        })
+        .catch(function (err) {
+          res.status(500);
+          res.send({
+            message: 'Internal server error'
+          });
+          console.log('error: ', err);
+        });
+    }
+  ;
 
   var add = function (req, res) {
     Module.findOne({'moduleCode': req.body.moduleCode})
       .exec()
       .then(function (module) {
-        if (module){
+        if (module) {
           var question = new Question(req.body);
-          module.totalQuestions++;
+          question.submittedBy = req.body.token.email;
           question.save()
             .then(function () {
+              module.totalQuestions++;
               module.save()
                 .then(function () {
                   res.status(200);
@@ -112,7 +136,7 @@ var questionController = function (Question, Module) {
               });
               console.log('error: ', err);
             });
-        }else{
+        } else {
           res.status(404);
           res.send({
             message: 'Module not found'
@@ -133,7 +157,6 @@ var questionController = function (Question, Module) {
       .exec()
       .then(function (question) {
         question.title = req.body.title;
-        question.submittedBy = req.body.submittedBy;
         question.rating = req.body.rating;
         question.totalAnswers = req.body.totalAnswers;
         question.moduleCode = req.body.moduleCode;
@@ -154,7 +177,7 @@ var questionController = function (Question, Module) {
             res.send({
               message: 'Internal server error'
             });
-            console.log('error: ',err);
+            console.log('error: ', err);
           });
       })
       .catch(function (err) {
@@ -162,7 +185,7 @@ var questionController = function (Question, Module) {
         res.send({
           message: 'Question not found'
         });
-        console.log('error: ',err);
+        console.log('error: ', err);
       });
   }
 
@@ -170,7 +193,7 @@ var questionController = function (Question, Module) {
     Question.findById(req.params.id)
       .then(function (question) {
         delete req.body._id;
-        for(var p in req.body){
+        for (var p in req.body) {
           question[p] = req.body[p];
         }
 
@@ -186,7 +209,7 @@ var questionController = function (Question, Module) {
             res.send({
               message: 'Internal server error'
             });
-            console.log('error: ',err);
+            console.log('error: ', err);
           });
       })
       .catch(function (err) {
@@ -194,7 +217,7 @@ var questionController = function (Question, Module) {
         res.send({
           message: 'Question not found'
         });
-        console.log('error: ',err);
+        console.log('error: ', err);
       });
   };
 
@@ -220,7 +243,7 @@ var questionController = function (Question, Module) {
             res.send({
               message: 'Internal server error'
             });
-            console.log('error: ',err);
+            console.log('error: ', err);
           })
       })
       .catch(function (err) {
@@ -228,9 +251,87 @@ var questionController = function (Question, Module) {
         res.send({
           message: 'Question not found'
         });
-        console.log('error: ',err);
+        console.log('error: ', err);
       });
   };
+
+  var rateUp = function (req, res) {
+    Question.findById(req.body.questionId)
+      .exec()
+      .then(function (question) {
+        var preRate = question.totalRatings;
+        question.ratings.addToSet(req.body.email);
+        question.totalRatings = question.ratings.length;
+
+        if (preRate < question.totalRatings) {
+          question.save()
+            .then(function () {
+              res.status(200);
+              res.send({
+                message: 'Success'
+              });
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send({
+                message: 'Internal server error'
+              });
+              console.log('error: ', err);
+            });
+        } else {
+          res.status(203);
+          res.send({
+            message: 'Already rated'
+          });
+        }
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send({
+          message: 'Question not found'
+        });
+        console.log('error: ', err);
+      });
+  };
+
+  var rateDown = function (req, res) {
+    Question.findById(req.body.questionId)
+      .exec()
+      .then(function (question) {
+        var preRate = question.totalRatings;
+        question.ratings.pull(req.body.token.email);
+        question.totalRatings = question.ratings.length;
+
+        if (preRate > question.totalRatings) {
+          question.save()
+            .then(function () {
+              res.status(200);
+              res.send({
+                message: 'Success'
+              });
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send({
+                message: 'Internal server error'
+              });
+              console.log('error: ', err);
+            });
+        } else {
+          res.status(203);
+          res.send({
+            message: 'You have not rated this question'
+          });
+        }
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send({
+          message: 'Question not found'
+        });
+        console.log('error: ', err);
+      });
+  }
 
   return {
     get: get,

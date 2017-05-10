@@ -30,7 +30,6 @@ export class SidePanelComponent implements OnInit, AfterViewInit {
 
   onResize(){
     this.menuDownHeight = window.innerHeight - this.menuUp.nativeElement.offsetHeight;
-    console.log()
   }
 
 }

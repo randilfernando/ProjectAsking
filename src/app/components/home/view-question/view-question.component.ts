@@ -43,7 +43,7 @@ export class ViewQuestionComponent implements OnInit {
   }
 
   addAnswer(){
-    this.editingAnswer.submittedBy = this.authenticationService.getLoggedOnUser().username;
+    this.editingAnswer.submittedBy = this.authenticationService.getLoggedOnUser().email;
     this.questionService.addAnswer(this.selectedQuestion._id, this.editingAnswer).subscribe(
       result => {
         if (result){

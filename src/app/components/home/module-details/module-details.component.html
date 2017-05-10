@@ -4,4 +4,6 @@
 <div class="row valign-wrapper container" *ngIf="message" style="padding-top: 20px">
   <h6>{{message}}</h6>
 </div>
-<ask-question-list *ngIf="questionList" [questionList]="questionList"></ask-question-list>
+<div class="container">
+  <ask-question-list *ngIf="questionList" [questionList]="questionList"></ask-question-list>
+</div>

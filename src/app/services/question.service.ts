@@ -20,7 +20,6 @@ export class QuestionService {
       "moduleName": question.moduleName,
       "topic": question.topic,
       "description": question.description,
-      "submittedBy": question.submittedBy,
       "tags": question.tags,
       "token": this.authenticationService.getLoggedOnUser().token
     })
@@ -71,6 +70,19 @@ export class QuestionService {
       });
   }
 
+  loadQuestionByUser(){
+    let headers = new Headers();
+    headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
+    return this.http.get(`/api/question/user`, {headers: headers})
+      .map((response: Response) => {
+        if(response.status === 200){
+          this.questionList = response.json();
+          return true;
+        }
+        return false;
+      });
+  }
+
   loadQuestionById(questionId: string): Observable<boolean>{
     let headers = new Headers();
     headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
@@ -90,7 +102,6 @@ export class QuestionService {
       "questionId": questionId,
       "answer": {
         "answer": answer.answer,
-        "submittedBy": answer.submittedBy
       },
       "token": this.authenticationService.getLoggedOnUser().token
     })

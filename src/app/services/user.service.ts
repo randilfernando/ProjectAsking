@@ -11,15 +11,15 @@ export class UserService {
 
   constructor(private http: Http, private authenticationService: AuthenticationService) { }
 
-  subscribeModule(email: string, module: Module): Observable<boolean>{
+  subscribeModule(module: Module): Observable<boolean>{
     return this.http.post('/api/user/subscribe', {
-      "email": email,
       "id": module._id,
       "token": this.authenticationService.getLoggedOnUser().token
     })
       .map((response: Response) => {
         if (response.status === 200) {
           this.subscribedModuleList.push(module);
+          console.log(this.subscribedModuleList);
           return true;
         } else {
           return false;
@@ -27,13 +27,33 @@ export class UserService {
       });
   };
 
-  loadSubscribedModules(email: string): Observable<boolean>{
+  unsubscribeModule(module: Module): Observable<boolean>{
+    return this.http.post('/api/user/unsubscribe', {
+      "id": module._id,
+      "token": this.authenticationService.getLoggedOnUser().token
+    })
+      .map((response: Response) => {
+        if (response.status === 200) {
+          var index: number = this.subscribedModuleList.indexOf(module, 0);
+          if (index > -1) {
+            this.subscribedModuleList.splice(index, 1);
+          }
+          return true;
+        } else {
+          return false;
+        }
+      });
+  };
+
+  loadSubscribedModules(): Observable<boolean>{
     let headers = new Headers();
     headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
-    return this.http.get(`/api/user/profile/${email}`, {headers: headers})
+    return this.http.get(`/api/user/profile`, {headers: headers})
       .map((response: Response) => {
         if(response.status === 200){
-          this.subscribedModuleList = response.json() && response.json().subscribedModules;
+          if (!this.subscribedModuleList){
+            this.subscribedModuleList = response.json() && response.json().subscribedModules;
+          }
           return true;
         }
         return false;
@@ -43,5 +63,4 @@ export class UserService {
   getSubscribedModules(): Module[]{
     return this.subscribedModuleList;
   }
-
 }

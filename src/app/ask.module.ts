@@ -40,6 +40,7 @@ import { ReportService } from "./services/report.service";
 import { Error403Component } from './components/error-pages/error-403/error-403.component';
 import {AdminGuard} from "./guards/admin.guard";
 import {LecturerGuard} from "./guards/lecturer.guard";
+import { ViewProfileComponent } from './components/home/view-profile/view-profile.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import {LecturerGuard} from "./guards/lecturer.guard";
     ViewQuestionComponent,
     Error404Component,
     ViewReportComponent,
-    Error403Component
+    Error403Component,
+    ViewProfileComponent
   ],
   imports: [
     BrowserModule,

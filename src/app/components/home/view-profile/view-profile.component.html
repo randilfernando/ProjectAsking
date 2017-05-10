@@ -1,0 +1,67 @@
+<div class="row container" style="padding-top: 20px">
+  <h5>My Profile</h5>
+</div>
+<div class="row divider"></div>
+<div class="container" style="padding-bottom: 50px">
+  <div class="row">
+    <div class="col s4">
+      <div class="card">
+        <div class="card-image">
+          <img src="../../../../assets/images/user_icon.png">
+        </div>
+        <div class="card-content">
+          <a class="waves-effect waves-light btn" style="width: 100%">Change</a>
+        </div>
+      </div>
+    </div>
+    <form id="signUpForm" class="col s7 offset-s1">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email"
+                 type="email"
+                 [value]="user.email"
+                 name="email"
+                 disabled
+          >
+          <label  class="active" for="email">Email</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="username"
+                 type="text"
+                 class="validate"
+                 [(ngModel)]="user.username"
+                 name="username"
+                 data-length="20"
+                 ngModel
+                 required
+          >
+          <label class="active" for="username">Username</label>
+        </div>
+      </div>
+      <div class="row" style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px">
+        <button [routerLink]="['/']" class="btn waves-effect waves-light center grey darken-1" type="button"
+                name="cancel" style="width: 100%">Cancel
+        </button>
+      </div>
+      <div class="row" style="padding-left: 10px; padding-right: 10px;">
+        <button class="btn waves-effect waves-light center" type="submit" name="action" style="width: 100%">Submit
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="row divider"></div>
+  <div class="row">
+    <div class="col s12" style="padding-bottom: 20px">
+      <ul class="tabs">
+        <li class="tab col s6"><a href="#subscribedModules">Subscribed Modules</a></li>
+        <li class="tab col s6"><a href="#submittedQuestions">Submitted Questions</a></li>
+      </ul>
+    </div>
+    <div id="subscribedModules" class="col s12">
+      <ask-modulesummarylist [moduleList]="subscribedModules" [subscribeEnabled]="true" [unsubscribeEnabled]="true"></ask-modulesummarylist>
+    </div>
+    <div id="submittedQuestions" class="col s12">
+      <ask-question-list [questionList]="submittedQuestions"></ask-question-list>
+    </div>
+  </div>
+</div>

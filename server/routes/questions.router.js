@@ -11,6 +11,9 @@ questionRouter.route('')
     .post(accessMiddleware([0,2]), questionsController.add)
     .delete(accessMiddleware([1,2]), questionsController.del);
 
+questionRouter.route('/user')
+  .get(questionsController.getByUser);
+
 questionRouter.route('/:id')
     .get(questionsController.getById)
     .put(accessMiddleware([1,2]), questionsController.update)
@@ -18,9 +21,6 @@ questionRouter.route('/:id')
 
 questionRouter.route('/module/:code')
     .get(questionsController.getByModule);
-
-questionRouter.route('/user/:email')
-    .get(questionsController.getByUser);
 
 questionRouter.route('/search/:keyword')
     .get(questionsController.getByKeyword);

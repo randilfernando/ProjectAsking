@@ -3,7 +3,10 @@
     <a class="left-align" [routerLink]="['/module/' + module.moduleCode]" style="color: white; font-size: 20px; padding-left: 20px">{{module.moduleCode}} - {{module.moduleName}}</a>
   </div>
   <div class="col s3">
-    <button *ngIf="subscribeEnabled" (click)="subscribe()" class="btn waves-effect waves-light center grey darken-2 z-depth-0">Subscribe</button>
+    <div *ngIf="subscribeEnabled">
+      <button *ngIf="!unsunscribeEnables" (click)="subscribe()" class="btn waves-effect waves-light center grey darken-2 z-depth-0">Subscribe</button>
+      <button *ngIf="unsunscribeEnables" (click)="unsubscribe()" class="btn waves-effect waves-light center grey darken-2 z-depth-0">Unsubscribe</button>
+    </div>
     <div *ngIf="!subscribeEnabled" class="right-align" style="padding-right: 20px;">
       <span class="new badge grey darken-2" data-badge-caption="questions">{{module.totalQuestions}}</span>
     </div>

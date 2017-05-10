@@ -40,16 +40,18 @@ export class HomeComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
-    let userEmail = this.authenticationService.getLoggedOnUser().email;
     if (this.authenticationService.getLoggedOnUser().accessLevel < 2){
-      this.userService.loadSubscribedModules(userEmail)
-        .subscribe(result => {
-          if(result){
-            this.enrolledModules = this.userService.getSubscribedModules();
-          } else {
-            this.enrolledModules = [];
-          }
-        })
+      if (this.enrolledModules = this.userService.getSubscribedModules()){
+      }else{
+        this.userService.loadSubscribedModules()
+          .subscribe(result => {
+            if(result){
+              this.enrolledModules = this.userService.getSubscribedModules();
+            } else {
+              this.enrolledModules = [];
+            }
+          })
+      }
     }else{
       this.enrolledModules = null;
     }

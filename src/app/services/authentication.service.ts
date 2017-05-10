@@ -53,6 +53,19 @@ export class AuthenticationService {
       });
   }
 
+  passwordReset(email: string){
+    return this.http.post('/api/user/reset', {
+      "email": email
+    })
+      .map((response: Response) => {
+        if (response.status == 200) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+  }
+
   logout(): void {
     // clear token remove user from local storage to log user out
     this.storage.removeItem(this.storedName);

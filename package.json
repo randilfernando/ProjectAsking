@@ -9,13 +9,14 @@
     "ng": "ng",
     "start": "node server/server.js",
     "build": "ng build",
+    "prod_build": "ng build --prod --output-path client",
     "test": "echo test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/randilfernando/Project_Asking.git"
+    "url": "https://github.com/randilfernando/Project_Asking.git"
   },
   "bugs": {
     "url": "https://github.com/randilfernando/Project_Asking/issues"
@@ -41,9 +42,11 @@
     "core-js": "^2.4.1",
     "express": "^4.15.2",
     "express-jwt": "^5.1.0",
+    "generate-password": "^1.3.0",
     "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.9.0",
     "morgan": "^1.8.1",
+    "nodemailer": "^4.0.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "rxjs": "^5.1.0",
