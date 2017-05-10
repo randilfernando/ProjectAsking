@@ -6,12 +6,14 @@ import {SignUpComponent} from "./components/sign-up/sign-up.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {Error404Component} from "./components/error-pages/error-404/error-404.component";
 import {Error403Component} from "./components/error-pages/error-403/error-403.component";
+import {PasswordResetComponent} from "./components/password-reset/password-reset.component";
 
 const APP_ROUTES: Routes = [
   {path: '', redirectTo: 'featured', pathMatch: 'full'},
   {path: '', component: HomeComponent, children: HOME_ROUTES, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent},
+  {path: 'reset', component: PasswordResetComponent},
   {path: 'forbidden', component: Error403Component},
   {path: '**', component: Error404Component}
 ];

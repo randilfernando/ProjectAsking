@@ -23,9 +23,9 @@ export class PasswordResetComponent implements OnInit, AfterViewInit {
     this.authenticationService.passwordReset(this.email)
       .subscribe(result => {
         if(result){
-          $('#confirmation').click();
+          $('#trigger_confirmation').click();
         }else{
-          $('error').click();
+          $('#trigger_error').click();
         }
       })
   }
