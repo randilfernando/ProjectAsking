@@ -1,6 +1,6 @@
 {
   "dev": {
-    "host": "localhost",
+    "host": "http://localhost",
     "port": 5000,
     "morganMode": "dev",
     "client": "client_dev"
@@ -12,7 +12,7 @@
     "client": "client_dev"
   },
   "prod": {
-    "host": "localhost",
+    "host": "https://asking-platform.herokuapp.com",
     "port": 5000,
     "morganMode": "common",
     "client": "client"
