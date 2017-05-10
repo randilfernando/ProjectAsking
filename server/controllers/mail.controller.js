@@ -39,7 +39,7 @@ module.exports.passwordResetMail = function (email, password) {
 };
 
 module.exports.accountConfirmationMail = function (email, tempUserUrl) {
-  var url = config.host + ':' + config.port + '/api/user/verification/' + tempUserUrl;
+  var url = 'https://asking-platform.herokuapp.com:' + config.port + '/api/user/verification/' + tempUserUrl;
   sendMail(email,
     '[Asking] Email Confirmation',
     'Click on this link to activate user user account at Asking',
