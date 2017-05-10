@@ -1,7 +1,63 @@
+<!-- Modal Structure -->
+<div id="passwordReset" class="modal">
+  <div class="modal-content">
+    <div class="row">
+      <form id="loginForm" (ngSubmit)="changePassword(password.value, newPassword.value, confirmPassword.value)" class="col s12" style="padding: 30px 50px;">
+        <div class="row">
+          <div class="input-field col s12">
+            <input
+              id="password"
+              type="password"
+              class="validate"
+              name="password"
+              ngModel
+              required
+              #password
+            >
+            <label for="password">Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input
+              id="newPassword"
+              type="password"
+              class="validate"
+              name="password"
+              ngModel
+              required
+              #newPassword
+            >
+            <label for="newPassword">New Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input
+              id="confirmPassword"
+              type="password"
+              class="validate"
+              name="password"
+              ngModel
+              required
+              #confirmPassword
+            >
+            <label for="confirmPassword">Confirm Password</label>
+          </div>
+        </div>
+        <div class="row" style="padding-left: 10px; padding-right: 10px;">
+          <button class="btn waves-effect waves-light center" type="submit" name="action" style="width: 100%">Change
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
   <li><a [routerLink]="['/view-profile']">{{username}}</a></li>
-  <li><a href="">Change Password</a></li>
+  <li><a href="#passwordReset">Change Password</a></li>
   <li class="divider"></li>
   <li><a (click)="logout()">Logout</a></li>
 </ul>
@@ -19,7 +75,8 @@
       <div class="col s3">
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li>
-            <a id="accountDropdown" class="dropdown-button truncate" data-activates="dropdown1" href="javascript:void(0);"><i
+            <a id="accountDropdown" class="dropdown-button truncate" data-activates="dropdown1"
+               href="javascript:void(0);"><i
               class="material-icons left">perm_identity</i>
               {{username}}
               <i class="material-icons right">arrow_drop_down</i></a>

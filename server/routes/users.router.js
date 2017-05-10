@@ -8,6 +8,9 @@ var authMiddleware = require('./../middleware/auth.middleware');
 
 var usersRouter = express.Router();
 
+usersRouter.route('')
+  .patch(userController.);
+
 usersRouter.route('/register')
   .post(userController.register);
 

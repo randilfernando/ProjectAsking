@@ -9,7 +9,7 @@ export class AuthenticationService {
   private storage = localStorage;
   private storedName = 'currentUser';
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private authenticationService: AuthenticationService) {}
 
   login(user: User): Observable<boolean> {
     return this.http.post('/api/user/login', {
@@ -56,6 +56,21 @@ export class AuthenticationService {
   passwordReset(email: string){
     return this.http.post('/api/user/reset', {
       "email": email
+    })
+      .map((response: Response) => {
+        if (response.status == 200) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+  }
+
+  changePassword(password: string, newPassword: string){
+    return this.http.patch('/api/user', {
+      "password": password,
+      "newPassword": newPassword,
+      "token": this.authenticationService.getLoggedOnUser().token
     })
       .map((response: Response) => {
         if (response.status == 200) {

@@ -10,25 +10,29 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   keyword: string;
   username: string;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) {
+  }
 
   ngOnInit() {
     this.username = this.authenticationService.getLoggedOnUser().username;
   }
 
-  logout(){
+  logout() {
     // logout user
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
 
-  ngAfterViewInit(){
-      $(document).ready(function () {
-        $('.dropdown-button').dropdown();
-      });
+  changePassword(password: string, newPassword: string, confirmPassword: string){
+
   }
 
-  search(){
+  ngAfterViewInit() {
+    $('.dropdown-button').dropdown();
+    $('.modal').modal();
+  }
+
+  search() {
     this.router.navigate([`/question/search/${this.keyword}`])
   }
 }
