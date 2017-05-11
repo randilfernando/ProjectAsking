@@ -36,6 +36,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     $('ul.tabs').tabs();
+    $('.modal').modal();
   }
 
   loadSubscribedModules() {
@@ -59,6 +60,21 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
           this.submittedQuestions = null;
         }
       })
+  }
+
+  changeUserData(){
+    this.userService.changeProfileName(this.user.username)
+      .subscribe(result => {
+        if(result){
+          $('#trigger_confirmation').click();
+        }else{
+          $('#trigger_error').click();
+        }
+      })
+  }
+
+  cancelEdit(){
+    this.user = this.authenticationService.getLoggedOnUser();
   }
 
 }

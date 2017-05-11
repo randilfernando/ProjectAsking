@@ -60,6 +60,24 @@ export class UserService {
       });
   }
 
+  changeProfileName(newName: string): Observable<boolean>{
+    return this.http.patch('/api/user/profile', {
+      "name": newName,
+      "token": this.authenticationService.getLoggedOnUser().token
+    })
+      .map((response: Response) => {
+        if (response.status === 200) {
+          let user = this.authenticationService.getLoggedOnUser();
+          user.username = newName;
+          this.authenticationService.saveLoggedOnUser(user);
+          return true;
+        } else {
+          return false;
+        }
+      });
+  }
+
+
   getSubscribedModules(): Module[]{
     return this.subscribedModuleList;
   }

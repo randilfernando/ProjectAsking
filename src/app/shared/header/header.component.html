@@ -1,8 +1,19 @@
+<!-- Modal Trigger -->
+<a id="trigger_confirmation" hidden href="#confirmation"></a>
+
+<!-- Modal Structure -->
+<div id="confirmation" class="modal">
+  <div class="modal-content">
+    <h4>Confirmation</h4>
+    <p>Password changed successfully.</p>
+  </div>
+</div>
+
 <!-- Modal Structure -->
 <div id="passwordReset" class="modal">
   <div class="modal-content">
     <div class="row">
-      <form id="loginForm" (ngSubmit)="changePassword(password.value, newPassword.value, confirmPassword.value)" class="col s12" style="padding: 30px 50px;">
+      <form id="loginForm" (ngSubmit)="changePassword(password.value, newPassword.value, confirmPassword.value)" class="col s12" style="padding: 10px 50px;">
         <div class="row">
           <div class="input-field col s12">
             <input
@@ -23,7 +34,7 @@
               id="newPassword"
               type="password"
               class="validate"
-              name="password"
+              name="newPassword"
               ngModel
               required
               #newPassword
@@ -37,7 +48,7 @@
               id="confirmPassword"
               type="password"
               class="validate"
-              name="password"
+              name="confirmPassword"
               ngModel
               required
               #confirmPassword
@@ -76,8 +87,8 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li>
             <a id="accountDropdown" class="dropdown-button truncate" data-activates="dropdown1"
-               href="javascript:void(0);"><i
-              class="material-icons left">perm_identity</i>
+               href="javascript:void(0);">
+              <i class="material-icons left">perm_identity</i>
               {{username}}
               <i class="material-icons right">arrow_drop_down</i></a>
           </li>

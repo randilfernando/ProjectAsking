@@ -1,14 +1,58 @@
-<div *ngIf="selectedQuestion && answerList" class="container" style="padding-top: 50px; padding-bottom: 50px">
-  <div class="row">
-    <h5>{{selectedQuestion.title}}</h5>
-    <div class="divider"></div>
+<div *ngIf="editEnabled">
+  <div *ngIf="!isEditing" class="fixed-action-btn" style="bottom: 45px; right: 24px">
+    <a (click)="triggerEdit()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
   </div>
-  <div class="row">
-    <div class="col s12">
-      <div [innerHTML]="selectedQuestion.description">
+
+  <div *ngIf="isEditing" class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px">
+    <a (click)="triggerEdit()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">menu</i></a>
+    <ul>
+      <li><a (click)="updateQuestion()" class="btn-floating green"><i class="material-icons">done</i></a></li>
+      <li><a (click)="triggerEdit()" class="btn-floating blue"><i class="material-icons">loop</i></a></li>
+      <li><a (click)="deleteQuestion()" class="btn-floating red"><i class="material-icons">delete</i></a></li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="selectedQuestion && answerList" class="container" style="padding-top: 50px; padding-bottom: 50px">
+
+  <div *ngIf="!isEditing">
+    <div class="row">
+      <h5>{{selectedQuestion.title}}</h5>
+      <div class="divider"></div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <div [innerHTML]="selectedQuestion.description">
+        </div>
       </div>
     </div>
   </div>
+
+  <div *ngIf="isEditing">
+    <!-- Modal Structure -->
+    <div id="confirmation" class="modal">
+      <div class="modal-content">
+        <h4>Confirmation</h4>
+        <p>Question updated successfully.</p>
+      </div>
+    </div>
+
+    <a id="trigger_confirmation" hidden href="#confirmation"></a>
+
+    <form (ngSubmit)="updateQuestion()">
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Add your question title here..." id="title" type="text" required
+                 [(ngModel)]="editingQuestion.title" name="title">
+          <label for="title" class="active">Question</label>
+        </div>
+      </div>
+      <div class="input-field col s12">
+        <ask-text-area [initialContent]="editingQuestion.description" (onEditorKeyup)="editingQuestion.description = $event"></ask-text-area>
+      </div>
+    </form>
+  </div>
+
   <div class="row">
     <div class="chip" style="background-color: #1e88e5; border-radius: 0">
       <a style="color: white">{{selectedQuestion.moduleCode}} - {{selectedQuestion.moduleName}}</a></div>
@@ -17,7 +61,7 @@
 
   <ask-answer-list [answerList]="answerList"></ask-answer-list>
 
-  <div class="row" style="padding-top: 20px">
+  <div *ngIf="!isEditing" class="row" style="padding-top: 20px">
     <div class="col s12">
       <ask-text-area (onEditorKeyup)="editingAnswer.answer = $event"></ask-text-area>
       <button class="btn waves-effect waves-light center right" (click)="addAnswer()">

@@ -42,6 +42,8 @@ import {AdminGuard} from "./guards/admin.guard";
 import {LecturerGuard} from "./guards/lecturer.guard";
 import { ViewProfileComponent } from './components/home/view-profile/view-profile.component';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { UserManagementComponent } from './components/home/user-management/user-management.component';
+import { ModuleManagementComponent } from './components/home/module-management/module-management.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { PasswordResetComponent } from './components/password-reset/password-res
     ViewReportComponent,
     Error403Component,
     ViewProfileComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    UserManagementComponent,
+    ModuleManagementComponent
   ],
   imports: [
     BrowserModule,

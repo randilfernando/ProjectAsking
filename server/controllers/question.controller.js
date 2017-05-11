@@ -108,8 +108,7 @@ var questionController = function (Question, Module) {
           });
           console.log('error: ', err);
         });
-    }
-  ;
+    };
 
   var add = function (req, res) {
     Module.findOne({'moduleCode': req.body.moduleCode})

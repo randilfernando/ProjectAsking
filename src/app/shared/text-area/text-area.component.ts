@@ -1,10 +1,12 @@
-import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, Input} from '@angular/core';
 
 @Component({
   selector: 'ask-text-area',
   templateUrl: 'text-area.component.html'
 })
 export class TextAreaComponent implements AfterViewInit, OnDestroy{
+
+  @Input() initialContent: string = '';
 
   @Output() onEditorKeyup = new EventEmitter<any>();
 

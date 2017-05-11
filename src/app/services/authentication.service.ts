@@ -3,13 +3,14 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import {User} from "../types/user.type";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthenticationService {
   private storage = localStorage;
   private storedName = 'currentUser';
 
-  constructor(private http: Http, private authenticationService: AuthenticationService) {}
+  constructor(private http: Http, private activatedRouter: Router) {}
 
   login(user: User): Observable<boolean> {
     return this.http.post('/api/user/login', {
@@ -27,7 +28,7 @@ export class AuthenticationService {
           user.accessLevel = response.json() && response.json().accessLevel;
           user.password = '';
           // store username and jwt token in local storage to keep user logged in between page refreshes
-          this.storage.setItem(this.storedName, JSON.stringify(user));
+          this.saveLoggedOnUser(user);
 
           // return true to indicate successful login
           return true;
@@ -53,7 +54,7 @@ export class AuthenticationService {
       });
   }
 
-  passwordReset(email: string){
+  passwordReset(email: string): Observable<boolean>{
     return this.http.post('/api/user/reset', {
       "email": email
     })
@@ -66,14 +67,27 @@ export class AuthenticationService {
       });
   }
 
-  changePassword(password: string, newPassword: string){
-    return this.http.patch('/api/user', {
-      "password": password,
+  changePassword(oldPassword: string, newPassword: string): Observable<boolean>{
+    return this.http.patch('/api/user/profile', {
+      "oldPassword": oldPassword,
       "newPassword": newPassword,
-      "token": this.authenticationService.getLoggedOnUser().token
+      "token": this.getLoggedOnUser().token
     })
       .map((response: Response) => {
         if (response.status == 200) {
+          let user: User = {
+            username: this.getLoggedOnUser().username,
+            email: this.getLoggedOnUser().email,
+            password: newPassword,
+            accessLevel: 0,
+            token: ''
+          };
+          this.login(user)
+            .subscribe(result => {
+              if(!result){
+                this.activatedRouter.navigate(['/login']);
+              }
+            });
           return true;
         } else {
           return false;
@@ -88,5 +102,9 @@ export class AuthenticationService {
 
   getLoggedOnUser(): User{
     return JSON.parse(this.storage.getItem(this.storedName));
+  }
+
+  saveLoggedOnUser(user: User){
+    this.storage.setItem(this.storedName, JSON.stringify(user));
   }
 }

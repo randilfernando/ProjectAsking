@@ -8,9 +8,6 @@ var authMiddleware = require('./../middleware/auth.middleware');
 
 var usersRouter = express.Router();
 
-usersRouter.route('')
-  .patch(userController.);
-
 usersRouter.route('/register')
   .post(userController.register);
 
@@ -24,7 +21,8 @@ usersRouter.route('/reset')
   .post(userController.resetPassword);
 
 usersRouter.route('/profile')
-  .get(authMiddleware, userController.getByEmail);
+  .get(authMiddleware, userController.getByEmail)
+  .patch(authMiddleware, userController.update);
 
 usersRouter.route('/subscribe')
   .post(authMiddleware, userController.subscribe);

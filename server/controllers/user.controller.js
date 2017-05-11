@@ -113,9 +113,9 @@ var userController = function (User, TempUser, Module, passport) {
     TempUser.findOne({email: req.body.email})
       .exec()
       .then(function (tempUser) {
-        if(tempUser){
+        if (tempUser) {
           mailController.accountConfirmationMail(tempUser.email, tempUser._id);
-        }else{
+        } else {
           res.status(404);
           res.send({
             message: 'No pending users found'
@@ -225,11 +225,37 @@ var userController = function (User, TempUser, Module, passport) {
   };
 
   var update = function (req, res) {
-
-  };
-
-  var patch = function (req, res) {
-
+    User.findById(req.body.token._id)
+      .exec()
+      .then(function (user) {
+        if (req.body.name) {
+          user.name = req.body.name;
+        }
+        if (req.body.newPassword) {
+          user.setPassword(req.body.newPassword);
+        }
+        user.save()
+          .then(function () {
+            res.status(200);
+            res.send({
+              message: 'Success'
+            });
+          })
+          .catch(function (err) {
+            res.status(500);
+            res.send({
+              message: 'Internal server error'
+            });
+            console.log('Error', err);
+          })
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send({
+          message: 'User not found'
+        });
+        console.log('Error', err);
+      })
   };
 
   var subscribe = function (req, res) {
@@ -328,6 +354,7 @@ var userController = function (User, TempUser, Module, passport) {
     verification: verification,
     resend: resend,
     login: login,
+    update: update,
     resetPassword: resetPassword,
     subscribe: subscribe,
     unsubscribe: unsubscribe

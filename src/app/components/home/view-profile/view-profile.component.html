@@ -1,3 +1,22 @@
+<!-- Modal Structure -->
+<div id="confirmation" class="modal">
+  <div class="modal-content">
+    <h4>Confirmation</h4>
+    <p>Profile updated successfully.</p>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="error" class="modal">
+  <div class="modal-content">
+    <h4>Error</h4>
+    <p>Profile not updated.</p>
+  </div>
+</div>
+
+<a id="trigger_confirmation" href="#confirmation" hidden></a>
+<a id="trigger_error" href="#error" hidden></a>
+
 <div class="row container" style="padding-top: 20px">
   <h5>My Profile</h5>
 </div>
@@ -14,7 +33,7 @@
         </div>
       </div>
     </div>
-    <form id="signUpForm" class="col s7 offset-s1">
+    <form id="profileEditForm" (ngSubmit)="changeUserData()" class="col s7 offset-s1">
       <div class="row">
         <div class="input-field col s12">
           <input id="email"
@@ -39,7 +58,7 @@
         </div>
       </div>
       <div class="row" style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px">
-        <button [routerLink]="['/']" class="btn waves-effect waves-light center grey darken-1" type="button"
+        <button (click)="cancelEdit()" class="btn waves-effect waves-light center grey darken-1" type="button"
                 name="cancel" style="width: 100%">Cancel
         </button>
       </div>

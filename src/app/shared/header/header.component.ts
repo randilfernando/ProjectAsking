@@ -23,8 +23,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/login']);
   }
 
-  changePassword(password: string, newPassword: string, confirmPassword: string){
-
+  changePassword(oldPassword: string, newPassword: string, confirmPassword: string){
+    if(newPassword == confirmPassword){
+      this.authenticationService.changePassword(oldPassword, newPassword)
+        .subscribe(result => {
+          if(result){
+            $('#passwordReset').modal('close');
+            $('#trigger_confirmation').click();
+          }
+        });
+    }
   }
 
   ngAfterViewInit() {

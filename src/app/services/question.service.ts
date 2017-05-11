@@ -113,6 +113,40 @@ export class QuestionService {
       });
   }
 
+  updateQuestion(questionId: string, title: string, description: string): Observable<boolean>{
+    return this.http.patch(`/api/question/${questionId}`, {
+      "title": title,
+      "description": description,
+      "token": this.authenticationService.getLoggedOnUser().token
+    })
+      .map((response: Response) => {
+        if(response.status === 200){
+          return true;
+        }
+        return false;
+      });
+  }
+
+  deleteQuestion(questionId: string): Observable<boolean>{
+    return this.http.post(`/api/answer/test`, {
+      "token": this.authenticationService.getLoggedOnUser().token
+    })
+      .map((response: Response) => {
+        if(response.status === 200){
+          return true;
+        }
+        return false;
+      });
+  }
+
+  // updateAnswer(questionId: string, answer: Answer): Observable<boolean>{
+  //
+  // }
+
+  // deleteAnswer(questionId: string, answerId: string): Observable<boolean>{
+  //
+  // }
+
   getQuestionList(){
     return this.questionList;
   }
