@@ -1,6 +1,8 @@
-var moduleController = function (Module) {
+"use strict";
 
-  var get = function (req, res) {
+const moduleController = function (Module) {
+
+  const get = function (req, res) {
     Module.find({})
       .select('_id moduleCode moduleName totalQuestions')
       .exec()
@@ -23,7 +25,7 @@ var moduleController = function (Module) {
       })
   };
 
-  var getById = function (req, res) {
+  const getById = function (req, res) {
     Module.findOne({'moduleCode': req.params.code})
       .exec()
       .then(function (module) {
@@ -44,13 +46,13 @@ var moduleController = function (Module) {
         });
         console.log('error: ', err);
       });
-  }
+  };
 
-  var getByKeyword = function (req, res) {
+  const getByKeyword = function (req, res) {
     res.send('Not implemented');
   };
 
-  var getFeatured = function (req, res) {
+  const getFeatured = function (req, res) {
     Module.find({}, null, {
       skip: 0,
       limit: 5,
@@ -70,8 +72,8 @@ var moduleController = function (Module) {
       })
   };
 
-  var add = function (req, res) {
-    var module = new Module(req.body);
+  const add = function (req, res) {
+    let module = new Module(req.body);
     module.save()
       .then(function () {
         res.status(200);
@@ -88,15 +90,15 @@ var moduleController = function (Module) {
       });
   };
 
-  var update = function (req, res) {
-    res.send('Not implemented');
-  }
-
-  var patch = function (req, res) {
+  const update = function (req, res) {
     res.send('Not implemented');
   };
 
-  var del = function (req, res) {
+  const patch = function (req, res) {
+    res.send('Not implemented');
+  };
+
+  const del = function (req, res) {
     res.send('Not implemented');
   };
 

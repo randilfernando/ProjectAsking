@@ -70,6 +70,7 @@ export class UserService {
           let user = this.authenticationService.getLoggedOnUser();
           user.username = newName;
           this.authenticationService.saveLoggedOnUser(user);
+          this.authenticationService.getLoggedOnUser().username = user.username;
           return true;
         } else {
           return false;

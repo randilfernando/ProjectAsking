@@ -1,8 +1,10 @@
-var nodeMailer = require('nodemailer');
-var security = require('./../config/security.config.json');
-var config = require('./../config/main.config');
+"use strict";
 
-var transporter = nodeMailer.createTransport({
+const nodeMailer = require('nodemailer');
+const security = require('./../config/security.config.json');
+const config = require('./../config/main.config');
+
+const transporter = nodeMailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'asking.platform@gmail.com',
@@ -10,8 +12,8 @@ var transporter = nodeMailer.createTransport({
   }
 });
 
-var sendMail = function (receiver, subject, text, html) {
-  var mailOptions = {
+const sendMail = function (receiver, subject, text, html) {
+  let mailOptions = {
     from: '"Asking Platform" <asking.platform@gmail.com>', // sender address
     to: receiver, // list of receivers
     subject: subject, // Subject line
@@ -27,7 +29,7 @@ var sendMail = function (receiver, subject, text, html) {
   });
 };
 
-module.exports.passwordResetMail = function (email, password) {
+const passwordResetMail = function (email, password) {
   sendMail(email,
     '[Asking] Password Reset',
     'Use this email to reset your password.',
@@ -38,8 +40,8 @@ module.exports.passwordResetMail = function (email, password) {
   );
 };
 
-module.exports.accountConfirmationMail = function (email, tempUserUrl) {
-  var url = config.host + '/api/user/verification/' + tempUserUrl;
+const accountConfirmationMail = function (email, tempUserUrl) {
+  let url = config.host + '/api/user/verification/' + tempUserUrl;
   sendMail(email,
     '[Asking] Email Confirmation',
     'Click on this link to activate user user account at Asking',
@@ -48,4 +50,9 @@ module.exports.accountConfirmationMail = function (email, tempUserUrl) {
       <p>Activation link: <a href="${url}">${url}</a></p>
     `
   )
+};
+
+module.exports = {
+  passwordResetMail: passwordResetMail,
+  accountConfirmationMail: accountConfirmationMail
 };

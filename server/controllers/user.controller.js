@@ -1,9 +1,10 @@
-var mailController = require('./mail.controller');
-var generator = require('generate-password');
+const mailController = require('./mail.controller');
+const generator = require('generate-password');
+const passport = require('passport');
 
-var userController = function (User, TempUser, Module, passport) {
+const userController = function (User, TempUser, Module) {
 
-  var getByEmail = function (req, res) {
+  const getByEmail = function (req, res) {
     User.findById(req.body.token._id)
       .populate('subscribedModules', '_id moduleCode moduleName totalQuestions')
       .exec()
@@ -19,7 +20,7 @@ var userController = function (User, TempUser, Module, passport) {
       });
   };
 
-  var register = function (req, res) {
+  const register = function (req, res) {
 
     console.log(req.body);
 
@@ -84,7 +85,7 @@ var userController = function (User, TempUser, Module, passport) {
       });
   };
 
-  var verification = function (req, res) {
+  const verification = function (req, res) {
     TempUser.findById(req.params.id)
       .exec()
       .then(function (tempUser) {
@@ -109,7 +110,7 @@ var userController = function (User, TempUser, Module, passport) {
       })
   };
 
-  var resend = function (req, res) {
+  const resend = function (req, res) {
     TempUser.findOne({email: req.body.email})
       .exec()
       .then(function (tempUser) {
@@ -130,7 +131,7 @@ var userController = function (User, TempUser, Module, passport) {
       })
   };
 
-  var login = function (req, res) {
+  const login = function (req, res) {
     passport.authenticate('local', function (err, user, info) {
       var token;
 
@@ -163,7 +164,7 @@ var userController = function (User, TempUser, Module, passport) {
 
   };
 
-  var resetPassword = function (req, res) {
+  const resetPassword = function (req, res) {
     User.findOne({'email': req.body.email})
       .exec()
       .then(function (user) {
@@ -196,7 +197,7 @@ var userController = function (User, TempUser, Module, passport) {
       })
   };
 
-  var add = function (req, res) {
+  const add = function (req, res) {
     var user = new User();
 
     user.name = req.body.username;
@@ -220,11 +221,11 @@ var userController = function (User, TempUser, Module, passport) {
       })
   };
 
-  var del = function (req, res) {
+  const del = function (req, res) {
 
   };
 
-  var update = function (req, res) {
+  const update = function (req, res) {
     User.findById(req.body.token._id)
       .exec()
       .then(function (user) {
@@ -258,7 +259,7 @@ var userController = function (User, TempUser, Module, passport) {
       })
   };
 
-  var subscribe = function (req, res) {
+  const subscribe = function (req, res) {
     User.findById(req.body.token._id)
       .exec()
       .then(function (user) {

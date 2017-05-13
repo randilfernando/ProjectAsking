@@ -1,16 +1,18 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
-var Schema = mongoose.Schema;
-var secretKey = require('./../config/security.config').secretKey;
+"use strict";
 
-var userLevels = {
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const Schema = mongoose.Schema;
+const secretKey = require('./../config/security.config').secretKey;
+
+const userLevels = {
   student: 0,
   lecturer: 1,
   admin: 2
 };
 
-var userModel = new Schema({
+let userModel = new Schema({
   name: {type: String, required: true},
   email: {type: String, unique: true, required: true},
   password: {type: String, required: true},
@@ -27,7 +29,7 @@ userModel.methods.validPassword = function (password) {
 };
 
 userModel.methods.generateJwt = function () {
-  var expiry = new Date();
+  let expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
 
   return jwt.sign({

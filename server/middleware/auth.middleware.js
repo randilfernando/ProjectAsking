@@ -1,11 +1,10 @@
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
-  var token = req.params.token || req.body.token || req.header('x-jwt-token');
+  const token = req.params.token || req.body.token || req.header('x-jwt-token');
   if (token){
     try{
-      var decoded = jwt.verify(token, require('./../config/security.config.json').secretKey);
-      req.body.token = decoded;
+      req.body.token = jwt.verify(token, require('./../config/security.config.json').secretKey);;
       next();
     } catch (err){
       res.status(403);

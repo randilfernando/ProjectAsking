@@ -6,20 +6,26 @@ import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, Input
 })
 export class TextAreaComponent implements AfterViewInit, OnDestroy{
 
+  @Input() elementId: string;
   @Input() initialContent: string = '';
-
+  @Input() height: string = '150';
   @Output() onEditorKeyup = new EventEmitter<any>();
 
   editor;
 
   ngAfterViewInit() {
     tinymce.init({
-      selector: '#questionDetail',
+      selector: '#' + this.elementId,
+      height : this.height,
       plugins: ['link', 'paste', 'table'],
       skin_url: '/assets/skins/lightgray',
       setup: editor => {
         this.editor = editor;
         editor.on('keyup', () => {
+          const content = editor.getContent();
+          this.onEditorKeyup.emit(content);
+        });
+        editor.on('paste', () => {
           const content = editor.getContent();
           this.onEditorKeyup.emit(content);
         });

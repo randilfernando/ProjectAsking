@@ -7,7 +7,7 @@
     <a (click)="triggerEdit()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">menu</i></a>
     <ul>
       <li><a (click)="updateQuestion()" class="btn-floating green"><i class="material-icons">done</i></a></li>
-      <li><a (click)="triggerEdit()" class="btn-floating blue"><i class="material-icons">loop</i></a></li>
+      <li><a (click)="resetEditing()" class="btn-floating blue"><i class="material-icons">loop</i></a></li>
       <li><a (click)="deleteQuestion()" class="btn-floating red"><i class="material-icons">delete</i></a></li>
     </ul>
   </div>
@@ -22,7 +22,7 @@
     </div>
     <div class="row">
       <div class="col s12">
-        <div [innerHTML]="selectedQuestion.description">
+        <div [innerHTML]="selectedQuestion.description" >
         </div>
       </div>
     </div>
@@ -48,7 +48,8 @@
         </div>
       </div>
       <div class="input-field col s12">
-        <ask-text-area [initialContent]="editingQuestion.description" (onEditorKeyup)="editingQuestion.description = $event"></ask-text-area>
+        <ask-text-area [elementId]="'questionEdit'" [initialContent]="editingQuestion.description"
+                       (onEditorKeyup)="editingQuestion.description = $event"></ask-text-area>
       </div>
     </form>
   </div>
@@ -59,11 +60,13 @@
     <div class="chip" style="border-radius: 0" *ngFor="let tag of selectedQuestion.tags">{{tag}}</div>
   </div>
 
-  <ask-answer-list [answerList]="answerList"></ask-answer-list>
+  <ask-answer-list [answerList]="answerList"
+                   [editEnabled]="answerListEditable()" [loggedOnEmail]="getLoggedOnEmail()">
+  </ask-answer-list>
 
   <div *ngIf="!isEditing" class="row" style="padding-top: 20px">
     <div class="col s12">
-      <ask-text-area (onEditorKeyup)="editingAnswer.answer = $event"></ask-text-area>
+      <ask-text-area [elementId]="'answerAdd'" (onEditorKeyup)="editingAnswer.answer = $event"></ask-text-area>
       <button class="btn waves-effect waves-light center right" (click)="addAnswer()">
         Add Answer
       </button>

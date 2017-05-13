@@ -1,12 +1,12 @@
 {
   "dev": {
-    "host": "http://localhost",
+    "host": "http://localhost:5000",
     "port": 5000,
     "morganMode": "dev",
     "client": "client_dev"
   },
   "test": {
-    "host": "http://localhost",
+    "host": "http://localhost:5000",
     "port": 5000,
     "morganMode": "dev",
     "client": "client_dev"

@@ -1,8 +1,10 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var answerModel = require('./answer.model').Answer;
+"use strict";
 
-var questionModel = new Schema({
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const answerModel = require('./answer.model').Answer;
+
+let questionModel = new Schema({
     title: {type:String, required:true, trim:true, text:true},
     submittedBy: {type:String, required:true},
     totalRatings: {type:Number, default:0},

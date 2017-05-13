@@ -10,7 +10,11 @@ export class AuthenticationService {
   private storage = localStorage;
   private storedName = 'currentUser';
 
-  constructor(private http: Http, private activatedRouter: Router) {}
+  loggedOnUser: User;
+
+  constructor(private http: Http, private activatedRouter: Router) {
+    this.loggedOnUser = JSON.parse(this.storage.getItem(this.storedName));
+  }
 
   login(user: User): Observable<boolean> {
     return this.http.post('/api/user/login', {
@@ -101,10 +105,11 @@ export class AuthenticationService {
   }
 
   getLoggedOnUser(): User{
-    return JSON.parse(this.storage.getItem(this.storedName));
+    return this.loggedOnUser;
   }
 
   saveLoggedOnUser(user: User){
     this.storage.setItem(this.storedName, JSON.stringify(user));
+    this.loggedOnUser = JSON.parse(this.storage.getItem(this.storedName));
   }
 }

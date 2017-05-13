@@ -1,6 +1,15 @@
 <div class="row">
+  <div class="col" [ngClass]="{'s12':!(sameUser || editEnabled), 's11':(sameUser || editEnabled)}">
+    <div *ngIf="!isEditing" [innerHTML]="answer.answer"></div>
+    <ask-text-area *ngIf="isEditing" [elementId]="answer._id" [initialContent]="editingAnswer" (onEditorKeyup)="editingAnswer = $event"></ask-text-area>
+  </div>
+  <div *ngIf="sameUser || editEnabled" class="col s1">
+    <div>
+      <a *ngIf="!isEditing" (click)="triggerEditing()" class="btn-floating waves-effect waves-teal"><i class="material-icons">edit</i></a>
+      <a *ngIf="isEditing" (click)="updateAnswer()" class="btn-floating waves-effect waves-teal"><i class="material-icons">done</i></a>
+    </div>
+  </div>
   <div class="col s12">
-    <div [innerHTML]="answer.answer"></div>
     <span class="right" style="color: gray">- {{answer.submittedBy}}</span><br>
   </div>
 </div>

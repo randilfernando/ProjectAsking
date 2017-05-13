@@ -1,9 +1,11 @@
-var express = require('express');
-var Module = require('./../model/module.model').Module;
-var moduleController = require('./../controllers/module.controller.js')(Module);
-var accessMiddleware = require('./../middleware/access.middleware');
+"use strict";
 
-var moduleRouter = express.Router();
+const express = require('express');
+const Module = require('./../model/module.model').Module;
+const moduleController = require('./../controllers/module.controller.js')(Module);
+const accessMiddleware = require('./../middleware/access.middleware');
+
+let moduleRouter = express.Router();
 
 moduleRouter.route('')
     .get(moduleController.get)

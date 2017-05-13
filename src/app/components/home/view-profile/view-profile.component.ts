@@ -29,7 +29,16 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.user = this.authenticationService.getLoggedOnUser();
+    let clone: User = {
+      email: '',
+      username: '',
+      password: '',
+      token: '',
+      accessLevel: 0
+    };
+    Object.assign(clone, this.authenticationService.getLoggedOnUser());
+    this.user = clone;
+
     this.loadSubscribedModules();
     this.loadSubmittedQuestions();
   }
@@ -74,7 +83,15 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   }
 
   cancelEdit(){
-    this.user = this.authenticationService.getLoggedOnUser();
+    let clone: User = {
+      email: '',
+      username: '',
+      password: '',
+      token: '',
+      accessLevel: 0
+    };
+    Object.assign(clone, this.authenticationService.getLoggedOnUser());
+    this.user = clone;
   }
 
 }

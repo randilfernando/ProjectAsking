@@ -1,11 +1,13 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var path = require('path');
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var morgan = require('morgan');
-var apiRouter = require('./routes/api.router.js');
-var mainConfig = require('./config/main.config');
+"use strict";
+
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const morgan = require('morgan');
+const apiRouter = require('./routes/api.router.js');
+const mainConfig = require('./config/main.config');
 
 const SERVER_HOST = mainConfig.host;
 const SERVER_PORT = mainConfig.port;
@@ -19,7 +21,7 @@ require('./config/passport.config')(passport);
 mongoose.Promise = require('bluebird');
 mongoose.connect(MONGO_STRING);
 
-var app = express();
+let app = express();
 app.use(bodyParser.json());
 app.use(morgan(MORGAN_MODE));
 app.use(passport.initialize());

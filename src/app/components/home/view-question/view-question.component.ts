@@ -64,18 +64,18 @@ export class ViewQuestionComponent implements OnInit {
   }
 
   addAnswer() {
-    this.editingAnswer.submittedBy = this.authenticationService.getLoggedOnUser().email;
-    this.questionService.addAnswer(this.selectedQuestion._id, this.editingAnswer).subscribe(
+    let clone: Answer = {
+      _id: '',
+      totalRatings: 0,
+      answer: '',
+      submittedBy: ''
+    };
+    Object.assign(clone, this.editingAnswer);
+
+    clone.submittedBy = this.authenticationService.getLoggedOnUser().email;
+    this.questionService.addAnswer(this.selectedQuestion._id, clone).subscribe(
       result => {
         if (result) {
-          let clone: Answer = {
-            _id: '',
-            totalRatings: 0,
-            answer: '',
-            submittedBy: ''
-          };
-          Object.assign(clone, this.editingAnswer);
-          this.answerList.push(clone);
           this.selectedQuestion.totalAnswers++;
           this.editingAnswer.answer = '';
         }
@@ -86,21 +86,21 @@ export class ViewQuestionComponent implements OnInit {
   updateQuestion() {
     this.questionService.updateQuestion(this.selectedQuestion._id, this.editingQuestion.title, this.editingQuestion.description)
       .subscribe((result) => {
-        if (result) {
-          this.selectedQuestion.title = this.editingQuestion.title;
-          this.selectedQuestion.description = this.editingQuestion.description;
-          this.triggerEdit();
-        }else{
-          this.triggerEdit();
+          if (result) {
+            this.selectedQuestion.title = this.editingQuestion.title;
+            this.selectedQuestion.description = this.editingQuestion.description;
+            this.triggerEdit();
+          } else {
+            this.triggerEdit();
+          }
         }
-      }
-    );
+      );
   }
 
   deleteQuestion() {
     this.questionService.deleteQuestion(this.selectedQuestion._id)
       .subscribe(result => {
-        if(result){
+        if (result) {
           this.activatedRouter.navigate(['/featured']);
         }
       });
@@ -108,7 +108,24 @@ export class ViewQuestionComponent implements OnInit {
 
   triggerEdit() {
     this.isEditing = !this.isEditing;
-    console.log(this.isEditing);
+  }
+
+  resetEditing() {
+    this.editingQuestion.title = this.selectedQuestion.title;
+    this.editingQuestion.description = this.selectedQuestion.description;
+    this.triggerEdit();
+  }
+
+  answerListEditable() {
+    if (this.authenticationService.getLoggedOnUser().accessLevel > 0) {
+      return true;
+    } else {
+      false;
+    }
+  }
+
+  getLoggedOnEmail() {
+    return this.authenticationService.getLoggedOnUser().email;
   }
 
   ngAfterViewInit() {

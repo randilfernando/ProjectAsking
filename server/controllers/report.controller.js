@@ -1,6 +1,8 @@
-var reportController = function (Question, Module) {
+"use strict";
 
-  var getOverall = function (req, res) {
+const reportController = function (Question, Module) {
+
+  const getOverall = function (req, res) {
     Module.find({},null,{
       skip: 0,
       sort: { totalQuestions: -1 }
@@ -19,7 +21,7 @@ var reportController = function (Question, Module) {
       })
   };
 
-  var getUnanswered = function (req, res) {
+  const getUnanswered = function (req, res) {
     Question.find({'totalAnswers': 0})
       .select('_id')
       .exec()
@@ -37,7 +39,7 @@ var reportController = function (Question, Module) {
       })
   };
 
-  var getByModule = function (req, res) {
+  const getByModule = function (req, res) {
     Question.find({'moduleCode': req.params.moduleCode},null,{
       skip: 0,
       sort: { totalQuestions: -1 }

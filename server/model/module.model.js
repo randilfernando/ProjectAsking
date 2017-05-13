@@ -1,7 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+"use strict";
 
-var moduleModel = new Schema({
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+let moduleModel = new Schema({
     moduleCode: {type:String, unique:true, required:true},
     moduleName: {type:String, required:true},
     totalQuestions: {type:Number, default:0},

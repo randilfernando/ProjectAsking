@@ -1,14 +1,16 @@
-var express = require('express');
-var Question = require('./../model/question.model').Question;
-var Module = require('./../model/module.model').Module;
-var questionsController = require('./../controllers/question.controller.js')(Question, Module);
-var accessMiddleware = require('./../middleware/access.middleware');
+"use strict";
 
-var questionRouter = express.Router();
+const express = require('express');
+const Question = require('./../model/question.model').Question;
+const Module = require('./../model/module.model').Module;
+const questionsController = require('./../controllers/question.controller.js')(Question, Module);
+const accessMiddleware = require('./../middleware/access.middleware');
+
+let questionRouter = express.Router();
 
 questionRouter.route('')
     .get(questionsController.get)
-    .post(accessMiddleware([0,2]), questionsController.add)
+    .post(accessMiddleware([0]), questionsController.add)
     .delete(accessMiddleware([1,2]), questionsController.del);
 
 questionRouter.route('/user')
@@ -16,8 +18,7 @@ questionRouter.route('/user')
 
 questionRouter.route('/:id')
     .get(questionsController.getById)
-    .put(accessMiddleware([1,2]), questionsController.update)
-    .patch(accessMiddleware([1,2]), questionsController.patch);
+    .patch(questionsController.patch);
 
 questionRouter.route('/module/:code')
     .get(questionsController.getByModule);

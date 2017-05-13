@@ -1,12 +1,14 @@
-var express = require('express');
-var passport = require('passport');
-var User = require('./../model/user.model').User;
-var TempUser = require('./../model/tempUser.model').TempUser;
-var Module = require('./../model/module.model').Module;
-var userController = require('./../controllers/user.controller')(User, TempUser, Module, passport);
-var authMiddleware = require('./../middleware/auth.middleware');
+"use strict";
 
-var usersRouter = express.Router();
+const express = require('express');
+const passport = require('passport');
+const User = require('./../model/user.model').User;
+const TempUser = require('./../model/tempUser.model').TempUser;
+const Module = require('./../model/module.model').Module;
+const userController = require('./../controllers/user.controller')(User, TempUser, Module);
+const authMiddleware = require('./../middleware/auth.middleware');
+
+let usersRouter = express.Router();
 
 usersRouter.route('/register')
   .post(userController.register);

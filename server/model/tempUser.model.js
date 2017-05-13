@@ -1,13 +1,15 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+"use strict";
 
-var userLevels = {
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const userLevels = {
   student: 0,
   lecturer: 1,
   admin: 2
 };
 
-var tempUserModel = new Schema({
+let tempUserModel = new Schema({
   name: {type: String, required: true},
   email: {type: String, unique: true, required: true},
   password: {type: String, required: true},

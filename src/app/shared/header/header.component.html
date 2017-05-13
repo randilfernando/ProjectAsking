@@ -67,7 +67,7 @@
 
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
-  <li><a [routerLink]="['/view-profile']">{{username}}</a></li>
+  <li><a [routerLink]="['/view-profile']">{{user.username}}</a></li>
   <li><a href="#passwordReset">Change Password</a></li>
   <li class="divider"></li>
   <li><a (click)="logout()">Logout</a></li>
@@ -89,7 +89,7 @@
             <a id="accountDropdown" class="dropdown-button truncate" data-activates="dropdown1"
                href="javascript:void(0);">
               <i class="material-icons left">perm_identity</i>
-              {{username}}
+              {{user.username}}
               <i class="material-icons right">arrow_drop_down</i></a>
           </li>
         </ul>

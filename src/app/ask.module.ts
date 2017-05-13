@@ -44,6 +44,7 @@ import { ViewProfileComponent } from './components/home/view-profile/view-profil
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { UserManagementComponent } from './components/home/user-management/user-management.component';
 import { ModuleManagementComponent } from './components/home/module-management/module-management.component';
+import {StudentOnlyGuard} from "./guards/student-only.guard";
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import { ModuleManagementComponent } from './components/home/module-management/m
     ReportService,
     AuthGuard,
     LecturerGuard,
-    AdminGuard
+    AdminGuard,
+    StudentOnlyGuard
   ],
   bootstrap: [AskComponent]
 })

@@ -1,13 +1,15 @@
-var express = require('express');
+"use strict";
 
-var questionRouter = require('./questions.router');
-var moduleRouter = require('./modules.router');
-var userRouter = require('./users.router');
-var answerRouter = require('./answer.router');
-var reportRouter = require('./report.router');
-var authMiddleware = require('./../middleware/auth.middleware');
+const express = require('express');
 
-var apiRouter = express.Router();
+const questionRouter = require('./questions.router');
+const moduleRouter = require('./modules.router');
+const userRouter = require('./users.router');
+const answerRouter = require('./answer.router');
+const reportRouter = require('./report.router');
+const authMiddleware = require('./../middleware/auth.middleware');
+
+let apiRouter = express.Router();
 
 //define api routes
 apiRouter.use('/question', authMiddleware, questionRouter);

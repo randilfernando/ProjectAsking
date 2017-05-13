@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Answer} from "../../types/answer.type";
+import {QuestionService} from "../../services/question.service";
 
 @Component({
   selector: 'ask-answer-summary',
@@ -7,13 +8,53 @@ import {Answer} from "../../types/answer.type";
 })
 export class AnswerSummaryComponent implements OnInit {
 
-  @Input()
-  answer: Answer;
+  @Input() answer: Answer;
+  @Input() loggedOnEmail: string;
+  @Input() editEnabled: boolean = false;
+  private sameUser: boolean = false;
 
-  constructor() { }
+  editingAnswer: string;
+
+  private isEditing: boolean;
+
+  constructor(private questionService: QuestionService) { }
 
   ngOnInit() {
-    console.log(this.answer);
+    this.editingAnswer = this.answer.answer;
+    this.sameUser = this.loggedOnEmail == this.answer.submittedBy;
+  }
+
+  triggerEditing(){
+    this.isEditing = !this.isEditing;
+  }
+
+  updateAnswer(){
+    if(this.editingAnswer == ''){
+      this.deleteAnswer();
+    }else{
+      this.questionService.updateAnswer(this.answer._id, this.editingAnswer)
+        .subscribe(result => {
+          if(result){
+            this.answer.answer = this.editingAnswer;
+          }else{
+            this.editingAnswer = this.answer.answer;
+          }
+
+          this.triggerEditing();
+        })
+    }
+  }
+
+  deleteAnswer(){
+    this.questionService.deleteAnswer(this.answer)
+      .subscribe(result => {
+        if(result){
+          this.answer.answer = this.editingAnswer;
+        }else{
+          this.editingAnswer = this.answer.answer;
+        }
+        this.triggerEditing();
+      })
   }
 
 }

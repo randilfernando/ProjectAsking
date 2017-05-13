@@ -11,8 +11,9 @@ import {serializePaths} from "@angular/router/src/url_tree";
 })
 export class AnswerListComponent implements OnInit {
 
-  @Input()
-  answerList: Answer[];
+  @Input() answerList: Answer[];
+  @Input() editEnabled: boolean = false;
+  @Input() loggedOnEmail: string;
 
   constructor() { }
 

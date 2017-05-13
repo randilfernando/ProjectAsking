@@ -9,10 +9,11 @@ import {SearchModuleComponent} from "./search-module/search-module.component";
 import {ViewReportComponent} from "./view-report/view-report.component";
 import {LecturerGuard} from "../../guards/lecturer.guard";
 import {ViewProfileComponent} from "./view-profile/view-profile.component";
+import {StudentOnlyGuard} from "../../guards/student-only.guard";
 
 export const HOME_ROUTES : Routes = [
   {path: 'featured', component: FeaturedComponent},
-  {path: 'add-question', component: AddQuestionComponent},
+  {path: 'add-question', component: AddQuestionComponent, canActivate: [StudentOnlyGuard]},
   {path: 'search-module', component: SearchModuleComponent},
   {path: 'question/:id', component: ViewQuestionComponent},
   {path: 'question/search/:keyword', component: SearchQuestionsComponent},

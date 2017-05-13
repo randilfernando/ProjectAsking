@@ -1,7 +1,7 @@
 import {Question} from "../types/question.type";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
-import {Http, Response, Headers} from "@angular/http";
+import {Http, Response, Headers, RequestMethod, RequestOptionsArgs} from "@angular/http";
 import {Answer} from "../types/answer.type";
 import {AuthenticationService} from "./authentication.service";
 
@@ -107,6 +107,9 @@ export class QuestionService {
     })
       .map((response: Response) => {
         if(response.status === 200){
+          answer._id = response.json() && response.json().id;
+          console.log(answer);
+          this.answerList.push(answer);
           return true;
         }
         return false;
@@ -127,8 +130,11 @@ export class QuestionService {
       });
   }
 
-  deleteQuestion(questionId: string): Observable<boolean>{
-    return this.http.post(`/api/answer/test`, {
+  updateAnswer(answerId: string, answer: string): Observable<boolean>{
+    return this.http.patch(`/api/answer/`, {
+      "questionId": this.selectedQuestion._id,
+      "answerId": answerId,
+      "answer": answer,
       "token": this.authenticationService.getLoggedOnUser().token
     })
       .map((response: Response) => {
@@ -139,13 +145,46 @@ export class QuestionService {
       });
   }
 
-  // updateAnswer(questionId: string, answer: Answer): Observable<boolean>{
-  //
-  // }
+  deleteQuestion(questionId: string): Observable<boolean>{
+    let options: RequestOptionsArgs = {
+      body: {
+        "questionId": questionId,
+        "token": this.authenticationService.getLoggedOnUser().token
+      },
+      method: RequestMethod.Delete
+    };
 
-  // deleteAnswer(questionId: string, answerId: string): Observable<boolean>{
-  //
-  // }
+    return this.http.request('/api/question/', options)
+      .map((response: Response) => {
+        if(response.status === 200){
+          return true;
+        }
+        return false;
+      });
+  }
+
+  deleteAnswer(answer: Answer): Observable<boolean>{
+    let options: RequestOptionsArgs = {
+      body: {
+        "questionId": this.selectedQuestion._id,
+        "answerId": answer._id,
+        "token": this.authenticationService.getLoggedOnUser().token
+      },
+      method: RequestMethod.Delete
+    };
+
+    return this.http.request('/api/answer/', options)
+      .map((response: Response) => {
+        if(response.status === 200){
+          var index: number = this.answerList.indexOf(answer, 0);
+          if (index > -1) {
+            this.answerList.splice(index, 1);
+          }
+          return true;
+        }
+        return false;
+      });
+  }
 
   getQuestionList(){
     return this.questionList;

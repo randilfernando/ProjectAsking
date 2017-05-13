@@ -4,4 +4,6 @@
     <div class="divider"></div>
   </div>
 </div>
-<ask-answer-summary *ngFor="let answer of answerList" [answer]="answer"></ask-answer-summary>
+<ask-answer-summary *ngFor="let answer of answerList" [answer]="answer"
+                    [editEnabled]="editEnabled" [loggedOnEmail]="loggedOnEmail">
+</ask-answer-summary>

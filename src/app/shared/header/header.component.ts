@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, AfterViewInit, EventEmitter, Output} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
+import {User} from "../../types/user.type";
 
 @Component({
   selector: 'ask-header',
@@ -8,13 +9,13 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   keyword: string;
-  username: string;
+  user: User;
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {
   }
 
   ngOnInit() {
-    this.username = this.authenticationService.getLoggedOnUser().username;
+    this.user = this.authenticationService.getLoggedOnUser();
   }
 
   logout() {

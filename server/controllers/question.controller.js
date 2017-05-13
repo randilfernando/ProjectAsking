@@ -1,6 +1,8 @@
-var questionController = function (Question, Module) {
+"use strict";
 
-  var get = function (req, res) {
+const questionController = function (Question, Module) {
+
+  const get = function (req, res) {
     Question.find({})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
       .exec()
@@ -17,13 +19,13 @@ var questionController = function (Question, Module) {
       });
   };
 
-  var getByKeyword = function (req, res) {
+  const getByKeyword = function (req, res) {
     Question.find({$text: {$search: req.params.keyword}}, {score: {$meta: "textScore"}})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
       .sort({score: {$meta: 'textScore'}})
       .exec()
       .then(function (questions) {
-        if (questions.length == 0) {
+        if (questions.length === 0) {
           res.status(204);
           res.send({
             message: 'No questions found'
@@ -42,7 +44,7 @@ var questionController = function (Question, Module) {
       });
   };
 
-  var getById = function (req, res) {
+  const getById = function (req, res) {
     Question.findById(req.params.id)
       .exec()
       .then(function (question) {
@@ -58,12 +60,12 @@ var questionController = function (Question, Module) {
       });
   };
 
-  var getByModule = function (req, res) {
+  const getByModule = function (req, res) {
     Question.find({'moduleCode': req.params.code})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
       .exec()
       .then(function (questions) {
-        if (questions.length == 0) {
+        if (questions.length === 0) {
           res.status(204);
           res.send({
             message: 'No questions submitted'
@@ -82,40 +84,40 @@ var questionController = function (Question, Module) {
       });
   };
 
-  var getByUser = function (req, res) {
-      Question.find({'submittedBy': req.body.token.email}, null, {
-        skip: 0,
-        limit: 100,
-        sort: {_id: -1}
-      })
-        .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
-        .exec()
-        .then(function (questions) {
-          if (questions.length == 0) {
-            res.status(204);
-            res.send({
-              message: 'No questions submitted'
-            });
-          } else {
-            res.status(200);
-            res.send(questions);
-          }
-        })
-        .catch(function (err) {
-          res.status(500);
+  const getByUser = function (req, res) {
+    Question.find({'submittedBy': req.body.token.email}, null, {
+      skip: 0,
+      limit: 100,
+      sort: {_id: -1}
+    })
+      .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
+      .exec()
+      .then(function (questions) {
+        if (questions.length === 0) {
+          res.status(204);
           res.send({
-            message: 'Internal server error'
+            message: 'No questions submitted'
           });
-          console.log('error: ', err);
+        } else {
+          res.status(200);
+          res.send(questions);
+        }
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send({
+          message: 'Internal server error'
         });
-    };
+        console.log('error: ', err);
+      });
+  };
 
-  var add = function (req, res) {
+  const add = function (req, res) {
     Module.findOne({'moduleCode': req.body.moduleCode})
       .exec()
       .then(function (module) {
         if (module) {
-          var question = new Question(req.body);
+          let question = new Question(req.body);
           question.submittedBy = req.body.token.email;
           question.save()
             .then(function () {
@@ -151,7 +153,7 @@ var questionController = function (Question, Module) {
       });
   };
 
-  var update = function (req, res) {
+  const update = function (req, res) {
     Question.findById(req.params.id)
       .exec()
       .then(function (question) {
@@ -186,30 +188,36 @@ var questionController = function (Question, Module) {
         });
         console.log('error: ', err);
       });
-  }
+  };
 
-  var patch = function (req, res) {
+  const patch = function (req, res) {
     Question.findById(req.params.id)
       .then(function (question) {
-        delete req.body._id;
-        for (var p in req.body) {
-          question[p] = req.body[p];
-        }
-
-        question.save()
-          .then(function () {
-            res.status(200);
-            res.send({
-              message: 'Success'
+        if (req.body.token.accessLevel > 0 || req.body.token.email === question.submittedBy) {
+          delete req.body._id;
+          for (let p in req.body) {
+            question[p] = req.body[p];
+          }
+          question.save()
+            .then(function () {
+              res.status(200);
+              res.send({
+                message: 'Success'
+              });
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send({
+                message: 'Internal server error'
+              });
+              console.log('error: ', err);
             });
-          })
-          .catch(function (err) {
-            res.status(500);
-            res.send({
-              message: 'Internal server error'
-            });
-            console.log('error: ', err);
+        } else {
+          res.status(403);
+          res.send({
+            message: 'Unauthorized access'
           });
+        }
       })
       .catch(function (err) {
         res.status(404);
@@ -220,8 +228,8 @@ var questionController = function (Question, Module) {
       });
   };
 
-  var del = function (req, res) {
-    Question.findById(req.body._id)
+  const del = function (req, res) {
+    Question.findById(req.body.questionId)
       .exec()
       .then(function (question) {
         question.remove()
@@ -231,7 +239,7 @@ var questionController = function (Question, Module) {
               .then(function (module) {
                 module.totalQuestions--;
                 module.save();
-              })
+              });
             res.status(200);
             res.send({
               message: 'Success'
@@ -254,11 +262,11 @@ var questionController = function (Question, Module) {
       });
   };
 
-  var rateUp = function (req, res) {
+  const rateUp = function (req, res) {
     Question.findById(req.body.questionId)
       .exec()
       .then(function (question) {
-        var preRate = question.totalRatings;
+        let preRate = question.totalRatings;
         question.ratings.addToSet(req.body.email);
         question.totalRatings = question.ratings.length;
 
@@ -293,11 +301,11 @@ var questionController = function (Question, Module) {
       });
   };
 
-  var rateDown = function (req, res) {
+  const rateDown = function (req, res) {
     Question.findById(req.body.questionId)
       .exec()
       .then(function (question) {
-        var preRate = question.totalRatings;
+        let preRate = question.totalRatings;
         question.ratings.pull(req.body.token.email);
         question.totalRatings = question.ratings.length;
 
@@ -330,7 +338,7 @@ var questionController = function (Question, Module) {
         });
         console.log('error: ', err);
       });
-  }
+  };
 
   return {
     get: get,
@@ -343,6 +351,6 @@ var questionController = function (Question, Module) {
     patch: patch,
     del: del
   };
-}
+};
 
 module.exports = questionController;
