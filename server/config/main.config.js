@@ -7,7 +7,7 @@ let environments = {
   test: "test"
 };
 
-let environment = process.env.NODE_ENV || environments.production; // change environment for the application
+let environment = environments.production; // change environment for the application
 
 let url = serverConfig[environment].host;
 
@@ -21,6 +21,6 @@ module.exports = {
   url: url,
   morganEnabled: serverConfig[environment].morganEnabled,
   morganMode: serverConfig[environment].morganMode,
-  client: process.env.CLIENT_PATH || serverConfig[environment].client,
+  client: serverConfig[environment].client,
   database: databaseConfig[environment]
 };
