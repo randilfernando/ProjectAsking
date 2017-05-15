@@ -7,7 +7,7 @@ let environments = {
   test: "test"
 };
 
-let environment = environments.production; // change environment for the application
+let environment = process.env.ENV || environments.production; // change environment for the application
 
 let url = serverConfig[environment].host;
 
