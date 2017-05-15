@@ -4,6 +4,19 @@
 <div class="row divider"></div>
 <div class="container" style="padding-bottom: 50px">
   <!-- Modal Structure -->
+  <div id="submitted" class="modal">
+    <div class="modal-content">
+      <h4>Confirmation!</h4>
+      <p>Question submitted successfully.</p>
+    </div>
+    <div class="modal-footer">
+      <a [routerLink]="['/featured']" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+    </div>
+  </div>
+
+  <a id="trigger_submitted" href="#submitted" hidden></a>
+
+  <!-- Modal Structure -->
   <div id="confirmation" class="modal">
     <div class="modal-content">
       <h4>Question is not submitted!</h4>
@@ -15,14 +28,7 @@
   </div>
 
   <form (ngSubmit)="submitQuestion()">
-    <div class="row">
-      <div class="input-field col s12">
-        <input type="text" placeholder="Search for module" id="moduleSearch" class="autocomplete"
-               name="moduleSearch" autocomplete="off" #moduleName required>
-        <button id="load_topics" hidden (click)="loadSelectedModule(moduleName.value)" type="button"></button>
-        <label for="moduleSearch" class="active">Module</label>
-      </div>
-    </div>
+    <ask-module-search *ngIf="moduleList" [moduleList]="moduleList" (onModuleChanged)="loadSelectedModule($event)"></ask-module-search>
     <div class="row">
       <div class="input-field col s12">
         <select id="topic" name="topic">

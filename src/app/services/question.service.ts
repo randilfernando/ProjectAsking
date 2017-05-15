@@ -17,7 +17,6 @@ export class QuestionService {
     return this.http.post('/api/question', {
       "title": question.title,
       "moduleCode": question.moduleCode,
-      "moduleName": question.moduleName,
       "topic": question.topic,
       "description": question.description,
       "tags": question.tags,
@@ -108,7 +107,6 @@ export class QuestionService {
       .map((response: Response) => {
         if(response.status === 200){
           answer._id = response.json() && response.json().id;
-          console.log(answer);
           this.answerList.push(answer);
           return true;
         }
@@ -176,7 +174,7 @@ export class QuestionService {
     return this.http.request('/api/answer/', options)
       .map((response: Response) => {
         if(response.status === 200){
-          var index: number = this.answerList.indexOf(answer, 0);
+          let index: number = this.answerList.indexOf(answer, 0);
           if (index > -1) {
             this.answerList.splice(index, 1);
           }

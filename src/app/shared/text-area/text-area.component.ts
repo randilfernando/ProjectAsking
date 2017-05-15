@@ -19,6 +19,12 @@ export class TextAreaComponent implements AfterViewInit, OnDestroy{
       height : this.height,
       plugins: ['link', 'paste', 'table'],
       skin_url: '/assets/skins/lightgray',
+      formats: {
+        bold: {inline : 'b'},
+        italic: {inline : 'em'},
+        underline: {inline : 'u'},
+        strikethrough: {inline : 'del'},
+      },
       setup: editor => {
         this.editor = editor;
         editor.on('keyup', () => {
@@ -26,6 +32,18 @@ export class TextAreaComponent implements AfterViewInit, OnDestroy{
           this.onEditorKeyup.emit(content);
         });
         editor.on('paste', () => {
+          const content = editor.getContent();
+          this.onEditorKeyup.emit(content);
+        });
+        editor.on('undo', () => {
+          const content = editor.getContent();
+          this.onEditorKeyup.emit(content);
+        });
+        editor.on('redo', () => {
+          const content = editor.getContent();
+          this.onEditorKeyup.emit(content);
+        });
+        editor.on('click', () => {
           const content = editor.getContent();
           this.onEditorKeyup.emit(content);
         });

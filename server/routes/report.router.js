@@ -9,9 +9,9 @@ const accessMiddleware = require('./../middleware/access.middleware');
 let reportRouter = express.Router();
 
 reportRouter.route('')
-  .get(accessMiddleware([1,2]), reportController.getAll);
+  .get(accessMiddleware([1,2]), reportController.get);
 
-reportRouter.route('/unanswered')
-  .get(accessMiddleware([1,2]), reportController.getUnanswered);
+reportRouter.route('/:moduleCode')
+  .get(accessMiddleware([1,2]), reportController.getByModule);
 
 module.exports = reportRouter;

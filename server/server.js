@@ -23,7 +23,11 @@ mongoose.connect(MONGO_STRING);
 
 let app = express();
 app.use(bodyParser.json());
-app.use(morgan(MORGAN_MODE));
+
+if(mainConfig.morganEnabled){
+  app.use(morgan(MORGAN_MODE));
+}
+
 app.use(passport.initialize());
 
 // point static path to client
@@ -36,5 +40,7 @@ app.use('/api', apiRouter);
 app.get('*', (req, res) => { res.sendFile(path.join(__dirname, CLIENT_LOCATION + '/index.html')); });
 
 app.listen(SERVER_PORT, function(){
-    console.log(`server is running on ${SERVER_HOST}:${SERVER_PORT}`);
+    console.log(`server is running on ${SERVER_HOST} : ${SERVER_PORT}`);
 });
+
+module.exports = app;

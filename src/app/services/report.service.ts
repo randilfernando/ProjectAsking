@@ -1,14 +1,26 @@
 import { Injectable } from '@angular/core';
 import {Http, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs/Observable";
-import {Module} from "../types/module.type";
 import {AuthenticationService} from "./authentication.service";
+import {OverallReport} from "../types/overall-report.type";
+import {ModuleReport} from "../types/module-report.type";
 
 @Injectable()
 export class ReportService {
 
-  private moduleReport: Module[] = [];
-  private unanswered: number;
+  private overallReport: OverallReport = {
+    answeredCount: 0,
+    unansweredCount: 0,
+    modules: []
+  };
+
+  private moduleReport: ModuleReport = {
+    answeredCount: 0,
+    unansweredCount: 0,
+    moduleCode: '',
+    moduleName: '',
+    topics: []
+  };
 
   constructor(private http: Http, private authenticationService: AuthenticationService) { }
 
@@ -18,7 +30,9 @@ export class ReportService {
     return this.http.get('/api/report', {headers: headers})
       .map((response: Response) => {
         if (response.status === 200) {
-          this.moduleReport = response.json();
+          this.overallReport.answeredCount = response.json().answeredCount;
+          this.overallReport.unansweredCount = response.json().unansweredCount;
+          this.overallReport.modules = response.json().data;
           return true;
         } else {
           return false;
@@ -26,13 +40,15 @@ export class ReportService {
       });
   };
 
-  loadUnanswered(): Observable<boolean>{
+  loadModuleReport(moduleCode: string): Observable<boolean>{
     let headers = new Headers();
     headers.append('x-jwt-token', this.authenticationService.getLoggedOnUser().token);
-    return this.http.get('/api/report/unanswered', {headers: headers})
+    return this.http.get(`/api/report/${moduleCode}`, {headers: headers})
       .map((response: Response) => {
         if (response.status === 200) {
-          this.unanswered = response.json() && response.json().count;
+          this.moduleReport.answeredCount = response.json().answeredCount;
+          this.moduleReport.unansweredCount = response.json().unansweredCount;
+          this.moduleReport.topics = response.json().data;
           return true;
         } else {
           return false;
@@ -40,20 +56,12 @@ export class ReportService {
       });
   }
 
-  getModuleReport(): Module[]{
+  getOverallReport(): OverallReport{
+    return this.overallReport;
+  }
+
+  getModuleReport(): ModuleReport{
     return this.moduleReport;
-  }
-
-  getUnansweredCount(): number{
-    return this.unanswered;
-  }
-
-  getAnsweredCount(): number{
-    let count: number = 0;
-    for (let module of this.moduleReport){
-      count += module.totalQuestions;
-    }
-    return (count - this.unanswered);
   }
 
 }

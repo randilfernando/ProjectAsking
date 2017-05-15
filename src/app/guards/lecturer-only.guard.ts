@@ -3,12 +3,12 @@ import { Router, CanActivate } from '@angular/router';
 import {AuthenticationService} from "../services/authentication.service";
 
 @Injectable()
-export class LecturerGuard implements CanActivate {
+export class LecturerOnlyGuard implements CanActivate {
 
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   canActivate() {
-    if (this.authenticationService.getLoggedOnUser().accessLevel > 0) {
+    if (this.authenticationService.getLoggedOnUser().accessLevel === 1) {
       //If lecturer
       return true;
     }

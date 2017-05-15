@@ -12,10 +12,7 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -37,10 +34,7 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -53,10 +47,7 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(404);
-        res.send({
-          message: 'Question not found'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -77,10 +68,8 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
-        console.log('error: ', err);
+        res.send(err);
+        console.log('Error', err);
       });
   };
 
@@ -105,10 +94,7 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -119,24 +105,43 @@ const questionController = function (Question, Module) {
         if (module) {
           let question = new Question(req.body);
           question.submittedBy = req.body.token.email;
-          question.save()
-            .then(function () {
-              module.totalQuestions++;
-              module.save()
-                .then(function () {
-                  res.status(200);
-                  res.send({
-                    message: 'Success'
-                  });
-                })
-            })
-            .catch(function (err) {
-              res.status(500);
-              res.send({
-                message: 'Internal server error'
+          question.moduleName = module.moduleName;
+
+          let valid = false;
+
+          if (question.topic === undefined) {
+            valid = true;
+          } else {
+            for (let topic of module.topics) {
+              if (topic === question.topic){
+                valid = true;
+                break;
+              }
+            }
+          }
+
+          if (valid) {
+            question.save()
+              .then(function () {
+                module.totalQuestions++;
+                module.save()
+                  .then(function () {
+                    res.status(200);
+                    res.send({
+                      message: 'Success'
+                    });
+                  })
+              })
+              .catch(function (err) {
+                res.status(500);
+                res.send(err);
               });
-              console.log('error: ', err);
+          } else {
+            res.status(500);
+            res.send({
+              message: 'Not a valid topic'
             });
+          }
         } else {
           res.status(404);
           res.send({
@@ -146,47 +151,7 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
-        console.log('error: ', err);
-      });
-  };
-
-  const update = function (req, res) {
-    Question.findById(req.params.id)
-      .exec()
-      .then(function (question) {
-        question.title = req.body.title;
-        question.rating = req.body.rating;
-        question.totalAnswers = req.body.totalAnswers;
-        question.moduleCode = req.body.moduleCode;
-        question.moduleName = req.body.moduleName;
-        question.topic = req.body.topic;
-        question.tags = req.body.tags;
-        question.description = req.body.description;
-
-        question.save()
-          .then(function () {
-            res.status(200);
-            res.send({
-              message: 'Success'
-            });
-          })
-          .catch(function (err) {
-            res.status(500);
-            res.send({
-              message: 'Internal server error'
-            });
-            console.log('error: ', err);
-          });
-      })
-      .catch(function (err) {
-        res.status(404);
-        res.send({
-          message: 'Question not found'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -194,10 +159,10 @@ const questionController = function (Question, Module) {
     Question.findById(req.params.id)
       .then(function (question) {
         if (req.body.token.accessLevel > 0 || req.body.token.email === question.submittedBy) {
+
           delete req.body._id;
-          for (let p in req.body) {
-            question[p] = req.body[p];
-          }
+          Object.assign(question, req.body);
+
           question.save()
             .then(function () {
               res.status(200);
@@ -207,10 +172,7 @@ const questionController = function (Question, Module) {
             })
             .catch(function (err) {
               res.status(500);
-              res.send({
-                message: 'Internal server error'
-              });
-              console.log('error: ', err);
+              res.send(err);
             });
         } else {
           res.status(403);
@@ -221,10 +183,7 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(404);
-        res.send({
-          message: 'Question not found'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -247,18 +206,12 @@ const questionController = function (Question, Module) {
           })
           .catch(function (err) {
             res.status(500);
-            res.send({
-              message: 'Internal server error'
-            });
-            console.log('error: ', err);
+            res.send(err);
           })
       })
       .catch(function (err) {
         res.status(404);
-        res.send({
-          message: 'Question not found'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -280,10 +233,7 @@ const questionController = function (Question, Module) {
             })
             .catch(function (err) {
               res.status(500);
-              res.send({
-                message: 'Internal server error'
-              });
-              console.log('error: ', err);
+              res.send(err);
             });
         } else {
           res.status(203);
@@ -294,10 +244,7 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(404);
-        res.send({
-          message: 'Question not found'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -319,10 +266,7 @@ const questionController = function (Question, Module) {
             })
             .catch(function (err) {
               res.status(500);
-              res.send({
-                message: 'Internal server error'
-              });
-              console.log('error: ', err);
+              res.send(err);
             });
         } else {
           res.status(203);
@@ -333,10 +277,7 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(404);
-        res.send({
-          message: 'Question not found'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -347,7 +288,6 @@ const questionController = function (Question, Module) {
     getByModule: getByModule,
     getByUser: getByUser,
     add: add,
-    update: update,
     patch: patch,
     del: del
   };

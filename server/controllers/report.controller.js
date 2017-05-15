@@ -2,55 +2,94 @@
 
 const reportController = function (Question, Module) {
 
-  const getOverall = function (req, res) {
-    Module.find({},null,{
+  const get = function (req, res) {
+    Module.find({}, null, {
       skip: 0,
-      sort: { totalQuestions: -1 }
+      sort: {totalQuestions: -1}
     })
-      .select('_id moduleCode moduleName totalQuestions')
+      .select('-_id moduleCode moduleName totalQuestions')
       .exec()
-      .then(function (modules) {
-        res.status(200);
-        res.send(modules);
+      .then(function (report) {
+        let total = 0;
+        for(let module of report){
+          total += module.totalQuestions;
+        }
+        Question.find({'totalAnswers': 0})
+          .select('_id')
+          .exec()
+          .then(function (questions) {
+            res.status(200);
+            res.send({
+              answeredCount: total - questions.length,
+              unansweredCount: questions.length,
+              data: report
+            });
+          })
+          .catch(function (err) {
+            res.status(500);
+            res.send(err);
+            console.log('Error', err);
+          });
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          "message": "Internal server error"
-        });
-      })
-  };
-
-  const getUnanswered = function (req, res) {
-    Question.find({'totalAnswers': 0})
-      .select('_id')
-      .exec()
-      .then(function (questions) {
-        res.status(200);
-        res.send({
-          "count": questions.length
-        });
-      })
-      .catch(function (err) {
-        res.status(500);
-        res.send({
-          "message": "Internal server error"
-        });
+        res.send(err);
+        console.log('Error', err);
       })
   };
 
   const getByModule = function (req, res) {
-    Question.find({'moduleCode': req.params.moduleCode},null,{
-      skip: 0,
-      sort: { totalQuestions: -1 }
-    })
-
+    Question.aggregate([
+      {
+        $match: {
+          moduleCode: {$eq: req.params.moduleCode}
+        }
+      },
+      {
+        $group: {
+          _id: '$topic',
+          count: {$sum: 1}
+        }
+      },
+      {
+        $sort: {
+          count: -1
+        }
+      }
+    ])
+    .exec()
+    .then(function (report) {
+      let total = 0;
+      for(let topic of report){
+        total += topic.count;
+      }
+      Question.find({'moduleCode': req.params.moduleCode, 'totalAnswers': 0})
+        .select('_id')
+        .exec()
+        .then(function (questions) {
+          res.status(200);
+          res.send({
+            answeredCount: total - questions.length,
+            unansweredCount: questions.length,
+            data: report
+          });
+        })
+        .catch(function (err) {
+          res.status(500);
+          res.send(err);
+          console.log('Error', err);
+        });
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send(err);
+        console.log(Error, err);
+      })
   };
 
   return {
-    getAll: getOverall,
-    getUnanswered: getUnanswered,
-    getBySubject: getByModule
+    get: get,
+    getByModule: getByModule,
   }
 };
 

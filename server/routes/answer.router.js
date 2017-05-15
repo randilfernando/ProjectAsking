@@ -8,8 +8,7 @@ const accessMiddleware = require('./../middleware/access.middleware');
 let answerRouter = express.Router();
 
 answerRouter.route('')
-  .post(answerController.add)
-  .put(accessMiddleware([1,2]), answerController.put)
+  .post(accessMiddleware([0,1]), answerController.add)
   .patch(answerController.patch)
   .delete(answerController.del);
 

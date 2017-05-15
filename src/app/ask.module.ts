@@ -38,13 +38,19 @@ import { UserService } from "./services/user.service";
 import { ViewReportComponent } from './components/home/view-report/view-report.component';
 import { ReportService } from "./services/report.service";
 import { Error403Component } from './components/error-pages/error-403/error-403.component';
-import {AdminGuard} from "./guards/admin.guard";
-import {LecturerGuard} from "./guards/lecturer.guard";
+import {AdminOnlyGuard} from "./guards/admin-only.guard";
+import {LecturerOnlyGuard} from "./guards/lecturer-only.guard";
 import { ViewProfileComponent } from './components/home/view-profile/view-profile.component';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { UserManagementComponent } from './components/home/user-management/user-management.component';
-import { ModuleManagementComponent } from './components/home/module-management/module-management.component';
 import {StudentOnlyGuard} from "./guards/student-only.guard";
+import { ViewModuleReportComponent } from './components/home/view-module-report/view-module-report.component';
+import { ModuleSearchComponent } from './shared/module/module-search.component';
+import { ManageModulesComponent } from './components/home/manage-modules/manage-modules.component';
+import { AddModuleComponent } from './components/home/add-module/add-module.component';
+import {AdminLecturerGuard} from "./guards/admin-lecturer.guard";
+import {LecturerStudentGuard} from "./guards/lecturer-student.guard";
+import {NotAuthGuard} from "./guards/not-auth.guard";
 
 @NgModule({
   declarations: [
@@ -77,7 +83,10 @@ import {StudentOnlyGuard} from "./guards/student-only.guard";
     ViewProfileComponent,
     PasswordResetComponent,
     UserManagementComponent,
-    ModuleManagementComponent
+    ViewModuleReportComponent,
+    ModuleSearchComponent,
+    ManageModulesComponent,
+    AddModuleComponent
   ],
   imports: [
     BrowserModule,
@@ -94,9 +103,12 @@ import {StudentOnlyGuard} from "./guards/student-only.guard";
     UserService,
     ReportService,
     AuthGuard,
-    LecturerGuard,
-    AdminGuard,
-    StudentOnlyGuard
+    LecturerOnlyGuard,
+    AdminOnlyGuard,
+    StudentOnlyGuard,
+    AdminLecturerGuard,
+    LecturerStudentGuard,
+    NotAuthGuard
   ],
   bootstrap: [AskComponent]
 })

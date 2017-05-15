@@ -21,52 +21,12 @@ const answerController = function (Question) {
           })
           .catch(function (err) {
             res.status(500);
-            res.send({
-              message: 'Internal server error'
-            });
-            console.log('error: ', err);
+            res.send(err);
           });
       })
       .catch(function (err) {
         res.status(404);
-        res.send({
-          message: 'Question not found'
-        });
-        console.log('error: ', err);
-      });
-  };
-
-  const put = function (req, res) {
-    Question.findById(req.body.questionId)
-      .exec()
-      .then(function (question) {
-        let answer = question.answers.id(req.body.answerId);
-
-        answer.answer = req.body.answer;
-        answer.totalRatings = req.body.totalRatings;
-        answer.totalComments = req.body.totalComments;
-
-        question.save()
-          .then(function () {
-            res.status(200);
-            res.send({
-              message: 'Success'
-            });
-          })
-          .catch(function (err) {
-            res.status(500);
-            res.send({
-              message: 'Internal server error'
-            });
-            console.log('error: ', err);
-          });
-      })
-      .catch(function (err) {
-        res.status(404);
-        res.send({
-          message: 'Question not found'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
@@ -75,11 +35,11 @@ const answerController = function (Question) {
       .exec()
       .then(function (question) {
         let answer = question.answers.id(req.body.answerId);
-        if (req.body.token.accessLevel > 0 || req.body.token.email == answer.submittedBy) {
+        if (req.body.token.accessLevel > 0 || req.body.token.email === answer.submittedBy) {
+
           delete req.body._id;
-          for (let p in req.body) {
-            answer[p] = req.body[p];
-          }
+          Object.assign(answer, req.body);
+          answer.submittedBy = req.body.token.email;
 
           question.save()
             .then(function () {
@@ -90,10 +50,7 @@ const answerController = function (Question) {
             })
             .catch(function (err) {
               res.status(500);
-              res.send({
-                message: 'Internal server error'
-              });
-              console.log('error: ', err);
+              res.send(err);
             });
         }else{
           res.status(403);
@@ -107,7 +64,6 @@ const answerController = function (Question) {
         res.send({
           message: 'Question not found'
         });
-        console.log('error: ', err);
       });
   };
 
@@ -146,13 +102,11 @@ const answerController = function (Question) {
         res.send({
           message: 'Question not found'
         });
-        console.log('error: ', err);
       });
   };
 
   return {
     add: add,
-    put: put,
     patch: patch,
     del: del
   }

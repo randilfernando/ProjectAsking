@@ -7,21 +7,20 @@ const moduleController = function (Module) {
       .select('_id moduleCode moduleName totalQuestions')
       .exec()
       .then(function (modules) {
-        if (modules.length == 0){
+        if (modules.length === 0) {
           res.status(203);
           res.send({
             message: 'No modules found'
           })
-        }else{
+        } else {
           res.status(200);
           res.send(modules);
         }
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
+        res.send(err);
+        console.log('error: ', err);
       })
   };
 
@@ -29,10 +28,10 @@ const moduleController = function (Module) {
     Module.findOne({'moduleCode': req.params.code})
       .exec()
       .then(function (module) {
-        if (module){
+        if (module) {
           res.status(200);
           res.send(module);
-        }else{
+        } else {
           res.status(404);
           res.send({
             message: 'Module not found'
@@ -41,9 +40,7 @@ const moduleController = function (Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
+        res.send(err);
         console.log('error: ', err);
       });
   };
@@ -55,7 +52,7 @@ const moduleController = function (Module) {
   const getFeatured = function (req, res) {
     Module.find({}, null, {
       skip: 0,
-      limit: 5,
+      limit: 3,
       sort: {totalQuestions: -1}
     })
       .select('_id moduleCode moduleName totalQuestions')
@@ -66,9 +63,8 @@ const moduleController = function (Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
+        res.send(err);
+        console.log('error: ', err);
       })
   };
 
@@ -83,23 +79,62 @@ const moduleController = function (Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
-        console.log('error: ', err);
+        res.send(err);
       });
   };
 
-  const update = function (req, res) {
-    res.send('Not implemented');
-  };
-
   const patch = function (req, res) {
-    res.send('Not implemented');
+    Module.findById(req.body._id)
+      .then(function (module) {
+        if(module){
+          delete req.body._id;
+          Object.assign(module, req.body);
+
+          module.save()
+            .then(function () {
+              res.status(200);
+              res.send({
+                message: 'Success'
+              });
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send(err);
+            });
+        }else{
+          res.status(404);
+          res.send({
+            message: 'Module not found'
+          })
+        }
+
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send(err);
+      });
   };
 
   const del = function (req, res) {
-    res.send('Not implemented');
+    Module.findById(req.body._id)
+      .exec()
+      .then(function (module) {
+        module.remove()
+          .then(function () {
+            res.status(200);
+            res.send({
+              message: 'Success'
+            })
+          })
+          .catch(function (err) {
+            res.status(500);
+            res.send(err);
+          })
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send(err);
+      });
   };
 
   return {
@@ -108,7 +143,6 @@ const moduleController = function (Module) {
     getByKeyword: getByKeyword,
     getFeatured: getFeatured,
     add: add,
-    update: update,
     patch: patch,
     del: del
   };

@@ -64,12 +64,14 @@
                    [editEnabled]="answerListEditable()" [loggedOnEmail]="getLoggedOnEmail()">
   </ask-answer-list>
 
-  <div *ngIf="!isEditing" class="row" style="padding-top: 20px">
-    <div class="col s12">
-      <ask-text-area [elementId]="'answerAdd'" (onEditorKeyup)="editingAnswer.answer = $event"></ask-text-area>
-      <button class="btn waves-effect waves-light center right" (click)="addAnswer()">
-        Add Answer
-      </button>
+  <div *ngIf="!isAdmin">
+    <div *ngIf="!isEditing" class="row" style="padding-top: 20px">
+      <div class="col s12">
+        <ask-text-area [elementId]="'answerAdd'" (onEditorKeyup)="editingAnswer.answer = $event"></ask-text-area>
+        <button class="btn waves-effect waves-light center right" (click)="addAnswer()">
+          Add Answer
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,96 @@
+<!-- Modal Structure -->
+<div id="submitted" class="modal">
+  <div class="modal-content">
+    <h4>Confirmation!</h4>
+    <p>Module updated successfully.</p>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="error" class="modal">
+  <div class="modal-content">
+    <h4>Error!</h4>
+    <p>Module not updated.</p>
+  </div>
+</div>
+
+<a id="trigger_error" href="#error" hidden></a>
+
+<a id="trigger_submitted" href="#submitted" hidden></a>
+
+<div *ngIf="!isError" class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px">
+  <a class="btn-floating btn-large red">
+    <i class="large material-icons">menu</i>
+  </a>
+  <ul>
+    <li><a (click)="deleteModule()" class="btn-floating red"><i class="material-icons">delete</i></a></li>
+    <li><a [routerLink]="['/add-module']" class="btn-floating blue"><i class="material-icons">add</i></a></li>
+  </ul>
+</div>
+
+<div *ngIf="isError" class="fixed-action-btn" style="bottom: 45px; right: 24px">
+  <a [routerLink]="['/add-module']" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+</div>
+
+<div class="row container" style="padding-top: 20px">
+  <h5>Manage Modules</h5>
+</div>
+<div class="row divider"></div>
+<div class="container">
+  <ask-module-search *ngIf="moduleList" [moduleList]="moduleList"
+                     (onModuleChanged)="loadModule($event)"></ask-module-search>
+  <div *ngIf="!isError" style="padding-bottom: 20px">
+    <div class="row">
+      <div class="col s12">
+        <h6>Edit Module Details</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s3">
+        <input placeholder="Module Code" id="moduleCode" type="text" class="validate"
+               [(ngModel)]="selectedModule.moduleCode" required>
+        <label for="moduleCode" class="active">Module Code</label>
+      </div>
+      <div class="input-field col s9">
+        <input placeholder="Module Name" id="moduleName" type="text" class="validate"
+               [(ngModel)]="selectedModule.moduleName" required>
+        <label for="moduleName" class="active">Module Name</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <h6>Edit Topics</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <ul class="collection">
+          <li *ngFor="let topic of selectedModule.topics" class="collection-item">
+            <div>{{topic}}
+              <span (click)="removeTopic(topic)"><a class="secondary-content"><i class="material-icons">delete</i></a></span>
+            </div>
+            <button hidden (click)="removeTopic(topic)" [id]="topic"></button>
+          </li>
+        </ul>
+        <div style="padding-left: 20px; padding-right: 20px">
+          <input [(ngModel)]="editingTopic" (keyup.enter)="addNewTopic()" placeholder="Add new topic" id="moduleAdd" type="text">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field">
+        <div class="col s6">
+          <button (click)="resetData()" class="btn waves-effect waves-light center grey darken-1" type="button"
+                  name="cancel" style="width: 100%">
+            Cancel
+          </button>
+        </div>
+        <div class="col s6">
+          <button (click)="updateModule()" class="btn waves-effect waves-light center" type="button" name="submit" style="width: 100%">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

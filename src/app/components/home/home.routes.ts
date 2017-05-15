@@ -7,9 +7,14 @@ import {AddQuestionComponent} from "./add-question/add-question.component";
 import {ViewQuestionComponent} from "./view-question/view-question.component";
 import {SearchModuleComponent} from "./search-module/search-module.component";
 import {ViewReportComponent} from "./view-report/view-report.component";
-import {LecturerGuard} from "../../guards/lecturer.guard";
+import {LecturerOnlyGuard} from "../../guards/lecturer-only.guard";
 import {ViewProfileComponent} from "./view-profile/view-profile.component";
 import {StudentOnlyGuard} from "../../guards/student-only.guard";
+import {ViewModuleReportComponent} from "./view-module-report/view-module-report.component";
+import {ManageModulesComponent} from "./manage-modules/manage-modules.component";
+import {AddModuleComponent} from "./add-module/add-module.component";
+import {AdminOnlyGuard} from "../../guards/admin-only.guard";
+import {AdminLecturerGuard} from "../../guards/admin-lecturer.guard";
 
 export const HOME_ROUTES : Routes = [
   {path: 'featured', component: FeaturedComponent},
@@ -18,6 +23,9 @@ export const HOME_ROUTES : Routes = [
   {path: 'question/:id', component: ViewQuestionComponent},
   {path: 'question/search/:keyword', component: SearchQuestionsComponent},
   {path: 'module/:id', component: ModuleDetailsComponent},
-  {path: 'view-report', component: ViewReportComponent, canActivate: [LecturerGuard]},
-  {path: 'view-profile', component: ViewProfileComponent}
+  {path: 'view-report', component: ViewReportComponent, canActivate: [AdminLecturerGuard]},
+  {path: 'view-module-report', component: ViewModuleReportComponent, canActivate: [AdminLecturerGuard]},
+  {path: 'view-profile', component: ViewProfileComponent},
+  {path: 'manage-modules', component: ManageModulesComponent, canActivate: [AdminOnlyGuard]},
+  {path: 'add-module', component: AddModuleComponent, canActivate: [AdminOnlyGuard]}
 ];

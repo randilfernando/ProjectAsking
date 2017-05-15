@@ -25,7 +25,7 @@ export class ViewQuestionComponent implements OnInit {
   private moduleList: Module[];
   editEnabled: boolean = false;
   isEditing: boolean = false;
-  private hasError: boolean = false;
+  private isAdmin = false;
 
   private editingAnswer: Answer = {
     _id: '',
@@ -42,6 +42,7 @@ export class ViewQuestionComponent implements OnInit {
   ngOnInit() {
     let id = this.activatedRoute.snapshot.params['id'];
     this.loadQuestion(id);
+    this.isAdmin = this.authenticationService.getLoggedOnUser().accessLevel == 2;
   }
 
   loadQuestion(id: string) {

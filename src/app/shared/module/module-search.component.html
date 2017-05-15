@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="input-field col s12">
+    <input type="text" placeholder="Search for module" id="moduleSearch" class="autocomplete"
+           name="moduleSearch" autocomplete="off" #moduleName required>
+    <button id="load_topics" hidden (click)="moduleChanged(moduleName.value)" type="button"></button>
+    <label for="moduleSearch" class="active">Module</label>
+  </div>
+</div>

@@ -41,7 +41,7 @@ const passwordResetMail = function (email, password) {
 };
 
 const accountConfirmationMail = function (email, tempUserUrl) {
-  let url = config.host + '/api/user/verification/' + tempUserUrl;
+  let url = config.url + '/api/user/verification/' + tempUserUrl;
   sendMail(email,
     '[Asking] Email Confirmation',
     'Click on this link to activate user user account at Asking',
@@ -54,5 +54,5 @@ const accountConfirmationMail = function (email, tempUserUrl) {
 
 module.exports = {
   passwordResetMail: passwordResetMail,
-  accountConfirmationMail: accountConfirmationMail
+  accountConfirmationMail: accountConfirmationMail,
 };

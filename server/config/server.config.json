@@ -1,19 +1,21 @@
 {
   "dev": {
-    "host": "http://localhost:5000",
+    "host": "http://localhost",
     "port": 5000,
+    "morganEnabled": true,
     "morganMode": "dev",
     "client": "client_dev"
   },
   "test": {
-    "host": "http://localhost:5000",
-    "port": 5000,
+    "host": "http://localhost",
+    "port": 6000,
+    "morganEnabled": false,
     "morganMode": "dev",
     "client": "client_dev"
   },
   "prod": {
     "host": "https://asking-platform.herokuapp.com",
-    "port": 5000,
+    "morganEnabled": true,
     "morganMode": "common",
     "client": "client"
   }

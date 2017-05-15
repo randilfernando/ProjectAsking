@@ -11,8 +11,8 @@ import {AuthenticationService} from "../../../services/authentication.service";
   styles: []
 })
 export class AddQuestionComponent implements OnInit, AfterViewInit {
+  moduleList: Module[];
   private selectedModule: Module;
-  private moduleList: Module[];
   private question: Question = {
     _id: '',
     title: '',
@@ -32,7 +32,6 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
   }
 
   loadSelectedModule(moduleCode: string) {
-    moduleCode = moduleCode.slice(0, 6);
     this.moduleService.loadModule(moduleCode).subscribe(
       (result) => {
         if (result) {
@@ -47,7 +46,7 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
     setTimeout(function () {
       $('select').material_select('destroy');
       $('select').material_select();
-    }, 1000);
+    }, 500);
   }
 
   submitQuestion() {
@@ -58,17 +57,14 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
       this.question.moduleCode = this.selectedModule.moduleCode;
       this.question.moduleName = this.selectedModule.moduleName;
       this.question.topic = $('#topic').val();
-      this.question.title = $('#title').val();
-      this.question.submittedBy = this.authenticationService.getLoggedOnUser().username; //can remove after authentication implemented
       let chips = $('.chips-placeholder').material_chip('data');
       for (let chip of chips) {
         this.question.tags.push(chip.tag);
       }
-      console.log(this.question);
       this.questionService.addQuestion(this.question).subscribe(
         (result) => {
           if (result) {
-            console.log('Success');
+            $('#trigger_submitted').click();
           }
         }
       );
@@ -76,39 +72,24 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.moduleService.loadModules()
+      .subscribe(result => {
+        if (result) {
+          this.moduleList = this.moduleService.getModules();
+        } else {
+          this.moduleList = null;
+        }
+      });
   }
 
   ngAfterViewInit() {
-    this.moduleService.loadModules().subscribe(
-      (result) => {
-        if (result) {
-          this.moduleList = this.moduleService.getModules();
-          var item = {};
-          for (let module of this.moduleList) {
-            item[module.moduleCode + ' - ' + module.moduleName] = null;
-          }
+    $('.modal').modal();
+    $('select').material_select();
 
-          $(document).ready(function () {
-            $('.modal').modal();
-            $('select').material_select();
-
-            $('#moduleSearch').autocomplete({
-              data: item,
-              limit: 20,
-              minLength: 1,
-              onAutocomplete: function () {
-                $('#load_topics').click();
-              }
-            });
-
-            $('.chips-placeholder').material_chip({
-              placeholder: 'Enter a tag',
-              secondaryPlaceholder: '+Tag',
-            });
-          });
-        }
-      }
-    );
+    $('.chips-placeholder').material_chip({
+      placeholder: 'Enter a tag',
+      secondaryPlaceholder: '+Tag',
+    });
   }
 
 }

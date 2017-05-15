@@ -1,47 +1,45 @@
 <div class="row container" style="padding-top: 20px">
-  <h5>Report</h5>
+  <h5>Module Report</h5>
 </div>
 <div class="row divider"></div>
 <div class="container">
-  <div *ngIf="overallReport && overallReport.modules.length > 0">
+  <ask-module-search *ngIf="moduleList" [moduleList]="moduleList" (onModuleChanged)="loadReportData($event)"></ask-module-search>
+  <div *ngIf="moduleReport && moduleReport.topics.length > 0">
     <div class="row">
       <h6 class="center-align">All questions submitted</h6><br>
     </div>
     <div class="row">
       <div class="col s6">
-        <chart [type]="allQuestionsChart.type" [data]="allQuestionsChart.data"
-               [options]="allQuestionsChart.options"></chart>
+        <chart [type]="moduleQuestionsChart.type" [data]="moduleQuestionsChart.data"
+               [options]="moduleQuestionsChart.options"></chart>
       </div>
       <div class="col s6">
         <p>This chart displays a report of answered and unanswered questions. Below chart categorized questions
-          according to
-          module. Further you can view report on each module by selecting the relevant module.
+          according to associated topic.
         </p>
       </div>
     </div>
     <div class="row divider"></div>
     <div class="row">
-      <h6 class="center-align">Questions submitted categorized by module</h6><br>
+      <h6 class="center-align">Questions submitted categorized by topic</h6><br>
     </div>
     <div class="row">
       <div class="col s12">
-        <chart [type]="moduleChart.type" [data]="moduleChart.data" [options]="moduleChart.options"></chart>
+        <chart [type]="topicChart.type" [data]="topicChart.data" [options]="topicChart.options"></chart>
       </div>
     </div>
     <div class="row">
       <table class="highlight">
         <thead>
         <tr>
-          <th>Module Code</th>
-          <th>Module Name</th>
-          <th>Questions Submitted</th>
+          <th style="width: 60%">Topic</th>
+          <th style="width: 40%">Questions Submitted</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let module of overallReport.modules">
-          <td>{{module.moduleCode}}</td>
-          <td>{{module.moduleName}}</td>
-          <td>{{module.totalQuestions}}</td>
+        <tr *ngFor="let topic of moduleReport.topics">
+          <td>{{topic._id}}</td>
+          <td>{{topic.count}}</td>
         </tr>
         </tbody>
       </table>

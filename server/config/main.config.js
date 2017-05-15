@@ -1,18 +1,26 @@
-var serverConfig = require('./server.config.json');
-var databaseConfig = require('./database.config.json');
+let serverConfig = require('./server.config.json');
+let databaseConfig = require('./database.config.json');
 
-var environments = {
+let environments = {
   development: "dev",
   production: "prod",
   test: "test"
 };
 
-var environment = process.env.NODE_ENV || environments.production; // change environment for the application
+let environment = process.env.NODE_ENV || environments.production; // change environment for the application
+
+let url = serverConfig[environment].host;
+
+if(serverConfig[environment].port){
+  url += `:${serverConfig[environment].port}`;
+}
 
 module.exports = {
   host: process.env.HOST || serverConfig[environment].host,
   port: process.env.PORT || serverConfig[environment].port,
+  url: url,
+  morganEnabled: serverConfig[environment].morganEnabled,
   morganMode: serverConfig[environment].morganMode,
-  client: serverConfig[environment].client,
+  client: process.env.CLIENT_PATH || serverConfig[environment].client,
   database: databaseConfig[environment]
 };

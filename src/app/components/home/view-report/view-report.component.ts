@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ReportService} from "../../../services/report.service";
-import {Module} from "../../../types/module.type";
+import {OverallReport} from "../../../types/overall-report.type";
 
 @Component({
   selector: 'ask-view-report',
@@ -9,10 +9,7 @@ import {Module} from "../../../types/module.type";
 })
 export class ViewReportComponent implements OnInit {
 
-  isModuleDataLoaded: boolean = false;
-  isQuestionDataLoaded: boolean = false;
-
-  moduleList: Module[];
+  overallReport: OverallReport;
 
   moduleChart = {
     type: 'doughnut',
@@ -52,27 +49,20 @@ export class ViewReportComponent implements OnInit {
     this.reportService.loadOverallReport()
       .subscribe(result => {
         if (result) {
-          this.moduleList = this.reportService.getModuleReport();
-          this.reportService.loadUnanswered()
-            .subscribe(result => {
-              if(result){
-                this.generateAllQuestionsChartData(this.reportService.getAnsweredCount(), this.reportService.getUnansweredCount());
-                this.generateModuleChartData(this.reportService.getModuleReport());
-                this.isQuestionDataLoaded = true;
-                this.isModuleDataLoaded = true;
-              }
-            })
+          this.overallReport = this.reportService.getOverallReport();
+          this.generateAllQuestionsChartData();
+          this.generateModuleChartData();
         }
       })
   }
 
-  generateModuleChartData(data: Module[]) {
+  generateModuleChartData() {
     let dataSet: number[] = [];
     let colorSet: string[] = [];
-    for (let module of data) {
+    for (let module of this.overallReport.modules) {
       this.moduleChart.data.labels.push(module.moduleCode + ' - ' + module.moduleName);
       dataSet.push(module.totalQuestions);
-      colorSet.push(this.getRandomColor());
+      colorSet.push(ViewReportComponent.getRandomColor());
     }
     this.moduleChart.data.datasets.push({
       data: dataSet,
@@ -81,8 +71,9 @@ export class ViewReportComponent implements OnInit {
     });
   }
 
-  generateAllQuestionsChartData(answered: number, unanswered: number){
-    console.log(answered);
+  generateAllQuestionsChartData(){
+    let answered = this.overallReport.answeredCount;
+    let unanswered = this.overallReport.unansweredCount;
     this.allQuestionsChart.data.datasets.push({
       data: [answered, unanswered],
       backgroundColor: ['#1976d2', '#9e9e9e'],
@@ -90,7 +81,7 @@ export class ViewReportComponent implements OnInit {
     });
   }
 
-  getRandomColor() {
+  static getRandomColor() {
     let letters = '0123456789ABCDEF'.split('');
     let color = '#';
     for (var i = 0; i < 6; i++ ) {

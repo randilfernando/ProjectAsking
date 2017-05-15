@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Module} from "../../../types/module.type";
 import {ModuleService} from "../../../services/module.service";
+import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
   selector: 'ask-search-module',
@@ -10,8 +11,9 @@ export class SearchModuleComponent implements OnInit {
 
   modulesList: Module[];
   private message: string = null;
+  private subscribeEnabled = false;
 
-  constructor(private moduleService: ModuleService) {
+  constructor(private moduleService: ModuleService, private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -24,5 +26,6 @@ export class SearchModuleComponent implements OnInit {
           this.message = 'Sorry no modules.'
         }
       });
+    this.subscribeEnabled = this.authenticationService.getLoggedOnUser().accessLevel < 2;
   }
 }

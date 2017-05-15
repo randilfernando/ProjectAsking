@@ -24,6 +24,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   subscribedModules: Module[];
   submittedQuestions: Question[];
 
+  private accessLevel: number = 0;
+
   constructor(private authenticationService: AuthenticationService, private userService: UserService,
               private questionService: QuestionService) {
   }
@@ -41,6 +43,8 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
 
     this.loadSubscribedModules();
     this.loadSubmittedQuestions();
+
+    this.accessLevel = this.authenticationService.getLoggedOnUser().accessLevel;
   }
 
   ngAfterViewInit() {

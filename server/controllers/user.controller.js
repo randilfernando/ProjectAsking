@@ -14,16 +14,12 @@ const userController = function (User, TempUser, Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          "message": "Internal server error"
-        })
+        res.send(err);
+        console.log('Error', err);
       });
   };
 
   const register = function (req, res) {
-
-    console.log(req.body);
-
     User.findOne({email: req.body.email})
       .exec()
       .then(function (user) {
@@ -42,10 +38,10 @@ const userController = function (User, TempUser, Module) {
                   message: 'Confirmation pending'
                 });
               } else {
-                var user = new User();
+                let user = new User();
                 user.setPassword(req.body.password);
 
-                var tempUser = new TempUser();
+                let tempUser = new TempUser();
                 tempUser.name = req.body.name;
                 tempUser.email = req.body.email;
                 tempUser.password = user.password;
@@ -69,19 +65,15 @@ const userController = function (User, TempUser, Module) {
             })
             .catch(function (err) {
               res.status(500);
-              res.send({
-                message: 'Internal server error'
-              });
-              console.log(err);
+              res.send(err);
+              console.log('Error', err);
             });
         }
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
-        console.log(err);
+        res.send(err);
+        console.log('Error', err);
       });
   };
 
@@ -89,24 +81,27 @@ const userController = function (User, TempUser, Module) {
     TempUser.findById(req.params.id)
       .exec()
       .then(function (tempUser) {
-        var user = new User();
-        user.email = tempUser.email;
-        user.name = tempUser.name;
-        user.password = tempUser.password;
+          let user = new User();
+          user.email = tempUser.email;
+          user.name = tempUser.name;
+          user.password = tempUser.password;
 
-        user.save()
-          .then(function () {
-            tempUser.remove();
-            res.status(200);
-            res.redirect('/login');
-          })
-          .catch(function (err) {
-            res.status(500);
-            res.send({
-              message: 'Internal server error'
+          user.save()
+            .then(function () {
+              tempUser.remove();
+              res.status(200);
+              res.redirect('/login');
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send(err);
             });
-            console.log(err);
-          })
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send({
+          message: 'Pending user not found'
+        });
       })
   };
 
@@ -125,22 +120,19 @@ const userController = function (User, TempUser, Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send({
-          message: 'Internal server error'
-        });
+        res.send(err);
+        console.log('Error', err);
       })
   };
 
   const login = function (req, res) {
     passport.authenticate('local', function (err, user, info) {
-      var token;
+      let token;
 
       // If Passport throws/catches an error
       if (err) {
         res.status(404);
-        res.json({
-          "message": 'Internal server error'
-        });
+        res.send(err);
         return;
       }
 
@@ -168,7 +160,7 @@ const userController = function (User, TempUser, Module) {
     User.findOne({'email': req.body.email})
       .exec()
       .then(function (user) {
-        var password = generator.generate({
+        let password = generator.generate({
           length: 10,
           numbers: true
         });
@@ -183,10 +175,7 @@ const userController = function (User, TempUser, Module) {
           })
           .catch(function (err) {
             res.status(500);
-            res.json({
-              "message": 'Internal server error'
-            });
-            console.log('error: ', err);
+            res.send(err);
           })
       })
       .catch(function (err) {
@@ -198,7 +187,7 @@ const userController = function (User, TempUser, Module) {
   };
 
   const add = function (req, res) {
-    var user = new User();
+    let user = new User();
 
     user.name = req.body.username;
     user.email = req.body.email;
@@ -214,10 +203,7 @@ const userController = function (User, TempUser, Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.json({
-          "message": 'Internal server error'
-        });
-        console.log('error: ', err);
+        res.send(err);
       })
   };
 
@@ -244,18 +230,12 @@ const userController = function (User, TempUser, Module) {
           })
           .catch(function (err) {
             res.status(500);
-            res.send({
-              message: 'Internal server error'
-            });
-            console.log('Error', err);
+            res.send(err);
           })
       })
       .catch(function (err) {
         res.status(404);
-        res.send({
-          message: 'User not found'
-        });
-        console.log('Error', err);
+        res.send(err);
       })
   };
 
@@ -264,7 +244,7 @@ const userController = function (User, TempUser, Module) {
       .exec()
       .then(function (user) {
         if (user.accessLevel > 1) {
-          res.status(203);
+          res.status(204);
           res.send({
             message: 'User can not subscribe for modules'
           })
@@ -272,7 +252,7 @@ const userController = function (User, TempUser, Module) {
           Module.findById(req.body.id)
             .exec()
             .then(function (module) {
-              var count = user.subscribedModules.length;
+              let count = user.subscribedModules.length;
               user.subscribedModules.addToSet(module._id);
               user.save()
                 .then(function () {
@@ -282,7 +262,7 @@ const userController = function (User, TempUser, Module) {
                       "message": "Success"
                     });
                   } else {
-                    res.status(304);
+                    res.status(204);
                     res.send({
                       "message": "Already subscribed"
                     });
@@ -290,15 +270,13 @@ const userController = function (User, TempUser, Module) {
                 })
                 .catch(function (err) {
                   res.status(500);
-                  res.send({
-                    "message": "Internal server error"
-                  });
+                  res.send(err);
                 })
             })
             .catch(function (err) {
               res.status(404);
               res.send({
-                "message": "Module not found"
+                message: 'Module not found'
               });
             });
         }
@@ -306,12 +284,12 @@ const userController = function (User, TempUser, Module) {
       .catch(function (err) {
         res.status(404);
         res.send({
-          "message": "User not found"
+          message: 'User not found'
         });
       });
   };
 
-  var unsubscribe = function (req, res) {
+  const unsubscribe = function (req, res) {
     User.findById(req.body.token._id)
       .exec()
       .then(function (user) {
@@ -321,7 +299,7 @@ const userController = function (User, TempUser, Module) {
             message: 'User can not unsubscribe for modules'
           })
         } else {
-          var index = user.subscribedModules.indexOf(req.body.id);
+          let index = user.subscribedModules.indexOf(req.body.id);
           if (index > -1) {
             user.subscribedModules.splice(index, 1);
           }
@@ -334,18 +312,13 @@ const userController = function (User, TempUser, Module) {
             })
             .catch(function (err) {
               res.status(500);
-              res.send({
-                "message": "Internal server error"
-              });
-              console.log('error', err);
+              res.send(err);
             });
         }
       })
       .catch(function (err) {
         res.status(404);
-        res.send({
-          "message": "User not found"
-        });
+        res.send(err);
       });
   };
 
