@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Module} from "../../../types/module.type";
 import {ModuleService} from "../../../services/module.service";
 import {Router} from "@angular/router";
@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   templateUrl: './add-module.component.html',
   styles: []
 })
-export class AddModuleComponent implements OnInit {
+export class AddModuleComponent implements OnInit, AfterViewInit {
 
   private selectedModule: Module = {
     _id: '',
@@ -41,10 +41,18 @@ export class AddModuleComponent implements OnInit {
         }else{
           $('#trigger_error').click();
         }
-      })
+      }, err => {
+        $('#trigger_error').click();
+      });
   }
 
   ngOnInit(){
+  }
+
+  ngAfterViewInit(){
+    $(document).ready(function () {
+      $('.modal').modal();
+    })
   }
 
 }

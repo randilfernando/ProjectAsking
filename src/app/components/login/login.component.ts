@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {User} from "../../types/user.type";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -7,7 +7,7 @@ import {AuthenticationService} from "../../services/authentication.service";
   selector: 'ask-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   user: User = {email: '', password: '', username: '', token: '', accessLevel: 0};
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
@@ -18,6 +18,12 @@ export class LoginComponent implements OnInit {
     this.authenticationService.logout();
   }
 
+  ngAfterViewInit(){
+    $(document).ready(function () {
+      $('.modal').modal();
+    })
+  }
+
   login() {
     this.authenticationService.login(this.user)
       .subscribe(result => {
@@ -25,6 +31,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/featured']);
         }
         return result;
+      }, err => {
+        $('#trigger_error').click();
       });
   }
 
