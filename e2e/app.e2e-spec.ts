@@ -1,14 +1,14 @@
-import { ProjectAskingClientPage } from './app.po';
+import { ProjectAskingHomePage } from './app.po';
 
-describe('project-asking-client App', () => {
-  let page: ProjectAskingClientPage;
+describe('project-asking App', () => {
+  let page: ProjectAskingHomePage;
 
   beforeEach(() => {
-    page = new ProjectAskingClientPage();
+    page = new ProjectAskingHomePage();
   });
 
-  it('should display message saying app works', () => {
+  it('should have a heading of featured', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getTitleText()).toEqual('Featured Content');
   });
 });

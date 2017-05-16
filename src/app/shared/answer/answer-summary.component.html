@@ -10,6 +10,9 @@
     </div>
   </div>
   <div class="col s12">
+    <a (click)="rateUpAnswer()" class="btn-floating waves-effect white z-depth-0"><i style="color: darkgrey" class="material-icons">thumb_up</i></a>
+    <span style="font-size: 1.0em">{{answer.totalRatings}}</span>
+    <a (click)="rateDownAnswer()" class="btn-floating waves-effect white z-depth-0"><i style="color: darkgrey" class="material-icons">thumb_down</i></a>
     <span class="right" style="color: gray">- {{answer.submittedBy}}</span><br>
   </div>
 </div>

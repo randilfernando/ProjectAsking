@@ -51,6 +51,7 @@ import { AddModuleComponent } from './components/home/add-module/add-module.comp
 import {AdminLecturerGuard} from "./guards/admin-lecturer.guard";
 import {LecturerStudentGuard} from "./guards/lecturer-student.guard";
 import {NotAuthGuard} from "./guards/not-auth.guard";
+import {RatingService} from "./services/rating.service";
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import {NotAuthGuard} from "./guards/not-auth.guard";
     QuestionService,
     UserService,
     ReportService,
+    RatingService,
     AuthGuard,
     LecturerOnlyGuard,
     AdminOnlyGuard,

@@ -55,6 +55,15 @@
   </div>
 
   <div class="row">
+    <div class="col s12">
+      <a (click)="rateUpQuestion()" class="btn-floating waves-effect white z-depth-0"><i style="color: darkgrey" class="material-icons">thumb_up</i></a>
+      <span style="font-size: 1.0em">{{selectedQuestion.totalRatings}}</span>
+      <a (click)="rateDownQuestion()" class="btn-floating waves-effect white z-depth-0"><i style="color: darkgrey" class="material-icons">thumb_down</i></a>
+      <span class="right" style="color: gray">- {{selectedQuestion.submittedBy}}</span><br>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="chip" style="background-color: #1e88e5; border-radius: 0">
       <a style="color: white">{{selectedQuestion.moduleCode}} - {{selectedQuestion.moduleName}}</a></div>
     <div class="chip" style="border-radius: 0" *ngFor="let tag of selectedQuestion.tags">{{tag}}</div>

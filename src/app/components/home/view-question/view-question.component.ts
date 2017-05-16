@@ -6,6 +6,7 @@ import {AuthenticationService} from "../../../services/authentication.service";
 import {Module} from "../../../types/module.type";
 import {ModuleService} from "../../../services/module.service";
 import {Question} from "../../../types/question.type";
+import {RatingService} from "../../../services/rating.service";
 
 @Component({
   selector: 'ask-view-question',
@@ -36,7 +37,7 @@ export class ViewQuestionComponent implements OnInit {
 
   constructor(private questionService: QuestionService, private activatedRoute: ActivatedRoute,
               private authenticationService: AuthenticationService, private moduleService: ModuleService,
-              private activatedRouter: Router) {
+              private activatedRouter: Router, private ratingService: RatingService) {
   }
 
   ngOnInit() {
@@ -103,6 +104,24 @@ export class ViewQuestionComponent implements OnInit {
       .subscribe(result => {
         if (result) {
           this.activatedRouter.navigate(['/featured']);
+        }
+      });
+  }
+
+  rateUpQuestion(){
+    this.ratingService.rateUpQuestion(this.selectedQuestion._id)
+      .subscribe(result => {
+        if(result){
+          this.selectedQuestion.totalRatings++;
+        }
+      });
+  }
+
+  rateDownQuestion(){
+    this.ratingService.rateDownQuestion(this.selectedQuestion._id)
+      .subscribe(result => {
+        if(result){
+          this.selectedQuestion.totalRatings--;
         }
       });
   }

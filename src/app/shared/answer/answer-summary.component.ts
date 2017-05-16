@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Answer} from "../../types/answer.type";
 import {QuestionService} from "../../services/question.service";
+import {RatingService} from "../../services/rating.service";
 
 @Component({
   selector: 'ask-answer-summary',
@@ -17,7 +18,7 @@ export class AnswerSummaryComponent implements OnInit {
 
   private isEditing: boolean;
 
-  constructor(private questionService: QuestionService) { }
+  constructor(private questionService: QuestionService, private ratingService: RatingService) { }
 
   ngOnInit() {
     this.editingAnswer = this.answer.answer;
@@ -55,6 +56,24 @@ export class AnswerSummaryComponent implements OnInit {
         }
         this.triggerEditing();
       })
+  }
+
+  rateUpAnswer(){
+    this.ratingService.rateUpAnswer(this.answer._id)
+      .subscribe(result => {
+        if(result){
+          this.answer.totalRatings++;
+        }
+      });
+  }
+
+  rateDownAnswer(){
+    this.ratingService.rateDownAnswer(this.answer._id)
+      .subscribe(result => {
+        if(result){
+          this.answer.totalRatings--;
+        }
+      });
   }
 
 }

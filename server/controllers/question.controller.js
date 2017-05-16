@@ -19,7 +19,7 @@ const questionController = function (Question, Module) {
   const getByKeyword = function (req, res) {
     Question.find({$text: {$search: req.params.keyword}}, {score: {$meta: "textScore"}})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
-      .sort({score: {$meta: 'textScore'}})
+      .sort({score: {$meta: 'textScore'}, totalRatings: -1})
       .exec()
       .then(function (questions) {
         if (questions.length === 0) {
@@ -208,72 +208,6 @@ const questionController = function (Question, Module) {
             res.status(500);
             res.send(err);
           })
-      })
-      .catch(function (err) {
-        res.status(404);
-        res.send(err);
-      });
-  };
-
-  const rateUp = function (req, res) {
-    Question.findById(req.body.questionId)
-      .exec()
-      .then(function (question) {
-        let preRate = question.totalRatings;
-        question.ratings.addToSet(req.body.email);
-        question.totalRatings = question.ratings.length;
-
-        if (preRate < question.totalRatings) {
-          question.save()
-            .then(function () {
-              res.status(200);
-              res.send({
-                message: 'Success'
-              });
-            })
-            .catch(function (err) {
-              res.status(500);
-              res.send(err);
-            });
-        } else {
-          res.status(203);
-          res.send({
-            message: 'Already rated'
-          });
-        }
-      })
-      .catch(function (err) {
-        res.status(404);
-        res.send(err);
-      });
-  };
-
-  const rateDown = function (req, res) {
-    Question.findById(req.body.questionId)
-      .exec()
-      .then(function (question) {
-        let preRate = question.totalRatings;
-        question.ratings.pull(req.body.token.email);
-        question.totalRatings = question.ratings.length;
-
-        if (preRate > question.totalRatings) {
-          question.save()
-            .then(function () {
-              res.status(200);
-              res.send({
-                message: 'Success'
-              });
-            })
-            .catch(function (err) {
-              res.status(500);
-              res.send(err);
-            });
-        } else {
-          res.status(203);
-          res.send({
-            message: 'You have not rated this question'
-          });
-        }
       })
       .catch(function (err) {
         res.status(404);

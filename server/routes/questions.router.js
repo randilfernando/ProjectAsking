@@ -4,6 +4,7 @@ const express = require('express');
 const Question = require('./../model/question.model').Question;
 const Module = require('./../model/module.model').Module;
 const questionsController = require('./../controllers/question.controller.js')(Question, Module);
+const ratingController = require('./../controllers/ratings.controller')(Question);
 const accessMiddleware = require('./../middleware/access.middleware');
 
 let questionRouter = express.Router();
@@ -15,6 +16,10 @@ questionRouter.route('')
 
 questionRouter.route('/user')
   .get(questionsController.getByUser);
+
+questionRouter.route('/rate')
+  .post(ratingController.rateUpQuestion)
+  .delete(ratingController.rateDownQuestion);
 
 questionRouter.route('/:id')
   .get(questionsController.getById)
