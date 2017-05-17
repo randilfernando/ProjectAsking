@@ -1,0 +1,75 @@
+<!-- Modal Structure -->
+<div id="submitted" class="modal">
+  <div class="modal-content">
+    <h4>Confirmation!</h4>
+    <p>User updated successfully.</p>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="error" class="modal">
+  <div class="modal-content">
+    <h4>Error!</h4>
+    <p>User not updated.</p>
+  </div>
+</div>
+
+<a id="trigger_error" href="#error" hidden></a>
+
+<a id="trigger_submitted" href="#submitted" hidden></a>
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px">
+  <a [routerLink]="['/add-user']" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+</div>
+
+<div class="row container" style="padding-top: 20px">
+  <h5>Manage Users</h5>
+</div>
+<div class="row divider"></div>
+<div class="container">
+  <ask-search-user *ngIf="userList" [userList]="userList" (onUserChanged)="loadUser($event)"></ask-search-user>
+
+  <div *ngIf="!isError" style="padding-bottom: 20px">
+    <div class="row">
+      <div class="col s12">
+        <h6>Edit User Details</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Email" id="email" type="email" class="validate"
+               [value]="selectedUser.email" disabled>
+        <label for="email" class="active">Email</label>
+      </div>
+      <div class="input-field col s12">
+        <input placeholder="Username" id="username" type="text" class="validate"
+               [value]="selectedUser.name" disabled>
+        <label for="username" class="active">Username</label>
+      </div>
+      <div class="col s12">
+          <input name="group1" type="radio" id="test1" (change)="selectedUser.accessLevel = 0" [checked]="selectedUser.accessLevel === 0"/>
+          <label for="test1">Student</label>
+          <input name="group1" type="radio" id="test2" (change)="selectedUser.accessLevel = 1" [checked]="selectedUser.accessLevel === 1"/>
+          <label for="test2">Lecturer</label>
+          <input name="group1" type="radio" id="test3" (change)="selectedUser.accessLevel = 2" [checked]="selectedUser.accessLevel === 2"/>
+          <label for="test3">Administrator</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field">
+        <div class="col s6">
+          <button (click)="resetData()" class="btn waves-effect waves-light center grey darken-1" type="button"
+                  name="cancel" style="width: 100%">
+            Cancel
+          </button>
+        </div>
+        <div class="col s6">
+          <button (click)="updateUser()" class="btn waves-effect waves-light center" type="button" name="submit" style="width: 100%">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

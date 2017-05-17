@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   templateUrl: './sign-up.component.html'
 })
 export class SignUpComponent implements OnInit, AfterViewInit {
-  private user: User = {email: '', password: '', username: '', token: '', accessLevel: 0};
+  private user: User = {email: '', password: '', name: '', token: '', accessLevel: 0};
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {
   }

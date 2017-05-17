@@ -55,12 +55,6 @@ export class ManageModulesComponent implements OnInit, AfterViewInit {
       .subscribe(result => {
         if (result) {
           $('#trigger_submitted').click();
-          for (let module of this.moduleList) {
-            if (module._id === this.selectedModule._id) {
-              Object.assign(module, this.selectedModule);
-            }
-          }
-          this.moduleService.generateChangedEvent();
         } else {
           $('#trigger_error').click();
         }
@@ -74,12 +68,6 @@ export class ManageModulesComponent implements OnInit, AfterViewInit {
       .subscribe(result => {
         if (result) {
           $('#trigger_submitted').click();
-          for (let index = 0; index < this.moduleList.length; index++) {
-            if (this.moduleList[index]._id === this.selectedModule._id) {
-              this.moduleList.splice(index, 1);
-            }
-          }
-          this.moduleService.generateChangedEvent();
           this.isError = true;
         } else {
           $('#trigger_error').click();

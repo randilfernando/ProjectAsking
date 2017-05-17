@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* set navigation bar size */
 nav {
   height: 100px;
   line-height: 100px;
@@ -18,7 +20,7 @@ nav .brand-logo {
   font-size: 1.6rem;
 }
 
-@media only screen and (min-width: 601px){
+@media only screen and (min-width: 992px) {
   nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     height: 100px;
     line-height: 100px;
@@ -26,15 +28,9 @@ nav .brand-logo {
 }
 
 /*to set the page in align with side nav*/
-.setSidebar {
-  padding-left: 300px;
-}
-
-@media only screen and (max-width: 992px) {
-  header,
-  main,
-  footer {
-    padding-left: 0;
+@media only screen and (min-width: 992px) {
+  .setSidebar {
+    padding-left: 300px;
   }
 }
 

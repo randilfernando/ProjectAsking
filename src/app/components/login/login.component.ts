@@ -8,7 +8,7 @@ import {AuthenticationService} from "../../services/authentication.service";
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit, AfterViewInit {
-  user: User = {email: '', password: '', username: '', token: '', accessLevel: 0};
+  user: User = {email: '', password: '', name: '', token: '', accessLevel: 0};
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
   }

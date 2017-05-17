@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Module} from "../../../types/module.type";
 import {ModuleService} from "../../../services/module.service";
-import {Router} from "@angular/router";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'ask-add-module',
@@ -19,7 +19,7 @@ export class AddModuleComponent implements OnInit, AfterViewInit {
   };
   private editingTopic = '';
 
-  constructor(private moduleService: ModuleService, private activatedRouter: Router) { }
+  constructor(private moduleService: ModuleService, private location: Location) { }
 
   addNewTopic(){
     this.selectedModule.topics.push(this.editingTopic);
@@ -38,6 +38,7 @@ export class AddModuleComponent implements OnInit, AfterViewInit {
       .subscribe(result => {
         if(result){
           $('#trigger_submitted').click();
+          this.location.back();
         }else{
           $('#trigger_error').click();
         }

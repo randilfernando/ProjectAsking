@@ -15,6 +15,8 @@ import {ManageModulesComponent} from "./manage-modules/manage-modules.component"
 import {AddModuleComponent} from "./add-module/add-module.component";
 import {AdminOnlyGuard} from "../../guards/admin-only.guard";
 import {AdminLecturerGuard} from "../../guards/admin-lecturer.guard";
+import {ManageUsersComponent} from "./manage-users/manage-users.component";
+import {AddUserComponent} from "./add-user/add-user.component";
 
 export const HOME_ROUTES : Routes = [
   {path: 'featured', component: FeaturedComponent},
@@ -27,5 +29,7 @@ export const HOME_ROUTES : Routes = [
   {path: 'view-module-report', component: ViewModuleReportComponent, canActivate: [AdminLecturerGuard]},
   {path: 'view-profile', component: ViewProfileComponent},
   {path: 'manage-modules', component: ManageModulesComponent, canActivate: [AdminOnlyGuard]},
-  {path: 'add-module', component: AddModuleComponent, canActivate: [AdminOnlyGuard]}
+  {path: 'add-module', component: AddModuleComponent, canActivate: [AdminOnlyGuard]},
+  {path: 'manage-users', component: ManageUsersComponent, canActivate: [AdminOnlyGuard]},
+  {path: 'add-user', component: AddUserComponent, canActivate: [AdminOnlyGuard]}
 ];

@@ -2,17 +2,19 @@
   <div id="menu-up" #menuUp (window:resize)="onResize()">
     <li>
       <div class="valign-wrapper z-depth-1" style="background-color: #424242; height: 100px">
-        <img style="height: 70px" src="../../../assets/images/company_logo.png" alt="Company Logo">
-        <h1 style="font-size: 40px; color: white; padding-left: 40px;">asking</h1>
+          <img style="height: 70px" src="../../../assets/images/company_logo.png" alt="Company Logo">
+          <h1 style="font-size: 40px; color: white; padding-left: 40px;">asking</h1>
       </div>
     </li>
-    <li *ngFor="let actionURL of actionURLList"><a [routerLink]="['/' + actionURL.actionURL]" routerLinkActive="active">{{actionURL.title}}</a></li>
+    <li *ngFor="let actionURL of actionURLList"><a [routerLink]="['/' + actionURL.actionURL]" routerLinkActive="active">{{actionURL.title}}</a>
+    </li>
     <li>
       <div *ngIf="enrolledModules" class="divider"></div>
     </li>
     <li *ngIf="enrolledModules"><a class="subheader">Enrolled Modules</a></li>
   </div>
   <div *ngIf="enrolledModules" class="scroll-box" [style.height.px]="menuDownHeight">
-    <li *ngFor="let module of enrolledModules"><a [routerLink]="['/module/' + module.moduleCode]" class="truncate">{{module.moduleName}}</a></li>
+    <li *ngFor="let module of enrolledModules"><a [routerLink]="['/module/' + module.moduleCode]" class="truncate">{{module.moduleName}}</a>
+    </li>
   </div>
 </ul>

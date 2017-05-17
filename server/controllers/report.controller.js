@@ -59,31 +59,38 @@ const reportController = function (Question, Module) {
     ])
     .exec()
     .then(function (report) {
-      let total = 0;
-      for(let topic of report){
-        total += topic.count;
-      }
-      Question.find({'moduleCode': req.params.moduleCode, 'totalAnswers': 0})
-        .select('_id')
+      Module.findOne({'moduleCode': req.params.moduleCode})
         .exec()
-        .then(function (questions) {
-          res.status(200);
-          res.send({
-            answeredCount: total - questions.length,
-            unansweredCount: questions.length,
-            data: report
-          });
+        .then(function (module) {
+          let total = 0;
+          for(let topic of report){
+            total += topic.count;
+            if (total._id === null) total._id = 'Without topic';
+          }
+          Question.find({'moduleCode': req.params.moduleCode, 'totalAnswers': 0})
+            .select('_id')
+            .exec()
+            .then(function (questions) {
+              res.status(200);
+              res.send({
+                answeredCount: total - questions.length,
+                unansweredCount: questions.length,
+                data: report
+              });
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send(err);
+            });
         })
         .catch(function (err) {
           res.status(500);
           res.send(err);
-          console.log('Error', err);
         });
       })
       .catch(function (err) {
         res.status(500);
         res.send(err);
-        console.log(Error, err);
       })
   };
 

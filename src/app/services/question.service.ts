@@ -96,16 +96,17 @@ export class QuestionService {
       });
   }
 
-  addAnswer(questionId: string, answer: Answer): Observable<boolean>{
+  addAnswer(answer: Answer): Observable<boolean>{
     return this.http.post(`/api/answer/`, {
-      "questionId": questionId,
+      "questionId": this.selectedQuestion._id,
       "answer": {
-        "answer": answer.answer,
+        "answer": answer.answer
       },
       "token": this.authenticationService.getLoggedOnUser().token
     })
       .map((response: Response) => {
         if(response.status === 200){
+          answer.submittedBy = this.authenticationService.getLoggedOnUser().email;
           answer._id = response.json() && response.json().id;
           this.answerList.push(answer);
           return true;
@@ -114,17 +115,14 @@ export class QuestionService {
       });
   }
 
-  updateQuestion(questionId: string, title: string, description: string): Observable<boolean>{
-    return this.http.patch(`/api/question/${questionId}`, {
+  updateQuestion(title: string, description: string): Observable<boolean>{
+    return this.http.patch(`/api/question/${this.selectedQuestion._id}`, {
       "title": title,
       "description": description,
       "token": this.authenticationService.getLoggedOnUser().token
     })
       .map((response: Response) => {
-        if(response.status === 200){
-          return true;
-        }
-        return false;
+        return response.status === 200;
       });
   }
 
@@ -136,17 +134,14 @@ export class QuestionService {
       "token": this.authenticationService.getLoggedOnUser().token
     })
       .map((response: Response) => {
-        if(response.status === 200){
-          return true;
-        }
-        return false;
+        return response.status === 200;
       });
   }
 
-  deleteQuestion(questionId: string): Observable<boolean>{
+  deleteQuestion(): Observable<boolean>{
     let options: RequestOptionsArgs = {
       body: {
-        "questionId": questionId,
+        "questionId": this.selectedQuestion._id,
         "token": this.authenticationService.getLoggedOnUser().token
       },
       method: RequestMethod.Delete
@@ -154,10 +149,7 @@ export class QuestionService {
 
     return this.http.request('/api/question/', options)
       .map((response: Response) => {
-        if(response.status === 200){
-          return true;
-        }
-        return false;
+        return response.status === 200;
       });
   }
 

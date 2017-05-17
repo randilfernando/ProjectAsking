@@ -1,6 +1,6 @@
 "use strict";
 
-process.env.NODE_ENV = 'test';
+process.env.ENV = 'test';
 
 const User = require('../model/user.model').User;
 const TempUser = require('../model/tempUser.model').TempUser;

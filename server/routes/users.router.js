@@ -11,6 +11,13 @@ const accessMiddleware = require('./../middleware/access.middleware');
 
 let usersRouter = express.Router();
 
+usersRouter.route('')
+  .get(authMiddleware, accessMiddleware([2]), userController.get)
+  .post(authMiddleware, accessMiddleware([2]), userController.add);
+
+usersRouter.route('/change')
+  .post(authMiddleware, accessMiddleware([2]), userController.changeAccess);
+
 usersRouter.route('/register')
   .post(userController.register);
 
@@ -25,7 +32,7 @@ usersRouter.route('/reset')
 
 usersRouter.route('/profile')
   .get(authMiddleware, userController.getByEmail)
-  .patch(authMiddleware, userController.update);
+  .put(authMiddleware, userController.update);
 
 usersRouter.route('/subscribe')
   .post(authMiddleware, accessMiddleware([0,1]), userController.subscribe);

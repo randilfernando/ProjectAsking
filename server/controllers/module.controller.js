@@ -45,10 +45,6 @@ const moduleController = function (Module) {
       });
   };
 
-  const getByKeyword = function (req, res) {
-    res.send('Not implemented');
-  };
-
   const getFeatured = function (req, res) {
     Module.find({}, null, {
       skip: 0,
@@ -140,7 +136,6 @@ const moduleController = function (Module) {
   return {
     get: get,
     getById: getById,
-    getByKeyword: getByKeyword,
     getFeatured: getFeatured,
     add: add,
     patch: patch,

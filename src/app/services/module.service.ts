@@ -9,8 +9,14 @@ export class ModuleService {
 
   moduleListUpdated:EventEmitter<any> = new EventEmitter();
 
-  private moduleList: Module[];
-  private selectedModule: Module;
+  private moduleList: Module[] = [];
+  private selectedModule: Module = {
+    _id: '',
+    topics: [],
+    moduleName: '',
+    moduleCode: '',
+    totalQuestions: 0
+  };
 
   constructor(private http: Http, private authenticationService: AuthenticationService) { }
 
@@ -62,7 +68,9 @@ export class ModuleService {
     })
       .map((response: Response) => {
         if(response.status === 200){
-          this.selectedModule = module;
+          module._id = response.json()._id;
+          Object.assign(this.selectedModule, module);
+          this.moduleList.push(this.selectedModule);
           return true;
         }
         return false;
@@ -80,6 +88,12 @@ export class ModuleService {
       .map((response: Response) => {
         if(response.status === 200){
           this.selectedModule = module;
+          for (let m of this.moduleList) {
+            if (m._id === module._id) {
+              Object.assign(m, module);
+            }
+          }
+          this.moduleListChanged();
           return true;
         }
         return false;
@@ -99,14 +113,20 @@ export class ModuleService {
       .map((response: Response) => {
         if(response.status === 200){
           this.selectedModule = null;
+          for (let index = 0; index < this.moduleList.length; index++) {
+            if (this.moduleList[index]._id === module._id) {
+              this.moduleList.splice(index, 1);
+            }
+          }
+          this.moduleListChanged();
           return true;
         }
         return false;
       });
   }
 
-  generateChangedEvent(){
-    this.moduleListUpdated.emit();
+  moduleListChanged(){
+    this.moduleListUpdated.emit('Changed');
   }
 
   getModules(): Module[]{

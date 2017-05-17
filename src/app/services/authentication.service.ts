@@ -28,10 +28,10 @@ export class AuthenticationService {
         if (token) {
           // set token property
           user.token = token;
-          user.username = response.json() && response.json().username;
+          user.name = response.json() && response.json().name;
           user.accessLevel = response.json() && response.json().accessLevel;
           user.password = '';
-          // store username and jwt token in local storage to keep user logged in between page refreshes
+          // store name and jwt token in local storage to keep user logged in between page refreshes
           this.saveLoggedOnUser(user);
 
           // return true to indicate successful login
@@ -46,7 +46,7 @@ export class AuthenticationService {
   register(user: User): Observable<boolean>{
     return this.http.post('/api/user/register', {
       "email": user.email,
-      "name": user.username,
+      "name": user.name,
       "password": user.password
     })
       .map((response: Response) => {
@@ -80,7 +80,7 @@ export class AuthenticationService {
       .map((response: Response) => {
         if (response.status == 200) {
           let user: User = {
-            username: this.getLoggedOnUser().username,
+            name: this.getLoggedOnUser().name,
             email: this.getLoggedOnUser().email,
             password: newPassword,
             accessLevel: 0,

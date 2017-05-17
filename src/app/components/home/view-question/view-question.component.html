@@ -1,3 +1,23 @@
+<!-- Modal Structure -->
+<div id="confirmation" class="modal">
+  <div class="modal-content">
+    <h4>Confirmation</h4>
+    <p>Question updated successfully.</p>
+  </div>
+</div>
+
+<a id="trigger_submitted" hidden href="#confirmation"></a>
+
+<!-- Modal Structure -->
+<div id="error" class="modal">
+  <div class="modal-content">
+    <h4>Error!</h4>
+    <p>Question not updated.</p>
+  </div>
+</div>
+
+<a id="trigger_error" hidden href="#error"></a>
+
 <div *ngIf="editEnabled">
   <div *ngIf="!isEditing" class="fixed-action-btn" style="bottom: 45px; right: 24px">
     <a (click)="triggerEdit()" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
@@ -29,15 +49,6 @@
   </div>
 
   <div *ngIf="isEditing">
-    <!-- Modal Structure -->
-    <div id="confirmation" class="modal">
-      <div class="modal-content">
-        <h4>Confirmation</h4>
-        <p>Question updated successfully.</p>
-      </div>
-    </div>
-
-    <a id="trigger_confirmation" hidden href="#confirmation"></a>
 
     <form (ngSubmit)="updateQuestion()">
       <div class="row">
@@ -70,7 +81,7 @@
   </div>
 
   <ask-answer-list [answerList]="answerList"
-                   [editEnabled]="answerListEditable()" [loggedOnEmail]="getLoggedOnEmail()">
+                   [editEnabled]="accessLevel > 0" [loggedOnEmail]="getLoggedOnEmail()">
   </ask-answer-list>
 
   <div *ngIf="!isAdmin">

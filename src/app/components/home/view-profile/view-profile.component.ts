@@ -17,7 +17,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
     email: '',
     accessLevel: 0,
     token: '',
-    username: '',
+    name: '',
     password: ''
   };
 
@@ -33,7 +33,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     let clone: User = {
       email: '',
-      username: '',
+      name: '',
       password: '',
       token: '',
       accessLevel: 0
@@ -76,7 +76,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   }
 
   changeUserData(){
-    this.userService.changeProfileName(this.user.username)
+    this.userService.changeProfileName(this.user.name)
       .subscribe(result => {
         if(result){
           $('#trigger_confirmation').click();
@@ -89,7 +89,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   cancelEdit(){
     let clone: User = {
       email: '',
-      username: '',
+      name: '',
       password: '',
       token: '',
       accessLevel: 0

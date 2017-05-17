@@ -16,6 +16,19 @@ const questionController = function (Question, Module) {
       });
   };
 
+  const getById = function (req, res) {
+    Question.findById(req.params.id)
+      .exec()
+      .then(function (question) {
+        res.status(200);
+        res.send(question);
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send(err);
+      });
+  };
+
   const getByKeyword = function (req, res) {
     Question.find({$text: {$search: req.params.keyword}}, {score: {$meta: "textScore"}})
       .select('_id title moduleCode moduleName submittedBy totalRatings totalAnswers tags')
@@ -34,19 +47,6 @@ const questionController = function (Question, Module) {
       })
       .catch(function (err) {
         res.status(500);
-        res.send(err);
-      });
-  };
-
-  const getById = function (req, res) {
-    Question.findById(req.params.id)
-      .exec()
-      .then(function (question) {
-        res.status(200);
-        res.send(question);
-      })
-      .catch(function (err) {
-        res.status(404);
         res.send(err);
       });
   };
@@ -109,7 +109,7 @@ const questionController = function (Question, Module) {
 
           let valid = false;
 
-          if (question.topic === undefined) {
+          if (question.topic == undefined) {
             valid = true;
           } else {
             for (let topic of module.topics) {

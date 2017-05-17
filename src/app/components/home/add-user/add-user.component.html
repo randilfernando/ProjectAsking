@@ -1,0 +1,74 @@
+<!-- Modal Structure -->
+<div id="submitted" class="modal">
+  <div class="modal-content">
+    <h4>Confirmation!</h4>
+    <p>User added successfully.</p>
+  </div>
+</div>
+
+<a id="trigger_submitted" href="#submitted" hidden></a>
+
+<!-- Modal Structure -->
+<div id="error" class="modal">
+  <div class="modal-content">
+    <h4>Error!</h4>
+    <p>User not added.</p>
+  </div>
+</div>
+
+<a id="trigger_error" href="#error" hidden></a>
+
+<div class="row container" style="padding-top: 20px">
+  <h5>Add New User</h5>
+</div>
+<div class="row divider"></div>
+<div class="container">
+  <div class="row" style="padding-bottom: 20px">
+    <form method="post" (ngSubmit)="addUser()" class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Email" id="email" type="email" class="validate"
+                 [(ngModel)]="user.email" name="email" required>
+          <label for="email" class="active">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Username" id="username" type="text" class="validate"
+                 [(ngModel)]="user.name" name="username" required>
+          <label for="username" class="active">Username</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <input name="group1" type="radio" id="test1" (change)="user.accessLevel = 0"
+                 [checked]="user.accessLevel === 0"/>
+          <label for="test1">Student</label>
+          <input name="group1" type="radio" id="test2" (change)="user.accessLevel = 1"
+                 [checked]="user.accessLevel === 1"/>
+          <label for="test2">Lecturer</label>
+          <input name="group1" type="radio" id="test3" (change)="user.accessLevel = 2"
+                 [checked]="user.accessLevel === 2"/>
+          <label for="test3">Administrator</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field">
+          <div class="col s6">
+            <button [routerLink]="['/manage-users']" class="btn waves-effect waves-light center grey darken-1"
+                    type="button"
+                    name="cancel" style="width: 100%">
+              Cancel
+            </button>
+          </div>
+          <div class="col s6">
+            <button class="btn waves-effect waves-light center" type="submit" name="submit" style="width: 100%">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

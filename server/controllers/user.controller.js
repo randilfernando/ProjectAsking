@@ -4,6 +4,27 @@ const passport = require('passport');
 
 const userController = function (User, TempUser, Module) {
 
+  const get = function (req, res) {
+    User.find({})
+      .select('email name accessLevel')
+      .exec()
+      .then(function (users) {
+        if (users.length > 0) {
+          res.status(200);
+          res.send(users);
+        } else {
+          res.status(203);
+          res.send({
+            message: 'No users'
+          })
+        }
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send(err);
+      });
+  };
+
   const getByEmail = function (req, res) {
     User.findById(req.body.token._id)
       .populate('subscribedModules', '_id moduleCode moduleName totalQuestions')
@@ -15,7 +36,6 @@ const userController = function (User, TempUser, Module) {
       .catch(function (err) {
         res.status(500);
         res.send(err);
-        console.log('Error', err);
       });
   };
 
@@ -81,21 +101,21 @@ const userController = function (User, TempUser, Module) {
     TempUser.findById(req.params.id)
       .exec()
       .then(function (tempUser) {
-          let user = new User();
-          user.email = tempUser.email;
-          user.name = tempUser.name;
-          user.password = tempUser.password;
+        let user = new User();
+        user.email = tempUser.email;
+        user.name = tempUser.name;
+        user.password = tempUser.password;
 
-          user.save()
-            .then(function () {
-              tempUser.remove();
-              res.status(200);
-              res.redirect('/login');
-            })
-            .catch(function (err) {
-              res.status(500);
-              res.send(err);
-            });
+        user.save()
+          .then(function () {
+            tempUser.remove();
+            res.status(200);
+            res.redirect('/login');
+          })
+          .catch(function (err) {
+            res.status(500);
+            res.send(err);
+          });
       })
       .catch(function (err) {
         res.status(404);
@@ -142,7 +162,7 @@ const userController = function (User, TempUser, Module) {
         res.status(200);
         res.json({
           "token": token,
-          "username": user.name,
+          "name": user.name,
           "accessLevel": user.accessLevel
         });
       } else {
@@ -187,17 +207,18 @@ const userController = function (User, TempUser, Module) {
   };
 
   const add = function (req, res) {
-    let user = new User();
-
-    user.name = req.body.username;
-    user.email = req.body.email;
-    user.accessLevel = req.body.accessLevel;
-    user.setPassword(req.body.password);
+    let user = new User(req.body);
+    let password = generator.generate({
+      length: 10,
+      numbers: true
+    });
+    user.setPassword(password);
 
     user.save()
       .then(function () {
+        mailController.passwordResetMail(user.email, password);
         res.status(200);
-        res.json({
+        res.send({
           "message": 'Success'
         });
       })
@@ -205,10 +226,6 @@ const userController = function (User, TempUser, Module) {
         res.status(500);
         res.send(err);
       })
-  };
-
-  const del = function (req, res) {
-
   };
 
   const update = function (req, res) {
@@ -221,6 +238,29 @@ const userController = function (User, TempUser, Module) {
         if (req.body.newPassword) {
           user.setPassword(req.body.newPassword);
         }
+        user.save()
+          .then(function () {
+            res.status(200);
+            res.send({
+              message: 'Success'
+            });
+          })
+          .catch(function (err) {
+            res.status(500);
+            res.send(err);
+          })
+      })
+      .catch(function (err) {
+        res.status(404);
+        res.send(err);
+      })
+  };
+
+  const changeAccess = function (req, res) {
+    User.findOne({'email': req.body.email})
+      .exec()
+      .then(function (user) {
+        user.accessLevel = req.body.accessLevel;
         user.save()
           .then(function () {
             res.status(200);
@@ -323,6 +363,9 @@ const userController = function (User, TempUser, Module) {
   };
 
   return {
+    get: get,
+    add: add,
+    changeAccess: changeAccess,
     getByEmail: getByEmail,
     register: register,
     verification: verification,
@@ -333,6 +376,6 @@ const userController = function (User, TempUser, Module) {
     subscribe: subscribe,
     unsubscribe: unsubscribe
   };
-}
+};
 
 module.exports = userController;

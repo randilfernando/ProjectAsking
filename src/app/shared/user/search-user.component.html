@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="input-field col s12">
+    <input type="text" placeholder="Search user email" id="userSearch" class="autocomplete"
+           name="userSearch" autocomplete="off" #userSearch>
+    <button id="load_users" hidden (click)="userChanged(userSearch.value)" type="button"></button>
+    <label for="userSearch" class="active">User</label>
+  </div>
+</div>

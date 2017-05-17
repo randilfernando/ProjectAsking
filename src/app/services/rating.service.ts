@@ -10,9 +10,9 @@ export class RatingService {
   constructor(private http: Http, private authenticationService: AuthenticationService, private questionService: QuestionService) {
   }
 
-  rateUpQuestion(questionId: string): Observable<boolean> {
+  rateUpQuestion(): Observable<boolean> {
     return this.http.post('/api/question/rate', {
-      "questionId": questionId,
+      "questionId": this.questionService.getSelectedQuestion()._id,
       "token": this.authenticationService.getLoggedOnUser().token
     })
       .map((response: Response) => {
@@ -20,10 +20,10 @@ export class RatingService {
       });
   }
 
-  rateDownQuestion(questionId: string): Observable<boolean> {
+  rateDownQuestion(): Observable<boolean> {
     let options: RequestOptionsArgs = {
       body: {
-        "questionId": questionId,
+        "questionId": this.questionService.getSelectedQuestion()._id,
         "token": this.authenticationService.getLoggedOnUser().token
       },
       method: RequestMethod.Delete

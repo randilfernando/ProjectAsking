@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../../services/user.service";
@@ -10,7 +10,7 @@ import {ActionURL} from "../../types/action.type";
   templateUrl: 'home.component.html',
   styles: []
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit,AfterViewInit {
 
   private studentURLs: ActionURL[] = [
     {title: 'Home', actionURL: 'featured'},
@@ -69,6 +69,10 @@ export class HomeComponent implements OnInit {
       default:
         this.actionsURLs = this.studentURLs;
     }
+  }
+
+  ngAfterViewInit(){
+
   }
 
 }

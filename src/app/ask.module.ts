@@ -52,6 +52,9 @@ import {AdminLecturerGuard} from "./guards/admin-lecturer.guard";
 import {LecturerStudentGuard} from "./guards/lecturer-student.guard";
 import {NotAuthGuard} from "./guards/not-auth.guard";
 import {RatingService} from "./services/rating.service";
+import { ManageUsersComponent } from './components/home/manage-users/manage-users.component';
+import { SearchUserComponent } from './shared/user/search-user.component';
+import { AddUserComponent } from './components/home/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +90,10 @@ import {RatingService} from "./services/rating.service";
     ViewModuleReportComponent,
     ModuleSearchComponent,
     ManageModulesComponent,
-    AddModuleComponent
+    AddModuleComponent,
+    ManageUsersComponent,
+    SearchUserComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,

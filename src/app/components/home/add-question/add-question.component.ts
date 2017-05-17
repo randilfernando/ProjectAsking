@@ -58,16 +58,21 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
       this.question.moduleName = this.selectedModule.moduleName;
       this.question.topic = $('#topic').val();
       let chips = $('.chips-placeholder').material_chip('data');
+      this.question.tags = [];
       for (let chip of chips) {
         this.question.tags.push(chip.tag);
       }
-      this.questionService.addQuestion(this.question).subscribe(
-        (result) => {
-          if (result) {
-            $('#trigger_submitted').click();
+      this.questionService.addQuestion(this.question)
+        .subscribe((result) => {
+            if (result) {
+              $('#trigger_submitted').click();
+            }else{
+              $('#trigger_error').click();
+            }
           }
-        }
-      );
+          , (err) => {
+            $('#trigger_error').click();
+          });
     }
   }
 
