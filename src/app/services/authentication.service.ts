@@ -72,7 +72,7 @@ export class AuthenticationService {
   }
 
   changePassword(oldPassword: string, newPassword: string): Observable<boolean>{
-    return this.http.patch('/api/user/profile', {
+    return this.http.put('/api/user/profile', {
       "oldPassword": oldPassword,
       "newPassword": newPassword,
       "token": this.getLoggedOnUser().token

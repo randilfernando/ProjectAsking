@@ -70,7 +70,7 @@ export class UserService {
   }
 
   changeProfileName(newName: string): Observable<boolean>{
-    return this.http.patch('/api/user/profile', {
+    return this.http.put('/api/user/profile', {
       "name": newName,
       "token": this.authenticationService.getLoggedOnUser().token
     })
