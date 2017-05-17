@@ -102,6 +102,7 @@ export class AuthenticationService {
   logout(): void {
     // clear token remove user from local storage to log user out
     this.storage.removeItem(this.storedName);
+    this.loggedOnUser = null;
   }
 
   getLoggedOnUser(): User{

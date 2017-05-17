@@ -12,7 +12,7 @@ import {NotAuthGuard} from "./guards/not-auth.guard";
 const APP_ROUTES: Routes = [
   {path: '', redirectTo: 'featured', pathMatch: 'full'},
   {path: '', component: HomeComponent, children: HOME_ROUTES, canActivate: [AuthGuard]},
-  {path: 'login', component: LoginComponent},
+  {path: 'login', component: LoginComponent, canActivate: [NotAuthGuard]},
   {path: 'sign-up', component: SignUpComponent, canActivate: [NotAuthGuard]},
   {path: 'reset', component: PasswordResetComponent},
   {path: 'forbidden', component: Error403Component, canActivate: [AuthGuard]},
