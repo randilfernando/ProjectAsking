@@ -260,18 +260,26 @@ const userController = function (User, TempUser, Module) {
     User.findOne({'email': req.body.email})
       .exec()
       .then(function (user) {
-        user.accessLevel = req.body.accessLevel;
-        user.save()
-          .then(function () {
-            res.status(200);
-            res.send({
-              message: 'Success'
-            });
+        if(user.email === req.body.token.email){
+          console.log(user.email, req.body.email);
+          res.status(203);
+          res.send({
+            message: 'You cant downgrade your own account'
           })
-          .catch(function (err) {
-            res.status(500);
-            res.send(err);
-          })
+        }else{
+          user.accessLevel = req.body.accessLevel;
+          user.save()
+            .then(function () {
+              res.status(200);
+              res.send({
+                message: 'Success'
+              });
+            })
+            .catch(function (err) {
+              res.status(500);
+              res.send(err);
+            })
+        }
       })
       .catch(function (err) {
         res.status(404);

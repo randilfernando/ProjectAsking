@@ -12,7 +12,8 @@
     "test": "mocha ./server/test --timeout 10000",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prod_build": "ng build --prod --output-path client"
+    "prod_build": "ng build --prod --output-path client",
+    "deploy": "ng build --prod --output-path client&&git add .&&git commit&&git push origin master"
   },
   "repository": {
     "type": "git",
