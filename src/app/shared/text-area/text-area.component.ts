@@ -1,8 +1,17 @@
 import {Component,  Output, EventEmitter, AfterViewInit, OnDestroy, Input} from '@angular/core';
+import 'tinymce';
+import 'tinymce/themes/modern';
+import 'tinymce/plugins/table';
+import 'tinymce/plugins/link';
+import 'tinymce/plugins/paste';
 
 @Component({
   selector: 'ask-text-area',
-  templateUrl: 'text-area.component.html'
+  template: `
+    <div class="row">
+      <textarea id="{{elementId}}" style="padding-right: 10px; padding-left: 10px">{{initialContent}}</textarea>
+    </div>
+  `
 })
 export class TextAreaComponent implements AfterViewInit, OnDestroy{
 

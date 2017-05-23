@@ -11,7 +11,7 @@
     "port": 6000,
     "morganEnabled": false,
     "morganMode": "dev",
-    "client": "client_dev"
+    "client": "client"
   },
   "prod": {
     "host": "https://asking-platform.herokuapp.com",
