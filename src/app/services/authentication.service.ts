@@ -50,11 +50,7 @@ export class AuthenticationService {
       "password": user.password
     })
       .map((response: Response) => {
-        if (response.status == 200) {
-          return true;
-        } else {
-          return false;
-        }
+        return response.status == 200;
       });
   }
 
@@ -63,11 +59,7 @@ export class AuthenticationService {
       "email": email
     })
       .map((response: Response) => {
-        if (response.status == 200) {
-          return true;
-        } else {
-          return false;
-        }
+        return response.status == 200;
       });
   }
 

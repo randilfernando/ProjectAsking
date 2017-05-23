@@ -1,5 +1,4 @@
-import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../../services/user.service";
 import {Module} from "../../types/module.type";
