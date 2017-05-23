@@ -22,10 +22,7 @@
         "./materialize/css/materialize.css",
         "./styles.css"
       ],
-      "scripts": [
-        "./materialize/js/jquery.min.js",
-        "./materialize/js/materialize.min.js"
-      ],
+      "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
