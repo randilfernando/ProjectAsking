@@ -16,3 +16,12 @@
 .active{
   background-color: #e0e0e0;
 }
+
+.my-fixed{
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  height: 40px;
+  width: 40px;
+  color: white;
+}
