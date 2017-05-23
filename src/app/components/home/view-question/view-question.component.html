@@ -37,19 +37,17 @@
 
   <div *ngIf="!isEditing">
     <div class="row">
-      <h5>{{selectedQuestion.title}}</h5>
-      <div class="divider"></div>
-    </div>
-    <div class="row">
       <div class="col s12">
-        <div [innerHTML]="selectedQuestion.description" >
-        </div>
+        <h5>{{selectedQuestion.title}}</h5>
+        <div class="divider"></div>
+      </div>
+      <div class="col s12">
+        <div [innerHTML]="selectedQuestion.description"></div>
       </div>
     </div>
   </div>
 
   <div *ngIf="isEditing">
-
     <form (ngSubmit)="updateQuestion()">
       <div class="row">
         <div class="input-field col s12">
@@ -67,28 +65,34 @@
 
   <div class="row">
     <div class="col s12">
-      <a (click)="rateUpQuestion()" class="btn-floating waves-effect white z-depth-0"><i style="color: darkgrey" class="material-icons">thumb_up</i></a>
+      <span class="right grey-text">- {{selectedQuestion.submittedBy}}</span><br>
+      <a (click)="rateUpQuestion()" class="btn-floating waves-effect white z-depth-0"><i style="color: darkgrey"
+                                                                                         class="material-icons">thumb_up</i></a>
       <span style="font-size: 1.0em">{{selectedQuestion.totalRatings}}</span>
-      <a (click)="rateDownQuestion()" class="btn-floating waves-effect white z-depth-0"><i style="color: darkgrey" class="material-icons">thumb_down</i></a>
-      <span class="right" style="color: gray">- {{selectedQuestion.submittedBy}}</span><br>
+      <a (click)="rateDownQuestion()" class="btn-floating waves-effect white z-depth-0"><i style="color: darkgrey"
+                                                                                           class="material-icons">thumb_down</i></a>
     </div>
   </div>
 
   <div class="row">
-    <div class="chip" style="background-color: #1e88e5; border-radius: 0">
-      <a style="color: white">{{selectedQuestion.moduleCode}} - {{selectedQuestion.moduleName}}</a></div>
-    <div class="chip" style="border-radius: 0" *ngFor="let tag of selectedQuestion.tags">{{tag}}</div>
+    <div class="col s12">
+      <div class="chip blue darken-2" style="border-radius: 0">
+        <a style="color: white">{{selectedQuestion.moduleCode}} - {{selectedQuestion.moduleName}}</a></div>
+      <div class="chip" style="border-radius: 0" *ngFor="let tag of selectedQuestion.tags">{{tag}}</div>
+    </div>
   </div>
 
   <ask-answer-list [answerList]="answerList"
                    [editEnabled]="accessLevel > 0" [loggedOnEmail]="getLoggedOnEmail()">
   </ask-answer-list>
 
-  <div *ngIf="!isAdmin">
+  <div *ngIf="accessLevel < 2">
     <div *ngIf="!isEditing" class="row" style="padding-top: 20px">
       <div class="col s12">
         <ask-text-area [elementId]="'answerAdd'" (onEditorKeyup)="editingAnswer.answer = $event"></ask-text-area>
-        <button class="btn waves-effect waves-light center right" (click)="addAnswer()">
+      </div>
+      <div class="col s12 l4 m6 offset-l8 offset-m6">
+        <button class="btn waves-effect waves-light" style="width: 100%" (click)="addAnswer()">
           Add Answer
         </button>
       </div>
