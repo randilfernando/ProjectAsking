@@ -1,10 +1,4 @@
 import {Component,  Output, EventEmitter, AfterViewInit, OnDestroy, Input} from '@angular/core';
-import 'tinymce';
-import 'tinymce/themes/modern';
-
-import 'tinymce/plugins/table';
-import 'tinymce/plugins/link';
-import 'tinymce/plugins/paste';
 
 @Component({
   selector: 'ask-text-area',
