@@ -19,12 +19,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "ask",
       "styles": [
-        "./assets/css/materialize.css",
         "./assets/css/styles.css"
       ],
       "scripts": [
-        "./assets/js/jquery.min.js",
-        "./assets/js/materialize.min.js",
         "../node_modules/tinymce/tinymce.js",
         "../node_modules/tinymce/themes/modern/theme.js",
         "../node_modules/tinymce/plugins/link/plugin.js",

@@ -68,7 +68,7 @@ const userController = function (User, TempUser, Module) {
 
                 tempUser.save()
                   .then(function (savedUser) {
-                    mailController.accountConfirmationMail(savedUser.email, savedUser._id);
+                    mailController.accountConfirmationMail(savedUser.email, savedUser._id, savedUser.name);
                     res.status(200);
                     res.send({
                       message: 'Confirmation message sent to email address'
@@ -187,7 +187,7 @@ const userController = function (User, TempUser, Module) {
         user.setPassword(password);
         user.save()
           .then(function () {
-            mailController.passwordResetMail(user.email, password);
+            mailController.passwordResetMail(user.email, password, user.name);
             res.status(200);
             res.json({
               "message": 'Success'
