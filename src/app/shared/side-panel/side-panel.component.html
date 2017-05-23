@@ -1,9 +1,10 @@
+<a href="#" data-activates="slide-out" class="button-collapse hide"><i class="material-icons">menu</i></a>
 <ul id="slide-out" class="side-nav fixed">
   <div id="menu-up" #menuUp (window:resize)="onResize()">
     <li>
       <div class="valign-wrapper z-depth-1" style="background-color: #424242; height: 100px">
-          <img style="height: 70px" src="../../../assets/images/company_logo.png" alt="Company Logo">
-          <h1 style="font-size: 40px; color: white; padding-left: 40px;">asking</h1>
+        <img style="height: 70px" src="../../../assets/images/company_logo.png" alt="Company Logo">
+        <h1 style="font-size: 40px; color: white; padding-left: 40px;">asking</h1>
       </div>
     </li>
     <li *ngFor="let actionURL of actionURLList"><a [routerLink]="['/' + actionURL.actionURL]" routerLinkActive="active">{{actionURL.title}}</a>
