@@ -110,7 +110,9 @@ const userController = function (User, TempUser, Module) {
           .then(function () {
             tempUser.remove();
             res.status(200);
-            res.redirect('/login');
+            res.send({
+              message: 'Success'
+            })
           })
           .catch(function (err) {
             res.status(500);
