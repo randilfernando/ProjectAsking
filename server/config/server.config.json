@@ -14,7 +14,7 @@
     "client": "client"
   },
   "prod": {
-    "host": "https://asking-platform.herokuapp.com",
+    "host": "https://asking-net.herokuapp.com",
     "morganEnabled": true,
     "morganMode": "common",
     "client": "client"
