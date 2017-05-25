@@ -55,7 +55,7 @@ const accountConfirmationMail = function (email, tempUserUrl, username) {
     'Click on this link to activate user user account at Asking',
     `
       <div style="padding-left: 20px">
-        <h5>Confirm your user account.</h5>
+        <h3>Confirm your user account.</h3>
         <p>Dear ${username},</p>
         <p>Thank you for registering at Asking question and answer platform.<br>
           Your account has been created with the email address<br>
@@ -75,7 +75,7 @@ const accountActivatedMail = function (email, password, username) {
     'Asking has created a user account for you.',
     `
       <div style="padding-left: 20px">
-        <h5>Login to use asking platform.</h5>
+        <h3>Login to use asking platform.</h3>
         <p>Dear ${username},</p>
         <p>Asking question and answer platform has created a user account for you.<br>
           Username: <a href="mailto:${email}">${email}</a></p>
