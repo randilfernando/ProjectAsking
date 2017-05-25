@@ -69,7 +69,27 @@ const accountConfirmationMail = function (email, tempUserUrl, username) {
   )
 };
 
+const accountActivatedMail = function (email, password, username) {
+  sendMail(email,
+    '[Asking] Account Created',
+    'Asking has created a user account for you.',
+    `
+      <div style="padding-left: 20px">
+        <h5>Login to use asking platform.</h5>
+        <p>Dear ${username},</p>
+        <p>Asking question and answer platform has created a user account for you.<br>
+          Username: <a href="mailto:${email}">${email}</a></p>
+        <p>Password: <b>${password}</b></p>
+        <p>If you have any issues logging please contact system administrator.<br>
+          <a href="mailto:asking.platform@gmail.com">asking.platform@gmail.com</a></p></p>
+        <p>Thank you.</p>
+      </div>
+    `
+  )
+};
+
 module.exports = {
   passwordResetMail: passwordResetMail,
   accountConfirmationMail: accountConfirmationMail,
+  accountActivatedMail: accountActivatedMail
 };

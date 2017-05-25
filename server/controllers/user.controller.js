@@ -109,6 +109,7 @@ const userController = function (User, TempUser, Module) {
         user.save()
           .then(function () {
             tempUser.remove();
+            mailController.accountActivatedMail(user.email, 'Please use the password you provided when registering.', user.name);
             res.status(200);
             res.send({
               message: 'Success'
@@ -218,7 +219,7 @@ const userController = function (User, TempUser, Module) {
 
     user.save()
       .then(function () {
-        mailController.passwordResetMail(user.email, password);
+        mailController.accountActivatedMail(user.email, password, user.name);
         res.status(200);
         res.send({
           "message": 'Success'
