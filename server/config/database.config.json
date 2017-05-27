@@ -1,5 +1,5 @@
 {
   "test": "mongodb://localhost:27017/askingTest",
-  "dev": "mongodb://127.0.0.1:27017/asking",
+  "dev": "mongodb://localhost:27017/asking",
   "prod": "mongodb://asking:1234@ds060009.mlab.com:60009/asking"
 }

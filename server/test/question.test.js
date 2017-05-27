@@ -11,9 +11,11 @@ const chaiHttp = require('chai-http');
 const server = require('../server');
 const should = chai.should();
 
-const lecturerToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTEzNTRlMDFjNjZhYjBiZTA1YTU5ODciLCJlbWFpbCI6InJhbmRpbC5mZXJuYW5kby5yZkBnbWFpbC5jb20iLCJuYW1lIjoiUmFuZGlsIExha3NoaXRoYSIsImFjY2Vzc0xldmVsIjoxLCJleHAiOjE0OTUzMzI0NjQsImlhdCI6MTQ5NDcyNzY2NH0.bQrBRJBdNiGKfoQVVMmEbTmtPvsaO4uj0HgJyZJcVC8';
-const studentToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTE0MzM4MjI4ZTlmZDI3ZjAwYTA5YWIiLCJlbWFpbCI6InJhbmRpbC5mZXJuYW5kby4xNEBjc2UubXJ0LmFjLmxrIiwibmFtZSI6IlJhbmRpbCBGZXJuYW5kbyIsImFjY2Vzc0xldmVsIjowLCJleHAiOjE0OTUzMzI1MTUsImlhdCI6MTQ5NDcyNzcxNX0.vWDqDNgtQBjPeldVGE9-J9KxSp_7hMAMXdQlSDi7ssE';
-const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1OTE4MTNiYjliZmU2OTdjMWJkMGE5N2IiLCJlbWFpbCI6InJhbmRpbF9mZXJuYW5kbzEyM0Bob3RtYWlsLmNvbSIsIm5hbWUiOiJBZG1pbmlzdHJhdG9yIDEiLCJhY2Nlc3NMZXZlbCI6MiwiZXhwIjoxNDk1NDQ2NjE2LCJpYXQiOjE0OTQ4NDE4MTZ9.JyTS3awEXLRtWioP1cE9IbxCIHHk8dQZGgqfR813xns';
+const tokens = require('./tokens.json');
+
+const lecturerToken = tokens.lecturer;
+const studentToken = tokens.student1;
+const adminToken = tokens.admin;
 
 chai.use(chaiHttp);
 
