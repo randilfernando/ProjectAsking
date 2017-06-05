@@ -12,8 +12,7 @@
     "test": "mocha ./server/test --timeout 10000",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build_prod": "ng build --prod --aot",
-    "postinstall": "npm run build_prod"
+    "postinstall": "ng build --prod --aot"
   },
   "repository": {
     "type": "git",
