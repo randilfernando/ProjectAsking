@@ -1,1 +1,8 @@
 yarn.lock
+/src
+/e2e
+.editorconfig
+.karma.conf.js
+protractor.conf.js
+tsconfig.json
+tslint.json
