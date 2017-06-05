@@ -12,8 +12,8 @@
     "test": "mocha ./server/test --timeout 10000",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build_prod": "ng build --prod --aot --output-path client",
-    "deploy": "ng build --prod --output-path client&&git add .&&git commit&&git push origin master"
+    "build_prod": "ng build --prod --aot",
+    "postinstall": "npm run build_prod"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "node": "6.10.0"
   },
   "dependencies": {
+    "@angular/cli": "1.0.0-rc.1",
     "@angular/common": "^2.4.0",
     "@angular/compiler": "^2.4.0",
     "@angular/core": "^2.4.0",
@@ -56,7 +57,6 @@
     "zone.js": "^0.7.6"
   },
   "devDependencies": {
-    "@angular/cli": "1.0.0-rc.1",
     "@angular/compiler-cli": "^2.4.0",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
