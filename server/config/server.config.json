@@ -4,7 +4,7 @@
     "port": 5000,
     "morganEnabled": true,
     "morganMode": "dev",
-    "client": "client_dev"
+    "client": "client"
   },
   "test": {
     "host": "http://localhost",
