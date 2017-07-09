@@ -16,8 +16,8 @@ import 'tinymce/plugins/paste';
 export class TextAreaComponent implements AfterViewInit, OnDestroy{
 
   @Input() elementId: string;
-  @Input() initialContent: string = '';
-  @Input() height: string = '150';
+  @Input() initialContent = '';
+  @Input() height= '150';
   @Output() onEditorKeyup = new EventEmitter<any>();
 
   editor;
