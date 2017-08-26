@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
-const secretKey = require('./../config/security.config').secretKey;
+const fs = require('fs');
+const path = require('path');
+const cert = fs.readFileSync(path.join(__dirname,'./../config/private.key'));
 
 const userLevels = {
   student: 0,
@@ -37,8 +39,10 @@ userModel.methods.generateJwt = function () {
     email: this.email,
     name: this.name,
     accessLevel: this.accessLevel,
-    exp: parseInt(expiry.getTime() / 1000),
-  }, secretKey);
+  }, cert, {
+    algorithm: 'RS256',
+    expiresIn: 60 * 60 * 3
+  });
 };
 
 module.exports.User = mongoose.model("User", userModel);
