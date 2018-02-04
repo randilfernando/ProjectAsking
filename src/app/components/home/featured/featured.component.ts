@@ -9,7 +9,7 @@ import {ModuleService} from "../../../services/module.service";
 export class FeaturedComponent implements OnInit {
 
   modulesList: Module[];
-  private message: string = null;
+  message: string = null;
 
   constructor(private moduleService: ModuleService) { }
 

@@ -12,11 +12,11 @@ export class AnswerSummaryComponent implements OnInit {
   @Input() answer: Answer;
   @Input() loggedOnEmail: string;
   @Input() editEnabled: boolean = false;
-  private sameUser: boolean = false;
+  sameUser: boolean = false;
 
   editingAnswer: string;
 
-  private isEditing: boolean;
+  isEditing: boolean;
 
   constructor(private questionService: QuestionService, private ratingService: RatingService) { }
 

@@ -10,8 +10,8 @@ import {AuthenticationService} from "../../../services/authentication.service";
 export class SearchModuleComponent implements OnInit {
 
   modulesList: Module[];
-  private message: string = null;
-  private subscribeEnabled = false;
+  message: string = null;
+  subscribeEnabled = false;
 
   constructor(private moduleService: ModuleService, private authenticationService: AuthenticationService) {
   }

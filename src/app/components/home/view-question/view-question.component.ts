@@ -15,17 +15,17 @@ import {RatingService} from "../../../services/rating.service";
 })
 export class ViewQuestionComponent implements OnInit {
 
-  private editingQuestion = {
+  editingQuestion = {
     title: '',
     description: ''
   };
-  private selectedQuestion: Question;
+  selectedQuestion: Question;
   answerList: Answer[];
   editEnabled: boolean = false;
   isEditing: boolean = false;
-  private accessLevel: number = 0;
+  accessLevel: number = 0;
 
-  private editingAnswer: Answer = {
+  editingAnswer: Answer = {
     _id: '',
     totalRatings: 0,
     answer: '',

@@ -9,9 +9,9 @@ import {UserService} from "../../../services/user.service";
 })
 export class ManageUsersComponent implements OnInit, AfterViewInit {
 
-  private isError: boolean = true;
+  isError: boolean = true;
   userList: User[];
-  private selectedUser: User = {
+  selectedUser: User = {
     email: '',
     name: '',
     accessLevel: 0,

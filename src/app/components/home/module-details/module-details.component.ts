@@ -14,7 +14,7 @@ export class ModuleDetailsComponent implements OnInit, OnDestroy {
 
   selectedModule: Module;
   questionList: Question[];
-  private message: string = null;
+  message: string = null;
   private subscription: Subscription;
 
   constructor(private moduleService: ModuleService, private questionService: QuestionService, private activatedRoute: ActivatedRoute) { }

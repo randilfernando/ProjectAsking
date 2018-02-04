@@ -10,14 +10,14 @@ import {Location} from "@angular/common";
 })
 export class AddModuleComponent implements OnInit, AfterViewInit {
 
-  private selectedModule: Module = {
+  selectedModule: Module = {
     _id: '',
     moduleCode: '',
     moduleName: '',
     topics: [],
     totalQuestions: 0
   };
-  private editingTopic = '';
+  editingTopic = '';
 
   constructor(private moduleService: ModuleService, private location: Location) { }
 

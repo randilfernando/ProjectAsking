@@ -12,8 +12,8 @@ import {AuthenticationService} from "../../../services/authentication.service";
 })
 export class AddQuestionComponent implements OnInit, AfterViewInit {
   moduleList: Module[];
-  private selectedModule: Module;
-  private question: Question = {
+  selectedModule: Module;
+  question: Question = {
     _id: '',
     title: '',
     moduleCode: '',
@@ -26,7 +26,7 @@ export class AddQuestionComponent implements OnInit, AfterViewInit {
     submittedBy: ''
   };
 
-  private hasError: boolean = false;
+  hasError: boolean = false;
 
   constructor(private moduleService: ModuleService, private questionService: QuestionService, private authenticationService: AuthenticationService) {
   }

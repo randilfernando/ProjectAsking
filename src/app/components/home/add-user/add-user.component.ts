@@ -11,14 +11,14 @@ import {Location} from "@angular/common";
 })
 export class AddUserComponent implements OnInit, AfterViewInit {
 
-  private user: User = {
+  user: User = {
     email: '',
     name: '',
     password: '',
     accessLevel: 0,
     token: ''
   };
-  private editingTopic = '';
+  editingTopic = '';
 
   constructor(private userService: UserService, private location: Location) {
   }

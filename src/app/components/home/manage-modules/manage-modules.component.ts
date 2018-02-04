@@ -9,16 +9,16 @@ import {ModuleService} from "../../../services/module.service";
 })
 export class ManageModulesComponent implements OnInit, AfterViewInit {
 
-  private isError: boolean = true;
+  isError: boolean = true;
   moduleList: Module[];
-  private selectedModule: Module = {
+  selectedModule: Module = {
     _id: '',
     moduleCode: '',
     moduleName: '',
     topics: [],
     totalQuestions: 0
   };
-  private editingTopic = '';
+  editingTopic = '';
 
   constructor(private moduleService: ModuleService) {
   }

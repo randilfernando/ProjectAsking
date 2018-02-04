@@ -13,7 +13,7 @@ import {UserService} from "../../../services/user.service";
 })
 export class ViewProfileComponent implements OnInit, AfterViewInit {
 
-  private user: User = {
+  user: User = {
     email: '',
     accessLevel: 0,
     token: '',
@@ -24,7 +24,7 @@ export class ViewProfileComponent implements OnInit, AfterViewInit {
   subscribedModules: Module[];
   submittedQuestions: Question[];
 
-  private accessLevel: number = 0;
+  accessLevel: number = 0;
 
   constructor(private authenticationService: AuthenticationService, private userService: UserService,
               private questionService: QuestionService) {
