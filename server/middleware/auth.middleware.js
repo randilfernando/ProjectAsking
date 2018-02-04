@@ -8,7 +8,6 @@ module.exports = function (req, res, next) {
   if (token){
     try{
       req.body.token = jwt.verify(token, cert, { algorithms: ['RS256'] });
-      console.log(req.body.token);
       next();
     } catch (err){
       res.status(403);

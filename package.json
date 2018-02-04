@@ -37,6 +37,7 @@
     "@angular/platform-browser": "^2.4.0",
     "@angular/platform-browser-dynamic": "^2.4.0",
     "@angular/router": "^3.4.0",
+    "@sendgrid/mail": "^6.2.1",
     "angular2-chartjs": "^0.2.0",
     "bcrypt": "^1.0.2",
     "bluebird": "^3.5.0",
@@ -48,14 +49,13 @@
     "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.9.0",
     "morgan": "^1.8.1",
-    "nodemailer": "^4.0.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "rxjs": "^5.1.0",
     "serve-favicon": "^2.4.2",
     "tinymce": "^4.5.5",
-    "zone.js": "^0.7.6",
-    "typescript": "~2.0.0"
+    "typescript": "~2.0.0",
+    "zone.js": "^0.7.6"
   },
   "devDependencies": {
     "@types/jasmine": "2.5.38",

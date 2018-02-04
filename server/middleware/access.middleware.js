@@ -1,6 +1,6 @@
 module.exports = function (accessList) {
   return function (req, res, next) {
-    const token = req.params.token || req.body.token || req.query.token || req.header('x-jwt-token');
+    const token = req.body.token;
     for (let accessLevel of accessList) {
       if (token.accessLevel === accessLevel) {
         next();

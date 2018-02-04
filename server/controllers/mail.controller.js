@@ -1,19 +1,12 @@
 "use strict";
 
-const nodeMailer = require('nodemailer');
-const security = require('./../config/security.config.json');
-const config = require('./../config/main.config');
+const sgMail = require('@sendgrid/mail');
+const config = require('../config/main.config');
 
-const transporter = nodeMailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'asking.platform@gmail.com',
-    pass: security.mailPassword
-  }
-});
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendMail = function (receiver, subject, text, html) {
-  let mailOptions = {
+  const msg = {
     from: '"Asking Platform" <asking.platform@gmail.com>', // sender address
     to: receiver, // list of receivers
     subject: subject, // Subject line
@@ -21,12 +14,7 @@ const sendMail = function (receiver, subject, text, html) {
     html: html
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-  });
+  sgMail.send(msg);
 };
 
 const passwordResetMail = function (email, password, username) {
